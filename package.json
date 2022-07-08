@@ -8,8 +8,9 @@
 		"start": "remix-serve build",
 		"format": "prettier --write .",
 		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
-    "generate:edgeql": "edgeql-js --target ts",
-		"db:migrate": "edgedb migrate && npm run generate:edgeql"
+		"generate:edgeql": "edgeql-js --target ts",
+		"db:migrate": "edgedb migrate && npm run generate:edgeql",
+		"db:seed": "npx esbuild-runner dbschema/seed.ts"
 	},
 	"dependencies": {
 		"@remix-run/node": "^1.6.3",
