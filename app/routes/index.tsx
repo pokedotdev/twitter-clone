@@ -1,16 +1,36 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction } from '@remix-run/node';
+import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
-import { client, e } from '~/db.server'
+import { getUsers } from '~/models/user.server'
+
+type LoaderData = {
+	users: Awaited<ReturnType<typeof getUsers>>
+}
 
 export const loader: LoaderFunction = async () => {
-	const msg = await e.str('Hello World!').run(client)
-
-	return { msg }
+	const users = await getUsers()
+	return json({ users })
 }
 
 export default function Index() {
-	const { msg } = useLoaderData()
+	const { users } = useLoaderData<LoaderData>()
 
-	return <h1>{msg}</h1>
+	return (
+		<>
+			<h1>All Users:</h1>
+			<ul>
+				{users.map(({ id, username, tweets }) => (
+					<li key={id}>
+						User: @{username}
+						<ul>
+							{tweets.map(({ id, body }) => (
+								<li key={id}>{body}</li>
+							))}
+						</ul>
+					</li>
+				))}
+			</ul>
+		</>
+	)
 }
