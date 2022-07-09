@@ -1,4 +1,4 @@
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
@@ -17,13 +17,15 @@ export default function Index() {
 	const { users } = useLoaderData<LoaderData>()
 
 	return (
-		<>
-			<h1>All Users:</h1>
+		<div className="my-8 mx-auto max-w-2xl">
+			<h1 className="my-4 font-bold">All Users:</h1>
 			<ul>
 				{users.map(({ id, username, tweets }) => (
 					<li key={id}>
-						User: @{username}
-						<ul>
+						<div className="flex items-center gap-2">
+							<div className="i-ph:user" />@{username}
+						</div>
+						<ul className="list-decimal pl-8">
 							{tweets.map(({ id, body }) => (
 								<li key={id}>{body}</li>
 							))}
@@ -31,6 +33,6 @@ export default function Index() {
 					</li>
 				))}
 			</ul>
-		</>
+		</div>
 	)
 }
