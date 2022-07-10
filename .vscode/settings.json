@@ -1,8 +1,15 @@
 {
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.formatOnSave": false,
+	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
 		"source.fixAll": true,
 		"source.fixAll.eslint": true
+	},
+	"tailwindCSS.hovers": false,
+	"search.exclude": {
+		"**/node_modules/**": true,
+		"**/.cache/**": true,
+		"**/build/**": true,
+		"**/public/build/**": true
 	}
 }
