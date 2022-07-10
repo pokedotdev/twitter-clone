@@ -8,6 +8,9 @@ module default {
 	}
 
 	type User extending HasCreatedAt {
+		required property provider -> tuple<name: str, id: str> {
+			constraint exclusive;
+		}
 		required property username -> str {
 			constraint exclusive;
 			constraint min_len_value(4);
@@ -18,13 +21,12 @@ module default {
 			constraint min_len_value(1);
 			constraint max_len_value(50);
 		}
-		property bio -> str {
-			constraint min_len_value(1);
-			constraint max_len_value(160);
-		}
-		property now := datetime_of_statement();
+		property bio -> str;
+		property location -> str;
+		property website -> str;
+		property avatarUrl -> str;
+		property coverUrl -> str;
 
-		link account := .<user[IS auth::Account];
 		# todo: tweets = only tweets & retweets
 		multi link tweets := User.<user[IS Tweet];
 		# todo: add created_at to likes
