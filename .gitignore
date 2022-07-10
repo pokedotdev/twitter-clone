@@ -6,3 +6,5 @@ node_modules
 .env
 
 dbschema/edgeql-js
+
+app/styles/uno.css
