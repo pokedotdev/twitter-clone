@@ -5,6 +5,7 @@ const theme = presetUno().theme
 export default defineConfig({
 	theme: {
 		colors: {
+			gray: theme?.colors?.slate,
 			primary: theme?.colors?.indigo,
 		},
 		breakpoints: {

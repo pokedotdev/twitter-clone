@@ -14,7 +14,7 @@ export default function App() {
 					<div className="sticky top-0 z-10 col-start-1 row-start-1 flex h-16 flex-col px-0 sm:h-screen sm:px-[5px] md:px-3.5">
 						{/* Nav */}
 						<div className="hidden h-16 sm:block">Logo</div>
-						<div className="fixed bottom-0 flex h-16 w-full flex-auto flex-col border-t border-slate-200 sm:static sm:bottom-auto sm:h-auto sm:border-none">
+						<div className="fixed bottom-0 flex h-16 w-full flex-auto flex-col border-t border-gray-200 sm:static sm:bottom-auto sm:h-auto sm:border-none">
 							<div className="min-w-60px xl:min-w-[247px]">nav</div>
 						</div>
 						{/* Account */}
@@ -23,11 +23,11 @@ export default function App() {
 						</div>
 					</div>
 					{/* Main */}
-					<div className="sticky top-0 z-10 col-start-2 row-start-1 h-16 border-slate-200 bg-white/80 backdrop-blur-lg sm:border-x">
+					<div className="sticky top-0 z-10 col-start-2 row-start-1 h-16 border-gray-200 bg-white/80 backdrop-blur-lg sm:border-x">
 						{/* Get title from helper matches */}
 						Page title
 					</div>
-					<main className="col-span-full col-start-1 row-start-1 mt-16 border-slate-200 sm:col-auto sm:col-start-2 sm:border-x">
+					<main className="col-span-full col-start-1 row-start-1 mt-16 border-gray-200 sm:col-auto sm:col-start-2 sm:border-x">
 						<Outlet />
 					</main>
 					{/* Sidebar */}
