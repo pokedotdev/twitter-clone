@@ -1,0 +1,14 @@
+node_modules
+
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+/.cache
+/build
+/public/build
+.env
+
+dbschema/edgeql-js
+
+app/styles/uno.css
