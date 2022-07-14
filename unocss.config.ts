@@ -17,5 +17,13 @@ export default defineConfig({
 			xl: '1280px',
 		},
 	},
+	preflights: [
+		{
+			getCSS: ({ theme }) => `
+				.open-content { display: none; }
+				.open[type=checkbox]:checked ~ .open-content { display: block; }
+				`,
+		},
+	],
 	presets: [presetUno(), presetIcons()],
 })

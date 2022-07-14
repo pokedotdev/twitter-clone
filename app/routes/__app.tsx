@@ -1,6 +1,7 @@
 import { Outlet } from '@remix-run/react'
 
 import { ButtonProvider, FormAuth } from '~/components'
+import { AccountMenu } from '~/components/account-menu'
 import { useOptionalUser } from '~/utils'
 
 export default function App() {
@@ -11,16 +12,19 @@ export default function App() {
 			<div className="flex justify-center">
 				<div className="mdl:grid-cols-[auto_600px_minmax(auto,390px)] inline-grid grid-cols-[auto_minmax(auto,600px)]">
 					{/* Header */}
-					<div className="sticky top-0 z-10 col-start-1 row-start-1 flex h-16 flex-col px-0 sm:h-screen sm:px-[5px] md:px-3.5">
-						{/* Nav */}
+					<div className="sticky top-0 z-10 col-start-1 row-start-1 flex h-16 flex-col justify-center px-0 sm:h-screen sm:px-[5px] md:px-3.5">
+						{/* Logo */}
 						<div className="hidden h-16 sm:block">Logo</div>
+						{/* Nav */}
 						<div className="fixed bottom-0 flex h-16 w-full flex-auto flex-col border-t border-gray-200 sm:static sm:bottom-auto sm:h-auto sm:border-none">
 							<div className="min-w-60px xl:min-w-[247px]">nav</div>
 						</div>
 						{/* Account */}
-						<div className="h-15 bg-white/80 backdrop-blur-lg md:my-3.5">
-							account
-						</div>
+						{user && (
+							<div className="relative bg-white/80 backdrop-blur-lg sm:my-3.5">
+								<AccountMenu />
+							</div>
+						)}
 					</div>
 					{/* Main */}
 					<div className="sticky top-0 z-10 col-start-2 row-start-1 h-16 border-gray-200 bg-white/80 backdrop-blur-lg sm:border-x">
