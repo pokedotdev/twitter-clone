@@ -1,8 +1,4 @@
-import type {
-	LinksFunction,
-	LoaderFunction,
-	MetaFunction,
-} from '@remix-run/node'
+import type { LinksFunction, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
 	Links,
@@ -30,7 +26,7 @@ export const meta: MetaFunction = () => ({
 	viewport: 'width=device-width,initial-scale=1',
 })
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
 	return json({
 		user: await getUser(request),
 	})

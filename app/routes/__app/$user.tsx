@@ -1,16 +1,11 @@
-import type {
-	ActionFunction,
-	LoaderFunction,
-	MetaFunction,
-} from '@remix-run/node'
+import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Outlet, useLoaderData } from '@remix-run/react'
+import { Outlet } from '@remix-run/react'
 
-import { Button, Text } from '~/components'
 import { authenticator } from '~/lib/auth.server'
 import { getUserByUsername } from '~/models/user.server'
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: ActionArgs) => {
 	await authenticator.logout(request, {
 		redirectTo: request.url,
 	})
@@ -23,7 +18,7 @@ export const meta: MetaFunction = ({ data }) => {
 	}
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: LoaderArgs) => {
 	if (!params.user) throw new Error('User not found')
 	const profile = await getUserByUsername(params.user)
 	if (!profile) {
@@ -41,6 +36,5 @@ export const loader: LoaderFunction = async ({ params }) => {
 }
 
 export default function UserRoute() {
-	// const { profile } = useLoaderData<LoaderData>()
 	return <Outlet />
 }

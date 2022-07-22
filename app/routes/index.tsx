@@ -1,20 +1,16 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
 import { getUsers } from '~/models/user.server'
 
-type LoaderData = {
-	users: Awaited<ReturnType<typeof getUsers>>
-}
-
-export const loader: LoaderFunction = async () => {
+export const loader = async (_: LoaderArgs) => {
 	const users = await getUsers()
 	return json({ users })
 }
 
 export default function Index() {
-	const { users } = useLoaderData<LoaderData>()
+	const { users } = useLoaderData<typeof loader>()
 
 	return (
 		<div className="my-8 mx-auto max-w-2xl">
