@@ -65,3 +65,21 @@ export function useUser(): User {
 	}
 	return maybeUser
 }
+
+export function useOptionalProfile(): User | undefined {
+	const data = useMatchesData('routes/__app/$user')
+	if (!data || !isUser(data.profile)) {
+		return undefined
+	}
+	return data.profile
+}
+
+export function useProfile(): User {
+	const maybeProfile = useOptionalProfile()
+	if (!maybeProfile) {
+		throw new Error(
+			'No profile found in $user loader, but user is required by useProfile. If profile is optional, try useOptionalProfile instead.'
+		)
+	}
+	return maybeProfile
+}

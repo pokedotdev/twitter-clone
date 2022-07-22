@@ -21,6 +21,15 @@ export async function getUserById(id: string) {
 		.run(client)
 }
 
+export async function getUserByUsername(username: string) {
+	return await e
+		.select(e.User, (user) => ({
+			...e.User['*'],
+			filter: e.op(user.username, '=', username),
+		}))
+		.run(client)
+}
+
 export async function getUsers() {
 	return await e
 		.select(e.User, () => ({

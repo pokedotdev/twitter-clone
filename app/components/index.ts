@@ -6,3 +6,5 @@ export * from './button'
 export * from './avatar'
 
 export * from './auth'
+export * from './nav'
+export * from './tabs'

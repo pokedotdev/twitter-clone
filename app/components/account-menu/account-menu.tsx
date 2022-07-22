@@ -1,15 +1,20 @@
 import { Form, useLocation } from '@remix-run/react'
+import * as AriaKit from 'ariakit'
 
 import { useUser } from '~/utils'
-import { Icon, Avatar, Text, Dialog } from '~/components'
+import { Icon, Avatar, Text } from '~/components'
 
 export const AccountMenu = () => {
 	const user = useUser()
 	const location = useLocation()
+	const popover = AriaKit.usePopoverState()
 
 	return (
-		<Dialog.Root name="account-menu">
-			<Dialog.Trigger className="relative flex cursor-pointer select-none rounded-full transition-colors hover:bg-gray-100 active:bg-gray-200 sm:p-3.5">
+		<>
+			<AriaKit.PopoverDisclosure
+				state={popover}
+				className="relative flex w-full cursor-pointer select-none items-center rounded-full p-3.5 transition-colors hover:bg-gray-100 active:bg-gray-200"
+			>
 				<Avatar
 					size="sm"
 					className="pointer-events-none sm:h-12 sm:w-12"
@@ -17,7 +22,7 @@ export const AccountMenu = () => {
 					alt={user.username}
 				/>
 				<div className="hidden flex-auto items-center justify-between xl:flex">
-					<div className="mx-3.5 flex flex-col text-lg">
+					<div className="text-start mx-3.5 flex flex-col text-lg">
 						<Text weight={7} className="leading-tight">
 							{user.name}
 						</Text>
@@ -27,11 +32,11 @@ export const AccountMenu = () => {
 					</div>
 					<Icon name="dots" size="md" />
 				</div>
-			</Dialog.Trigger>
-
-			<Dialog.Content>
-				<div className="absolute bottom-full z-30 mb-2 min-w-[280px] group-hover:block">
-					<div className="flex rounded-xl border border-gray-100 bg-white py-3 shadow-lg">
+			</AriaKit.PopoverDisclosure>
+			<AriaKit.Popover state={popover}>
+				<div className="w-72 drop-shadow-lg group-hover:block">
+					<AriaKit.PopoverArrow className="first:!fill-white" />
+					<div className="flex rounded-xl border-t border-gray-100 bg-white py-3">
 						<Form action="/auth/logout" method="post" className="w-full">
 							<button
 								name="redirectTo"
@@ -43,7 +48,7 @@ export const AccountMenu = () => {
 						</Form>
 					</div>
 				</div>
-			</Dialog.Content>
-		</Dialog.Root>
+			</AriaKit.Popover>
+		</>
 	)
 }

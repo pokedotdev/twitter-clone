@@ -1,18 +1,46 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type {
+	ActionFunction,
+	LoaderFunction,
+	MetaFunction,
+} from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Outlet, useLoaderData } from '@remix-run/react'
 
-export const loader: LoaderFunction = async ({ params }) => {
-	if (!params.user) throw new Error('User not found')
-	return json({
-		user: params.user,
+import { Button, Text } from '~/components'
+import { authenticator } from '~/lib/auth.server'
+import { getUserByUsername } from '~/models/user.server'
+
+export const action: ActionFunction = async ({ request }) => {
+	await authenticator.logout(request, {
+		redirectTo: request.url,
 	})
 }
 
-export default function Profile() {
-	const data = useLoaderData()
-	return (
-		//
-		<div className="text-5xl font-bold">@{data.user}</div>
-	)
+export const meta: MetaFunction = ({ data }) => {
+	if (!data?.user) return { title: 'Profile / Twitter' }
+	return {
+		title: `${data.user.name} (${data.user.username}) / Twitter`,
+	}
+}
+
+export const loader: LoaderFunction = async ({ params }) => {
+	if (!params.user) throw new Error('User not found')
+	const profile = await getUserByUsername(params.user)
+	if (!profile) {
+		return json({
+			user: {
+				id: '0',
+				username: params.user,
+				name: params.user,
+			},
+		})
+	}
+	return json({
+		profile,
+	})
+}
+
+export default function UserRoute() {
+	// const { profile } = useLoaderData<LoaderData>()
+	return <Outlet />
 }
