@@ -2,10 +2,13 @@ module default {
 
 	abstract type HasCreatedAt {
 		property created_at -> datetime {
-			default := (SELECT datetime_current());
+			default := datetime_current();
 			readonly := true;
 		}	
 	}
+
+	global current_user_id -> uuid;
+	global current_user := (select User filter .id ?= global current_user_id);
 
 	type User extending HasCreatedAt {
 		required property provider -> tuple<name: str, id: str> {
@@ -27,12 +30,23 @@ module default {
 		property avatarUrl -> str;
 		property coverUrl -> str;
 
-		# todo: tweets = only tweets & retweets
-		multi link tweets := User.<user[IS Tweet];
-		# todo: add created_at to likes
-		multi link likes -> Tweet;
-		# retweets & replies
-		# media tweets
+		multi link following -> User {
+			property created_at -> datetime {
+				default := datetime_current();
+				readonly := true;
+			}
+			constraint expression on (__subject__.id != global current_user_id);
+		};
+		multi link followers := .<following[is User];
+		multi link tweets := .<user[is Tweet];
+		multi link likes -> Tweet {
+			property created_at -> datetime {
+				default := datetime_current();
+				readonly := true;
+			} 
+		}
+
+		property is_own := (.id ?= global current_user_id);
 	}
 
 	scalar type TweetType extending enum<TWEET, RETWEET, REPLY>;
@@ -43,11 +57,13 @@ module default {
 			constraint max_len_value(280);
 		}
 		required property tweet_type -> TweetType;
+	
+		multi link likes := .<likes[is User];
+		required link user -> User;
 
-		multi link likes := Tweet.<likes[IS User];
-		required link user -> User {
-    	on target delete delete source;
-		}
+		property is_own := (.user.id ?= global current_user_id);
+		property is_liked := global current_user in .likes;
+		property num_likes := count(.likes);
 	}
 
 }
