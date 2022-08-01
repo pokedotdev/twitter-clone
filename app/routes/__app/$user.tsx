@@ -1,15 +1,8 @@
-import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
+import type { LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet } from '@remix-run/react'
 
-import { authenticator } from '~/lib/auth.server'
-import { getUserByUsername } from '~/models/user.server'
-
-export const action = async ({ request }: ActionArgs) => {
-	await authenticator.logout(request, {
-		redirectTo: request.url,
-	})
-}
+import { getUserByUsername, getUserId } from '~/models/user.server'
 
 export const meta: MetaFunction = ({ data }) => {
 	if (!data?.user) return { title: 'Profile / Twitter' }
@@ -18,18 +11,16 @@ export const meta: MetaFunction = ({ data }) => {
 	}
 }
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader = async ({ params, request }: LoaderArgs) => {
 	if (!params.user) throw new Error('User not found')
-	const profile = await getUserByUsername(params.user)
-	if (!profile) {
-		return json({
-			user: {
-				id: '0',
-				username: params.user,
-				name: params.user,
-			},
-		})
+
+	const ctx = {
+		current_user_id: await getUserId(request),
 	}
+
+	const profile = await getUserByUsername(params.user, ctx)
+	if (!profile) throw new Response('User not found', { status: 404 })
+
 	return json({
 		profile,
 	})

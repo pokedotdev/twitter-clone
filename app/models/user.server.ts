@@ -1,56 +1,62 @@
 import type { GitHubProfile } from 'remix-auth-github'
+import type { $scopify } from 'edgedb/dist/reflection'
 
+import type { $User } from 'dbschema/edgeql-js/modules/default'
 import type { InsertShape } from 'dbschema/edgeql-js/syntax/insert'
 import { client, e } from '~/db.server'
 import { authenticator } from '~/lib/auth.server'
 
+export async function getUserId(request: Request) {
+	const session = await authenticator.isAuthenticated(request)
+	return session?.id
+}
+
 export async function getUser(request: Request) {
-	const session = await authenticator.isAuthenticated(request.clone())
-	if (!session || !session.id) return null
-	const user = await getUserById(session.id)
+	const userId = await getUserId(request)
+	if (!userId) return undefined
+	const user = await getUserById(userId)
 	if (user) return user
 	throw await authenticator.logout(request, { redirectTo: '/404' })
 }
 
+const UserBody = (user: $scopify<$User>) => ({
+	id: true,
+	username: true,
+	name: true,
+	avatarUrl: true,
+	bio: true,
+	coverUrl: true,
+	location: true,
+	website: true,
+	created_at: true,
+	is_own: true,
+	is_followed: e.op(user, 'in', e.global.current_user.following),
+	num_following: e.count(user.following),
+	num_followers: e.count(user.followers),
+})
+
 export async function getUserById(id: string) {
-	return await e
-		.select(e.User, (user) => ({
-			...e.User['*'],
-			filter: e.op(user.id, '=', e.uuid(id)),
-		}))
-		.run(client)
+	const query = e.select(e.User, (user) => ({
+		filter: e.op(user.id, '=', e.uuid(id)),
+		...UserBody(user),
+	}))
+	return query.run(client)
 }
 
-export async function getUserByUsername(username: string) {
-	return await e
-		.select(e.User, (user) => ({
-			...e.User['*'],
-			filter: e.op(user.username, '=', username),
-		}))
-		.run(client)
-}
-
-export async function getUsers() {
-	return await e
-		.select(e.User, () => ({
-			id: true,
-			username: true,
-			tweets: {
-				id: true,
-				body: true,
-			},
-		}))
-		.run(client)
+export async function getUserByUsername(username: string, ctx: {}) {
+	const query = e.select(e.User, (user) => ({
+		filter: e.op(user.username, '=', username),
+		...UserBody(user),
+	}))
+	return query.run(client.withGlobals(ctx))
 }
 
 export async function findOrCreateUser(data: InsertShape<typeof e['User']>) {
-	return await e
-		.insert(e.User, data)
-		.unlessConflict((user) => ({
-			on: user.provider,
-			else: user,
-		}))
-		.run(client)
+	const insert = e.insert(e.User, data).unlessConflict((user) => ({
+		on: user.provider,
+		else: user,
+	}))
+	return insert.run(client)
 }
 
 export function mapUserFromGitHub(
@@ -65,4 +71,19 @@ export function mapUserFromGitHub(
 		location: data._json.location,
 		website: data._json.blog,
 	}
+}
+
+export async function followUser(
+	data: { id: string; remove?: boolean },
+	ctx: {}
+) {
+	const friend = e.select(e.User, (user) => ({
+		filter: e.op(user.id, '=', e.uuid(data.id)),
+	}))
+	const query = e.update(e.global.current_user, () => ({
+		set: {
+			following: data.remove ? { '-=': friend } : { '+=': friend },
+		},
+	}))
+	return query.run(client.withGlobals(ctx))
 }

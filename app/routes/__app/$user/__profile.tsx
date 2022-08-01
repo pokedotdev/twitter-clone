@@ -1,24 +1,13 @@
 import { Link, Outlet } from '@remix-run/react'
 
-import { useOptionalUser, useProfile } from '~/utils'
-import { Button, Text, Icon, Tabs, Avatar } from '~/components'
+import { formatUserCreatedDate, useProfile } from '~/utils'
+import { Button, Text, Icon, Tabs, Avatar, ButtonFollow } from '~/components'
 
 export default function ProfileLayout() {
 	const profile = useProfile()
-	const user = useOptionalUser()
-	const isOwn = user?.id === profile.id
 
 	return (
 		<div className="flex flex-col">
-			{/* {isOwn && (
-				<Modal name="edit:profile">
-					content
-					<br />
-					asdfasdfsafasdfsfsfsafsaf
-					<br />
-					asdfasdf
-				</Modal>
-			)} */}
 			<div>
 				{/* Banner */}
 				<div
@@ -42,11 +31,11 @@ export default function ProfileLayout() {
 							src={profile.avatarUrl}
 							alt={profile.username}
 							size="xl"
-							className="border-4.5 border-white bg-white"
+							className="border-4.5 box-content border-white bg-white"
 							style={{ marginTop: '-15%' }}
 						/>
 						<div className="flex gap-2.5">
-							{isOwn ? (
+							{profile.is_own ? (
 								<a href="#edit:profile">
 									<Button as="div" variant="ghost" outline>
 										Edit Profile
@@ -56,9 +45,7 @@ export default function ProfileLayout() {
 								<>
 									<Button variant="ghost" outline icon="dots" />
 									<Button variant="ghost" outline icon="message" />
-									<Button aria-label={`'Follow ${profile.username}`}>
-										Follow
-									</Button>
+									<ButtonFollow profile={profile} />
 								</>
 							)}
 						</div>
@@ -106,7 +93,7 @@ export default function ProfileLayout() {
 					{profile.created_at && (
 						<span className="flex items-center gap-1">
 							<Icon name="calendar" size="md" />
-							{profile.created_at}
+							{'Joined ' + formatUserCreatedDate(new Date(profile.created_at))}
 						</span>
 					)}
 				</Text>
@@ -114,10 +101,12 @@ export default function ProfileLayout() {
 				{/* Stats */}
 				<div className="my-3 flex gap-4">
 					<Link to="following" className="hover:underline">
-						<Text weight={7}>505</Text> <Text color="gray">Following</Text>
+						<Text weight={7}>{profile.num_following}</Text>{' '}
+						<Text color="gray">Following</Text>
 					</Link>
 					<Link to="followers" className="hover:underline">
-						<Text weight={7}>11</Text> <Text color="gray">Followers</Text>
+						<Text weight={7}>{profile.num_followers}</Text>{' '}
+						<Text color="gray">Followers</Text>
 					</Link>
 				</div>
 			</div>
