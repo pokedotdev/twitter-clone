@@ -12,13 +12,13 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 			{/* Tweet */}
 			<div className="flex gap-[14px]">
 				{/* Left */}
-				<div>
+				<Link to={`/${tweet.user.username}`}>
 					<Avatar
 						src={tweet.user.avatarUrl}
 						alt={tweet.user.username}
 						size="lg"
 					/>
-				</div>
+				</Link>
 				{/* Right */}
 				<div className="flex-1">
 					<div className="flex justify-between">
@@ -27,12 +27,12 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 								<span className="font-bold hover:underline">
 									{tweet.user.name}
 								</span>
-								<Text color="gray">{tweet.user.username}</Text>
+								<Text color="gray">{'@' + tweet.user.username}</Text>
 							</Link>
-							{/* <Text color="gray">·</Text>
+							<Text color="gray">·</Text>
 							<Text color="gray" className="hover:underline">
 								1h
-							</Text> */}
+							</Text>
 						</div>
 					</div>
 
