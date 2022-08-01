@@ -1,7 +1,7 @@
 import cn from 'clsx'
 
-import type { IconCollection } from '~/components'
-import { Icon } from '~/components'
+import type { IconCollection, TextProps } from '~/components'
+import { Icon, Text } from '~/components'
 import { Theme } from '~/components/theme'
 
 export type ButtonProps = {
@@ -10,6 +10,7 @@ export type ButtonProps = {
 	variant?: ButtonVariants
 	color?: ButtonColors
 	size?: keyof typeof Theme.sizes.field
+	weight?: TextProps['weight']
 	outline?: boolean
 	square?: boolean
 	active?: boolean
@@ -25,6 +26,7 @@ export const Button = <E extends React.ElementType = typeof DEFAULT_ELEMENT>({
 	children,
 	icon,
 	size = 'md',
+	weight = 7,
 	variant = 'fill',
 	color = 'default',
 	outline = false,
@@ -40,34 +42,39 @@ export const Button = <E extends React.ElementType = typeof DEFAULT_ELEMENT>({
 		outline && ButtonStyles.outline,
 		rest.disabled && ButtonStyles.disabled,
 
-		square ? Theme.sizes.square[size] : Theme.sizes.field[size],
 		active && Theme.color.text[color],
-		Theme.sizes.text[size],
-		icon && Theme.sizes.gap[size],
+		square ? Theme.sizes.square[size] : !icon && Theme.sizes.field[size],
+		icon && children && Theme.sizes.gap[size],
 		className
 	)
 
 	return (
 		<Component className={classes} {...rest}>
-			{icon && (
-				<span
-					className={cn('grid place-items-center', Theme.sizes.square[size])}
-				>
+			{icon &&
+				(children ? (
+					<span
+						className={cn('grid place-items-center', Theme.sizes.square[size])}
+					>
+						<Icon name={icon} size={size} />
+					</span>
+				) : (
 					<Icon name={icon} size={size} />
-					{/* {icon} */}
-				</span>
-			)}
+				))}
 			{children && (
-				<span className={cn(Theme.sizes.padding[size], icon && 'pl-0')}>
+				<Text
+					size={size}
+					weight={weight}
+					className={cn(!square && Theme.sizes.padding[size], icon && 'pl-0')}
+				>
 					{children}
-				</span>
+				</Text>
 			)}
 		</Component>
 	)
 }
 
 export const ButtonStyles = {
-	base: 'inline-flex justify-center items-center font-bold rounded-full',
+	base: 'inline-flex justify-center items-center rounded-full',
 	disabled: 'opacity-50 cursor-not-allowed',
 	outline: 'border',
 	variant: {
