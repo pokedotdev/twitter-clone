@@ -22,7 +22,11 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 	if (!profile) throw new Response('User not found', { status: 404 })
 
 	return json({
-		profile,
+		data: { profile },
+		header: {
+			title: profile.name,
+			subtitle: profile.num_tweets + ' tweets',
+		},
 	})
 }
 

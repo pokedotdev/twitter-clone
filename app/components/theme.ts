@@ -39,7 +39,7 @@ export const Theme = {
 			xl: 'h-16 w-16',
 		},
 		text: {
-			sm: 'text-lg',
+			sm: 'text-md',
 			md: 'text-lg',
 			lg: 'text-xl',
 			xl: 'text-2xl',

@@ -14,12 +14,20 @@ export async function loader({ request }: LoaderArgs) {
 		current_user_id: userId,
 	}
 	const tweets = await getHomeTweets(ctx)
-	return json({ tweets })
+	return json({
+		data: { tweets },
+	})
+}
+
+export const handle = {
+	header: {
+		title: 'Home',
+	},
 }
 
 export default function Home() {
 	const user = useOptionalUser()
-	const data = useLoaderData<typeof loader>()
+	const { data } = useLoaderData<typeof loader>()
 
 	return (
 		<div>

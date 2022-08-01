@@ -10,7 +10,7 @@ export async function loader({ params, request }: LoaderArgs) {
 	let tweets: TweetModel.TweetsType = []
 
 	const { user: username, feed } = params
-	if (!username) return json({ tweets })
+	if (!username) return json({ data: { tweets } })
 
 	const ctx = {
 		current_user_id: await getUserId(request),
@@ -23,11 +23,11 @@ export async function loader({ params, request }: LoaderArgs) {
 	else if (feed === 'likes')
 		tweets = await TweetModel.getUserLikedTweets({ username }, ctx)
 
-	return json({ tweets })
+	return json({ data: { tweets } })
 }
 
 export default function UserFeedRoute() {
-	const data = useLoaderData<typeof loader>()
+	const { data } = useLoaderData<typeof loader>()
 
 	return <Tweets list={data.tweets} />
 }

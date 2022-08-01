@@ -1,7 +1,13 @@
 import { Link, Outlet } from '@remix-run/react'
 
-import { Button, ButtonProvider, FormAuth, NavList } from '~/components'
-import { AccountMenu } from '~/components/account-menu'
+import {
+	Button,
+	ButtonProvider,
+	FormAuth,
+	NavList,
+	AccountMenu,
+	RouteHeader,
+} from '~/components'
 import { useOptionalUser } from '~/utils'
 
 export default function App() {
@@ -37,12 +43,10 @@ export default function App() {
 							</div>
 						)}
 					</div>
+
 					{/* Main */}
-					<div className="sticky top-0 z-10 col-start-2 row-start-1 h-16 border-gray-200 bg-white/80 backdrop-blur-lg sm:border-x">
-						{/* Get title from helper matches */}
-						Page title
-					</div>
-					<main className="col-span-full col-start-1 row-start-1 mt-16 border-gray-200 sm:col-auto sm:col-start-2 sm:border-x">
+					<main className="col-span-full col-start-1 row-start-1 border-gray-200 sm:col-auto sm:col-start-2 sm:border-x">
+						<RouteHeader />
 						<Outlet />
 					</main>
 					{/* Sidebar */}

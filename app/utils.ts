@@ -47,7 +47,7 @@ function isUser(user: any): user is User {
 }
 
 export function useOptionalUser() {
-	const data = useMatchesData<RootLoaderType>('root')
+	const { data } = useMatchesData<RootLoaderType>('root')
 	if (!data || !isUser(data.user)) return undefined
 	return data.user
 }
@@ -62,7 +62,7 @@ export function useUser() {
 }
 
 export function useOptionalProfile() {
-	const data = useMatchesData<UserProfileLoaderType>('routes/__app/$user')
+	const { data } = useMatchesData<UserProfileLoaderType>('routes/__app/$user')
 	if (!data || !isUser(data.profile)) return undefined
 	return data.profile
 }

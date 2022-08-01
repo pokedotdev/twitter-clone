@@ -26,5 +26,5 @@ export async function action({ request }: ActionArgs) {
 		})
 		.run(client)
 
-	return json({ tweet })
+	return json({ data: { tweet } })
 }

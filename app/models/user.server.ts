@@ -33,6 +33,7 @@ const UserBody = (user: $scopify<$User>) => ({
 	is_followed: e.op(user, 'in', e.global.current_user.following),
 	num_following: e.count(user.following),
 	num_followers: e.count(user.followers),
+	num_tweets: e.count(user.tweets),
 })
 
 export async function getUserById(id: string) {

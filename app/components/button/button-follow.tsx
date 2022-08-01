@@ -5,7 +5,7 @@ import type { ButtonProps } from '~/components'
 import type { UserProfileLoaderType } from '~/types/routes'
 
 type ButtonFollowProps = {
-	profile: UserProfileLoaderType['profile']
+	profile: UserProfileLoaderType['data']['profile']
 } & ButtonProps
 
 export const ButtonFollow = ({ profile, ...rest }: ButtonFollowProps) => {
