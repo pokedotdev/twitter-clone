@@ -2,7 +2,7 @@ import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
-import { Tweets } from '~/components'
+import { TweetList } from '~/components'
 import * as TweetModel from '~/models/tweet.server'
 import { getUserId } from '~/models/user.server'
 
@@ -29,5 +29,5 @@ export async function loader({ params, request }: LoaderArgs) {
 export default function UserFeedRoute() {
 	const { data } = useLoaderData<typeof loader>()
 
-	return <Tweets list={data.tweets} />
+	return <TweetList list={data.tweets} />
 }

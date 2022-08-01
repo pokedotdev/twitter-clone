@@ -1,5 +1,6 @@
 import type { NavLinkProps } from '@remix-run/react'
 import { NavLink } from '@remix-run/react'
+import cn from 'clsx'
 
 import { Text } from '~/components'
 
@@ -9,11 +10,15 @@ type TabProps = {
 
 export type TabsProps = {
 	list: TabProps[]
-}
+} & React.ComponentProps<'div'>
 
-export const Tabs = ({ list }: TabsProps) => {
+export const Tabs = ({ list, className, ...rest }: TabsProps) => {
+	const classes = cn(
+		'no-scrollbar flex h-16 w-full snap-x snap-mandatory flex-col flex-wrap items-stretch overflow-x-auto overflow-y-hidden border-b border-gray-200 bg-white/80 backdrop-blur-lg',
+		className
+	)
 	return (
-		<div className="no-scrollbar flex h-16 w-full snap-x snap-mandatory flex-col flex-wrap items-stretch overflow-x-auto overflow-y-hidden border-b border-gray-200">
+		<div className={classes} {...rest}>
 			{list.map(({ label, to, ...rest }) => (
 				<Tab key={label} to={to} {...rest}>
 					{label}

@@ -36,6 +36,17 @@ const UserBody = (user: $scopify<$User>) => ({
 	num_tweets: e.count(user.tweets),
 })
 
+export async function getUsers(ctx: {}) {
+	const query = e.select(e.User, (user) => ({
+		order_by: {
+			expression: user.created_at,
+			direction: e.DESC,
+		},
+		...UserBody(user),
+	}))
+	return query.run(client.withGlobals(ctx))
+}
+
 export async function getUserById(id: string) {
 	const query = e.select(e.User, (user) => ({
 		filter: e.op(user.id, '=', e.uuid(id)),

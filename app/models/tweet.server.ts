@@ -36,6 +36,11 @@ const TweetBody = (tweet: $scopify<$Tweet>) => ({
 	num_likes: true,
 })
 
+export async function getTweets(ctx: {}) {
+	const query = e.select(e.Tweet, (tweet) => TweetBody(tweet))
+	return query.run(client.withGlobals(ctx))
+}
+
 export async function getHomeTweets(ctx: {}) {
 	const query = e.select(e.Tweet, (tweet) => ({
 		filter: e.op(

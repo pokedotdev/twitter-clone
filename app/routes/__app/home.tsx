@@ -2,7 +2,7 @@ import { useLoaderData } from '@remix-run/react'
 import type { LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 
-import { TweetForm, Tweets } from '~/components'
+import { TweetForm, TweetList } from '~/components'
 import { useOptionalUser } from '~/utils'
 import { getUserId } from '~/models/user.server'
 import { getHomeTweets } from '~/models/tweet.server'
@@ -36,7 +36,7 @@ export default function Home() {
 					<TweetForm />
 				</div>
 			)}
-			<Tweets list={data.tweets} />
+			<TweetList list={data.tweets} />
 		</div>
 	)
 }

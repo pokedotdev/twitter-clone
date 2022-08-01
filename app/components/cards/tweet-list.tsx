@@ -1,10 +1,10 @@
-import { Tweet } from './tweet'
+import { Tweet } from './tweet-card'
 
 export type TweetsProps = {
 	list: any[]
 }
 
-export const Tweets = ({ list: tweets }: TweetsProps) => {
+export const TweetList = ({ list: tweets }: TweetsProps) => {
 	return (
 		<div>
 			{tweets.map((tweet) => (

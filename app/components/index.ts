@@ -8,7 +8,7 @@ export * from './avatar'
 export * from './auth'
 export * from './nav'
 export * from './tabs'
-export * from './tweet'
+export * from './cards'
 
 export * from './account-menu'
 export * from './route-header'
