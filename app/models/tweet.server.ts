@@ -1,9 +1,23 @@
 import type { $scopify } from 'edgedb/dist/reflection'
 
 import type { $Tweet } from 'dbschema/edgeql-js/modules/default'
+import type { InsertShape } from 'dbschema/edgeql-js/syntax/insert'
 import { client, e } from '~/db.server'
 
 export type TweetsType = Awaited<ReturnType<typeof getUserTweets>>
+
+export async function createTweet(
+	data: Omit<InsertShape<typeof e['Tweet']>, 'user'>,
+	ctx: { current_user_id: string }
+) {
+	const insert = e.insert(e.Tweet, {
+		...data,
+		user: e.select(e.User, (user) => ({
+			filter: e.op(user.id, '=', e.global.current_user_id),
+		})),
+	})
+	return insert.run(client.withGlobals(ctx))
+}
 
 const TweetBody = (tweet: $scopify<$Tweet>) => ({
 	order_by: {
