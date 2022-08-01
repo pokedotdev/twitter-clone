@@ -1,6 +1,11 @@
+import type { MetaFunction } from '@remix-run/node'
 import { Outlet } from '@remix-run/react'
 
 import { Tabs } from '~/components'
+
+export const meta: MetaFunction = () => ({
+	title: 'Explore',
+})
 
 export const handle = {
 	header: {
