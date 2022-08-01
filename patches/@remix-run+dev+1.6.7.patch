@@ -1,0 +1,27 @@
+diff --git a/node_modules/@remix-run/dev/dist/config/routesConvention.js b/node_modules/@remix-run/dev/dist/config/routesConvention.js
+index 9f72532..2816ea7 100644
+--- a/node_modules/@remix-run/dev/dist/config/routesConvention.js
++++ b/node_modules/@remix-run/dev/dist/config/routesConvention.js
+@@ -80,10 +80,19 @@ function defineConventionalRoutes(appDir, ignoredFilePatterns) {
+     let childRouteIds = routeIds.filter(id => findParentRouteId(routeIds, id) === parentId);
+ 
+     for (let routeId of childRouteIds) {
+-      let routePath = createRoutePath(routeId.slice((parentId || "routes").length + 1));
+-      let isIndexRoute = routeId.endsWith("/index");
++      let lastSegment = routeId.slice((parentId || "routes").length + 1);
++      let routePath = createRoutePath(lastSegment);
++
++      let isIndexRoute = lastSegment === "index";
++      let isLayoutRoute = lastSegment.startsWith("__");
+       let fullPath = createRoutePath(routeId.slice("routes".length + 1));
+-      let uniqueRouteId = (fullPath || "") + (isIndexRoute ? "?index" : "");
++      let uniqueRouteId = fullPath || "";
++
++      if (isIndexRoute) {
++        uniqueRouteId += "?index";
++      } else if (isLayoutRoute) {
++        uniqueRouteId += lastSegment;
++      }
+ 
+       if (uniqueRouteId) {
+         if (uniqueRoutes.has(uniqueRouteId)) {
