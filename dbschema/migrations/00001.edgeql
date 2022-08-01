@@ -1,4 +1,4 @@
-CREATE MIGRATION m14orkdrxfm6qtbwo2anueqpdoomdpvbpfuxdzdhicbwamnoxmohxa
+CREATE MIGRATION m1a3rawq2phpptkj25gbrnesp7whp432zcjj72wo3aqorl2j7crmva
     ONTO initial
 {
   CREATE GLOBAL default::current_user_id -> std::uuid;
@@ -62,7 +62,6 @@ CREATE MIGRATION m14orkdrxfm6qtbwo2anueqpdoomdpvbpfuxdzdhicbwamnoxmohxa
   };
   ALTER TYPE default::Tweet {
       CREATE MULTI LINK likes := (.<likes[IS default::User]);
-      CREATE PROPERTY is_liked := ((GLOBAL default::current_user IN .likes));
       CREATE PROPERTY num_likes := (std::count(.likes));
   };
 };

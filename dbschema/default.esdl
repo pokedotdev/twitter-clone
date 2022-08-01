@@ -35,7 +35,6 @@ module default {
 				default := datetime_current();
 				readonly := true;
 			}
-			constraint expression on (__subject__.id != global current_user_id);
 		};
 		multi link followers := .<following[is User];
 		multi link tweets := .<user[is Tweet];
@@ -62,7 +61,6 @@ module default {
 		required link user -> User;
 
 		property is_own := (.user.id ?= global current_user_id);
-		property is_liked := global current_user in .likes;
 		property num_likes := count(.likes);
 	}
 

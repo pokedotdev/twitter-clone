@@ -19,6 +19,24 @@ export async function createTweet(
 	return insert.run(client.withGlobals(ctx))
 }
 
+export async function likeTweet(
+	data: { id: string; remove?: boolean },
+	ctx: { current_user_id: string }
+) {
+	const tweet = e.select(e.Tweet, (tweet) => ({
+		filter: e.op(tweet.id, '=', e.uuid(data.id)),
+	}))
+	const update = e
+		.update(e.global.current_user, () => ({
+			set: {
+				likes: data.remove ? { '-=': tweet } : { '+=': tweet },
+			},
+		}))
+		.assert_single()
+	const res = await update.run(client.withGlobals(ctx))
+	return res
+}
+
 const TweetBody = (tweet: $scopify<$Tweet>) => ({
 	order_by: {
 		expression: tweet.created_at,
@@ -32,8 +50,8 @@ const TweetBody = (tweet: $scopify<$Tweet>) => ({
 		name: true,
 		avatarUrl: true,
 	},
-	is_liked: true,
 	num_likes: true,
+	is_liked: e.op(tweet, 'in', e.global.current_user.likes),
 })
 
 export async function getTweets(ctx: {}) {
