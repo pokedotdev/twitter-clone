@@ -4,6 +4,7 @@ import { GitHubStrategy } from 'remix-auth-github'
 import { sessionStorage } from '~/lib/session.server'
 import { mapUserFromGitHub, findOrCreateUser } from '~/models/user.server'
 
+if (!process.env.SITE_URL) throw new Error('SITE_URL is required')
 if (!process.env.GITHUB_CLIENT_ID)
 	throw new Error('GITHUB_CLIENT_ID is required')
 if (!process.env.GITHUB_CLIENT_SECRET)
@@ -13,8 +14,7 @@ export const gitHubStrategy = new GitHubStrategy(
 	{
 		clientID: process.env.GITHUB_CLIENT_ID,
 		clientSecret: process.env.GITHUB_CLIENT_SECRET,
-		// TODO: add dynamic route (dev or prod)
-		callbackURL: 'http://localhost:3000/auth/callback/github',
+		callbackURL: process.env.SITE_URL + '/auth/callback/github',
 		scope: '',
 	},
 	async ({ profile }) => {
