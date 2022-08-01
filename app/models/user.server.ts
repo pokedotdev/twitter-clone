@@ -63,6 +63,24 @@ export async function getUserByUsername(username: string, ctx: {}) {
 	return query.run(client.withGlobals(ctx))
 }
 
+export async function getFollowers(data: { username: string }, ctx: {}) {
+	const query = e.select(e.User, (user) => ({
+		filter: e.op(user.username, '=', data.username),
+		followers: UserBody,
+	}))
+	const res = await query.run(client.withGlobals(ctx))
+	return res?.followers || []
+}
+
+export async function getFollowings(data: { username: string }, ctx: {}) {
+	const query = e.select(e.User, (user) => ({
+		filter: e.op(user.username, '=', data.username),
+		following: UserBody,
+	}))
+	const res = await query.run(client.withGlobals(ctx))
+	return res?.following || []
+}
+
 export async function findOrCreateUser(data: InsertShape<typeof e['User']>) {
 	const insert = e.insert(e.User, data).unlessConflict((user) => ({
 		on: user.provider,
