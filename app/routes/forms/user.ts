@@ -1,5 +1,5 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 
 import { followUser, getUserId } from '~/models/user.server'
 
@@ -18,8 +18,11 @@ export async function action({ request }: ActionArgs) {
 		case 'follow': {
 			const userId = formData.get('user')?.toString()
 			const remove = formData.get('remove')?.toString() === 'true'
-			if (!userId) return
-			await followUser({ id: userId, remove }, ctx)
+			if (!userId) return null
+			const user = await followUser({ id: userId, remove }, ctx)
+			return json({ data: { user } })
 		}
 	}
+
+	return null
 }
