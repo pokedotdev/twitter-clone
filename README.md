@@ -1,41 +1,60 @@
-# Welcome to Remix!
+# Twitter Clone
 
-- [Remix Docs](https://remix.run/docs)
+Twitter clone made with Remix, EdgeDB & UnoCSS.
 
-## Fly Setup
+**Demo**: [twitter-clone.poke.dev](https://twitter-clone.poke.dev)
 
-1. [Install `flyctl`](https://fly.io/docs/getting-started/installing-flyctl/)
+### Features
 
-2. Sign up and log in to Fly
+- Signup/Login (With GitHub OAuth)
+- Create tweets
+- Follow people
+- Like tweets
+- View tweets from people you follow 
+- View profile
 
-```sh
-flyctl auth signup
-```
+### Upcoming features
 
-3. Setup Fly. It might ask if you want to deploy, say no since you haven't built the app yet.
+- Edit profile
+- Retweet & Reply to tweets
+- Hashtags & Mentions
+- Search tweets & people
+- Dark Mode
+- Optimistic UI
+- Cache (for faster loading)
 
-```sh
-flyctl launch
-```
 
 ## Development
 
-From your terminal:
+### 1. Initialize an EdgeDB project
+
+First install the cli via the [EdgeDB installation guide](https://www.edgedb.com/docs/guides/quickstart), then in this project directory run (the initializer prompts to do this for you):
+
+```sh
+edgedb project init # Initialize a local db instance
+npm run generate:edgeql # Generate the query builder
+```
+
+This will install the latest version of EdgeDB, spin up an instance, and apply all migrations from `dbschema/migrations`.
+
+### 2. Seed the database
+
+```sh
+npm run db:seed
+```
+
+This creates a user with the username "test", in order to interact with it. 
+
+### 3. Create `.env`
+
+Rename the file `.env.example` to `.env` and only change the values of the variables.
+
+### 4. Start the server
+
+This starts your app in development mode, rebuilding assets on file changes.
 
 ```sh
 npm run dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
-
-## Deployment
-
-If you've followed the setup instructions already, all you need to do is run this:
-
-```sh
-npm run deploy
-```
-
-You can run `flyctl info` to get the url and ip address of your server.
-
-Check out the [fly docs](https://fly.io/docs/getting-started/node/) for more information.
+Go to [localhost:3000](http://localhost:3000), create an account with your GitHub account, and explore the application.
