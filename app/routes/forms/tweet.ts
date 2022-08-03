@@ -6,7 +6,7 @@ import { getUserId } from '~/models/user.server'
 
 export async function action({ request }: ActionArgs) {
 	const userId = await getUserId(request)
-	if (!userId) throw new Error('Not authenticated')
+	if (!userId) return null
 
 	const formData = await request.formData()
 	const ctx = {

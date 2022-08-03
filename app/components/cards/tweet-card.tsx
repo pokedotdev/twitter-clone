@@ -1,8 +1,10 @@
 import { Link, useFetcher } from '@remix-run/react'
 
 import { Avatar, Button, Text } from '~/components'
+import { useOptionalUser } from '~/utils'
 
 export const Tweet = ({ tweet }: { tweet: any }) => {
+	const user = useOptionalUser()
 	const fetcher = useFetcher()
 
 	return (
@@ -59,6 +61,7 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 						{/* Likes */}
 						<span className="flex flex-1 items-center gap-1">
 							<Button
+								type={user ? 'submit' : 'button'}
 								name="action"
 								value={tweet.is_liked ? 'unlike' : 'like'}
 								variant="ghost"
