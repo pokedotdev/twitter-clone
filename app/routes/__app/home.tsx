@@ -32,9 +32,10 @@ export default function Home() {
 	return (
 		<div>
 			{user && (
-				<div className=" border-b border-gray-200 ">
+				<>
 					<TweetForm />
-				</div>
+					<div className="my-[5px] h-0 border-b border-gray-200" />
+				</>
 			)}
 			<TweetList list={data.tweets} />
 		</div>

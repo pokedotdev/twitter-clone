@@ -1,8 +1,14 @@
 import type { ActionArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import { redirect, json } from '@remix-run/node'
+import { validationError } from 'remix-validated-form'
 
 import { createTweet, likeTweet } from '~/models/tweet.server'
 import { getUserId } from '~/models/user.server'
+import { TweetFormValidator } from '~/components'
+
+export async function loader() {
+	return redirect('/')
+}
 
 export async function action({ request }: ActionArgs) {
 	const userId = await getUserId(request)
@@ -16,8 +22,9 @@ export async function action({ request }: ActionArgs) {
 	const action = formData.get('action')?.toString()
 	switch (action) {
 		case 'create': {
-			const body = formData.get('body')?.toString()
-			if (!body) return null
+			const fieldValues = await TweetFormValidator.validate(formData)
+			if (fieldValues.error) return validationError(fieldValues.error)
+			const { body } = fieldValues.data
 			const tweet = await createTweet(
 				{
 					body,

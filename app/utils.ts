@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { useMatches } from '@remix-run/react'
 
-import type { User } from './db.server'
-
+import type { User } from '~/db.server'
 import type { RootLoaderType, UserProfileLoaderType } from '~/types/routes'
 
 const DEFAULT_REDIRECT = '/'
@@ -81,4 +80,8 @@ export function formatUserCreatedDate(created_at: Date) {
 		month: 'long',
 		year: 'numeric',
 	}).format(created_at)
+}
+
+export function removeExtraBreakLines(text: string) {
+	return text.replace(/\n\s*\n\s*\n/g, '\n\n')
 }
