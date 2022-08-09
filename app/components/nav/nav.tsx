@@ -4,7 +4,7 @@ import cn from 'clsx'
 
 import { useOptionalUser } from '~/utils'
 import type { IconCollection } from '~/components'
-import { Button, Icon } from '~/components'
+import { TweetForm, Button, Icon, Dialog } from '~/components'
 
 export const NavList = () => {
 	const user = useOptionalUser()
@@ -35,15 +35,7 @@ export const NavList = () => {
 					</NavButton>
 					{/* Button New Tweet */}
 					<div className="bottom-21 fixed right-5 sm:static sm:my-5 xl:w-11/12">
-						<Button
-							color="primary"
-							size="xl"
-							className="shadow-md sm:shadow-none xl:w-full"
-							square
-						>
-							<span className="hidden text-xl xl:block">Tweet</span>
-							<Icon name="pen" className="xl:hidden" size="xl" />
-						</Button>
+						<TweetButton />
 					</div>
 				</>
 			)}
@@ -78,3 +70,30 @@ const NavButton = ({
 		)}
 	</NavLink>
 )
+
+const TweetButton = () => {
+	const dialog = Dialog.useDialog()
+	return (
+		<>
+			<Button
+				onClick={dialog.toggle}
+				color="primary"
+				size="xl"
+				className="shadow-md sm:shadow-none xl:w-full"
+				square
+			>
+				<span className="hidden text-xl xl:block">Tweet</span>
+				<Icon name="pen" className="xl:hidden" size="xl" />
+			</Button>
+
+			<Dialog.Content state={dialog}>
+				<Dialog.Header />
+				<TweetForm
+					onSubmit={() => {
+						dialog.setOpen(false)
+					}}
+				/>
+			</Dialog.Content>
+		</>
+	)
+}
