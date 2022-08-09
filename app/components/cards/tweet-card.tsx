@@ -14,13 +14,15 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 			{/* Tweet */}
 			<div className="flex gap-[14px]">
 				{/* Left */}
-				<Link to={`/${tweet.user.username}`}>
-					<Avatar
-						src={tweet.user.avatarUrl}
-						alt={tweet.user.username}
-						size="lg"
-					/>
-				</Link>
+				<div className="flex-none">
+					<Link to={`/${tweet.user.username}`}>
+						<Avatar
+							src={tweet.user.avatarUrl}
+							alt={tweet.user.username}
+							size="lg"
+						/>
+					</Link>
+				</div>
 				{/* Right */}
 				<div className="flex-1">
 					<div className="flex justify-between">
@@ -40,7 +42,15 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 
 					{/* Content */}
 					<div>
-						<p className="text-lg">{tweet.body}</p>
+						<span
+							className="break-words text-lg"
+							style={{
+								wordBreak: 'break-word',
+								whiteSpace: 'pre-wrap',
+							}}
+						>
+							{tweet.body}
+						</span>
 					</div>
 
 					{/* Stats */}
