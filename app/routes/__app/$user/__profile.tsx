@@ -1,6 +1,10 @@
 import { Link, Outlet } from '@remix-run/react'
 
-import { formatUserCreatedDate, useProfile } from '~/utils'
+import {
+	formatUserCreatedDate,
+	parseDomainToValidUrl,
+	useProfile,
+} from '~/utils'
 import { Button, Text, Icon, Tabs, Avatar, ButtonFollow } from '~/components'
 
 export default function ProfileLayout() {
@@ -81,7 +85,7 @@ export default function ProfileLayout() {
 						<span className="flex items-center gap-1">
 							<Icon name="link" size="md" />
 							<a
-								href={profile.website}
+								href={parseDomainToValidUrl(profile.website)}
 								target="_blank"
 								className="link"
 								rel="noreferrer"

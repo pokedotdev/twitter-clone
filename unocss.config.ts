@@ -3,6 +3,9 @@ import { defineConfig, presetUno, presetIcons } from 'unocss'
 const theme = presetUno().theme
 
 export default defineConfig({
+	shortcuts: {
+		link: 'text-primary-500 hover:underline',
+	},
 	theme: {
 		colors: {
 			gray: theme?.colors?.slate,

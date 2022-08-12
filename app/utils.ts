@@ -85,3 +85,7 @@ export function formatUserCreatedDate(created_at: Date) {
 export function removeExtraBreakLines(text: string) {
 	return text.replace(/\n\s*\n\s*\n/g, '\n\n')
 }
+
+export function parseDomainToValidUrl(domain: string) {
+	return !domain.startsWith('http') ? `http://${domain}` : domain
+}
