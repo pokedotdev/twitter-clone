@@ -36,12 +36,10 @@ async function seed() {
 		.set(
 			e.insert(e.Tweet, {
 				body: 'Hello, world!',
-				tweet_type: 'TWEET',
 				user,
 			}),
 			e.insert(e.Tweet, {
 				body: 'Second tweet',
-				tweet_type: 'TWEET',
 				user,
 			})
 		)

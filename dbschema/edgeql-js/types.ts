@@ -268,24 +268,34 @@ export namespace cfg {
   }
   export interface Trust extends AuthMethod {}
 }
-export interface HasCreatedAt extends std.$Object {
-  "created_at"?: Date | null;
+export namespace has {
+  export interface CreatedAt extends std.$Object {
+    "created_at"?: Date | null;
+  }
 }
-export interface Tweet extends HasCreatedAt {
-  "user": User;
+export interface BaseTweet extends has.CreatedAt {
+  "body"?: string | null;
   "is_own": boolean;
-  "body": string;
-  "tweet_type": TweetType;
+  "tag": string;
   "likes": User[];
+  "is_liked": boolean;
   "num_likes": number;
+  "quote"?: BaseTweet | null;
+  "replies": Reply[];
+  "retweets": BaseTweet[];
+  "user": User;
+  "is_retweeted": boolean;
+  "num_replies": number;
+  "num_retweets": number;
 }
-export enum TweetType {
-  TWEET = "TWEET",
-  RETWEET = "RETWEET",
-  REPLY = "REPLY",
+export interface Reply extends BaseTweet {
+  "replied_to": BaseTweet;
 }
-export interface User extends HasCreatedAt {
-  "following": User[];
+export interface Retweet extends BaseTweet {
+  "quote": BaseTweet;
+}
+export interface Tweet extends BaseTweet {}
+export interface User extends has.CreatedAt {
   "followers": User[];
   "avatarUrl"?: string | null;
   "bio"?: string | null;
@@ -296,10 +306,14 @@ export interface User extends HasCreatedAt {
   "provider": {name: string, id: string};
   "username": string;
   "website"?: string | null;
-  "likes": Tweet[];
-  "tweets": Tweet[];
+  "tweets": BaseTweet[];
+  "num_tweets": number;
+  "following": User[];
+  "likes": BaseTweet[];
+  "is_followed": boolean;
+  "num_followers": number;
+  "num_following": number;
 }
-export interface current_user extends User {}
 export namespace sys {
   export interface SystemObject extends schema.AnnotationSubject {}
   export interface Database extends SystemObject, schema.AnnotationSubject {
@@ -395,12 +409,15 @@ export interface types {
     "SCRAM": cfg.SCRAM;
     "Trust": cfg.Trust;
   };
+  "has": {
+    "CreatedAt": has.CreatedAt;
+  };
   "default": {
-    "HasCreatedAt": HasCreatedAt;
+    "BaseTweet": BaseTweet;
+    "Reply": Reply;
+    "Retweet": Retweet;
     "Tweet": Tweet;
-    "TweetType": TweetType;
     "User": User;
-    "current_user": current_user;
   };
   "sys": {
     "SystemObject": sys.SystemObject;
