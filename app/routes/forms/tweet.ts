@@ -28,7 +28,6 @@ export async function action({ request }: ActionArgs) {
 			const tweet = await createTweet(
 				{
 					body,
-					tweet_type: 'TWEET',
 				},
 				ctx
 			)

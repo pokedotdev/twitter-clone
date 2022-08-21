@@ -4,16 +4,16 @@ import { useLoaderData } from '@remix-run/react'
 
 import { TweetList } from '~/components'
 import * as TweetModel from '~/models/tweet.server'
-import { getUserId } from '~/models/user.server'
+import * as UserModel from '~/models/user.server'
 
 export async function loader({ params, request }: LoaderArgs) {
-	let tweets: TweetModel.TweetsType = []
+	let tweets: TweetModel.TweetCardFieldsType[] = []
 
 	const { user: username, feed } = params
 	if (!username) return json({ data: { tweets } })
 
 	const ctx = {
-		current_user_id: await getUserId(request),
+		current_user_id: await UserModel.getUserId(request),
 	}
 
 	if (feed === undefined)

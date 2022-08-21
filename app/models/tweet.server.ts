@@ -1,90 +1,108 @@
-import type { $scopify } from 'edgedb/dist/reflection'
-
-import type { $Tweet } from 'dbschema/edgeql-js/modules/default'
 import type { InsertShape } from 'dbschema/edgeql-js/syntax/insert'
+import type { CTX, $infer } from '~/db.server'
 import { client, e } from '~/db.server'
+import { currentUser } from '~/models/user.server'
 
-export type TweetsType = Awaited<ReturnType<typeof getUserTweets>>
+export type TweetCardFieldsType = $infer<typeof selectTweets>[0]
 
 export async function createTweet(
 	data: Omit<InsertShape<typeof e['Tweet']>, 'user'>,
-	ctx: { current_user_id: string }
+	ctx: CTX
 ) {
 	const insert = e.insert(e.Tweet, {
 		...data,
-		user: e.select(e.User, (user) => ({
-			filter: e.op(user.id, '=', e.global.current_user_id),
-		})),
+		user: currentUser,
 	})
 	return insert.run(client.withGlobals(ctx))
 }
 
 export async function likeTweet(
 	data: { id: string; remove?: boolean },
-	ctx: { current_user_id: string }
+	ctx: CTX
 ) {
 	const tweet = e.select(e.Tweet, (tweet) => ({
 		filter: e.op(tweet.id, '=', e.uuid(data.id)),
 	}))
 	const update = e
-		.update(e.global.current_user, () => ({
+		.update(currentUser, () => ({
 			set: {
 				likes: data.remove ? { '-=': tweet } : { '+=': tweet },
 			},
 		}))
 		.assert_single()
-	const res = await update.run(client.withGlobals(ctx))
-	return res
+	return update.run(client.withGlobals(ctx))
 }
 
-const TweetBody = (tweet: $scopify<$Tweet>) => ({
-	order_by: {
-		expression: tweet.created_at,
-		direction: e.DESC,
-	},
+const TweetCardFields = {
+	tag: true,
 	id: true,
 	created_at: true,
-	body: true,
 	user: {
 		username: true,
 		name: true,
 		avatarUrl: true,
 	},
+	body: true,
+	is_liked: true,
+	is_retweeted: true,
 	num_likes: true,
-	is_liked: e.op(tweet, 'in', e.global.current_user.likes),
-})
+	num_retweets: true,
+	num_replies: true,
+} as const
 
-export async function getTweets(ctx: {}) {
-	const query = e.select(e.Tweet, (tweet) => TweetBody(tweet))
+const selectTweets = e.select(e.BaseTweet, () => TweetCardFields)
+
+export async function getTweets(ctx: CTX) {
+	const query = e.select(e.BaseTweet, (tweet) => ({
+		order_by: {
+			expression: tweet.created_at,
+			direction: e.DESC,
+		},
+		...TweetCardFields,
+	}))
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getHomeTweets(ctx: {}) {
-	const query = e.select(e.Tweet, (tweet) => ({
+export async function getHomeTweets(ctx: CTX) {
+	const query = e.select(e.BaseTweet, (tweet) => ({
 		filter: e.op(
-			e.op(tweet.user, 'in', e.global.current_user.following),
+			e.op(tweet.user, 'in', currentUser.following),
 			'or',
-			e.op(tweet.user, '=', e.global.current_user)
+			e.op(tweet.user, '=', currentUser)
 		),
-		...TweetBody(tweet),
+		order_by: {
+			expression: tweet.created_at,
+			direction: e.DESC,
+		},
+		...TweetCardFields,
 	}))
-	const res = await query.run(client.withGlobals(ctx))
-	return res
+	return query.run(client.withGlobals(ctx))
 }
 
-export async function getUserTweets(data: { username: string }, ctx: {}) {
-	const query = e.select(e.User, (user) => ({
+export async function getUserTweets(data: { username: string }, ctx: CTX) {
+	const filter = e.select(e.User, (user) => ({
 		filter: e.op(user.username, '=', data.username),
-		tweets: TweetBody,
+	})).tweets
+	const query = e.select(filter, (tweet) => ({
+		order_by: {
+			expression: tweet.created_at,
+			direction: e.DESC,
+		},
+		...TweetCardFields,
 	}))
-	const res = await query.run(client.withGlobals(ctx))
-	return res?.tweets || []
+	return query.run(client.withGlobals(ctx))
 }
 
-export async function getUserLikedTweets(data: { username: string }, ctx: {}) {
+export async function getUserLikedTweets(data: { username: string }, ctx: CTX) {
 	const query = e.select(e.User, (user) => ({
 		filter: e.op(user.username, '=', data.username),
-		likes: TweetBody,
+		likes: (tweet) => ({
+			order_by: {
+				expression: tweet['@created_at'],
+				direction: e.DESC,
+			},
+			...TweetCardFields,
+		}),
 	}))
 	const res = await query.run(client.withGlobals(ctx))
 	return res?.likes || []

@@ -1,8 +1,7 @@
 import type { GitHubProfile } from 'remix-auth-github'
-import type { $scopify } from 'edgedb/dist/reflection'
 
-import type { $User } from 'dbschema/edgeql-js/modules/default'
 import type { InsertShape } from 'dbschema/edgeql-js/syntax/insert'
+import type { CTX } from '~/db.server'
 import { client, e } from '~/db.server'
 import { authenticator } from '~/lib/auth.server'
 
@@ -19,7 +18,11 @@ export async function getUser(request: Request) {
 	throw await authenticator.logout(request, { redirectTo: '/404' })
 }
 
-const UserBody = (user: $scopify<$User>) => ({
+export const currentUser = e.select(e.User, (user) => ({
+	filter: e.op(user.id, '=', e.global.current_user_id),
+}))
+
+const UserFields = {
 	id: true,
 	username: true,
 	name: true,
@@ -30,19 +33,19 @@ const UserBody = (user: $scopify<$User>) => ({
 	website: true,
 	created_at: true,
 	is_own: true,
-	is_followed: e.op(user, 'in', e.global.current_user.following),
-	num_following: e.count(user.following),
-	num_followers: e.count(user.followers),
-	num_tweets: e.count(user.tweets),
-})
+	is_followed: true,
+	num_following: true,
+	num_followers: true,
+	num_tweets: true,
+} as const
 
-export async function getUsers(ctx: {}) {
+export async function getUsers(ctx: CTX) {
 	const query = e.select(e.User, (user) => ({
 		order_by: {
 			expression: user.created_at,
 			direction: e.DESC,
 		},
-		...UserBody(user),
+		...UserFields,
 	}))
 	return query.run(client.withGlobals(ctx))
 }
@@ -50,32 +53,32 @@ export async function getUsers(ctx: {}) {
 export async function getUserById(id: string) {
 	const query = e.select(e.User, (user) => ({
 		filter: e.op(user.id, '=', e.uuid(id)),
-		...UserBody(user),
+		...UserFields,
 	}))
 	return query.run(client)
 }
 
-export async function getUserByUsername(username: string, ctx: {}) {
+export async function getUserByUsername(username: string, ctx: CTX) {
 	const query = e.select(e.User, (user) => ({
 		filter: e.op(user.username, '=', username),
-		...UserBody(user),
+		...UserFields,
 	}))
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getFollowers(data: { username: string }, ctx: {}) {
+export async function getFollowers(data: { username: string }, ctx: CTX) {
 	const query = e.select(e.User, (user) => ({
 		filter: e.op(user.username, '=', data.username),
-		followers: UserBody,
+		followers: UserFields,
 	}))
 	const res = await query.run(client.withGlobals(ctx))
 	return res?.followers || []
 }
 
-export async function getFollowings(data: { username: string }, ctx: {}) {
+export async function getFollowings(data: { username: string }, ctx: CTX) {
 	const query = e.select(e.User, (user) => ({
 		filter: e.op(user.username, '=', data.username),
-		following: UserBody,
+		following: UserFields,
 	}))
 	const res = await query.run(client.withGlobals(ctx))
 	return res?.following || []
@@ -105,12 +108,12 @@ export function mapUserFromGitHub(
 
 export async function followUser(
 	data: { id: string; remove?: boolean },
-	ctx: {}
+	ctx: CTX
 ) {
 	const friend = e.select(e.User, (user) => ({
 		filter: e.op(user.id, '=', e.uuid(data.id)),
 	}))
-	const query = e.update(e.global.current_user, () => ({
+	const query = e.update(currentUser, () => ({
 		set: {
 			following: data.remove ? { '-=': friend } : { '+=': friend },
 		},
