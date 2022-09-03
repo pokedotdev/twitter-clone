@@ -1,5 +1,5 @@
-import type { ActionArgs } from '@remix-run/node'
-import { redirect, json } from '@remix-run/node'
+import type { ActionArgs } from '~/remix'
+import { redirect, json } from '~/remix'
 import { validationError } from 'remix-validated-form'
 
 import { createTweet, likeTweet } from '~/models/tweet.server'

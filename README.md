@@ -10,7 +10,7 @@ Twitter clone made with Remix, EdgeDB & UnoCSS.
 - Create tweets
 - Follow people
 - Like tweets
-- View tweets from people you follow 
+- View tweets from people you follow
 - View profile
 
 ### Upcoming features
@@ -23,7 +23,6 @@ Twitter clone made with Remix, EdgeDB & UnoCSS.
 - Optimistic UI
 - Cache (for faster loading)
 
-
 ## Development
 
 ### 1. Initialize an EdgeDB project
@@ -32,7 +31,7 @@ First install the cli via the [EdgeDB installation guide](https://www.edgedb.com
 
 ```sh
 edgedb project init # Initialize a local db instance
-npm run generate:edgeql # Generate the query builder
+npm run gen:edgeql # Generate the query builder
 ```
 
 This will install the latest version of EdgeDB, spin up an instance, and apply all migrations from `dbschema/migrations`.
@@ -43,7 +42,7 @@ This will install the latest version of EdgeDB, spin up an instance, and apply a
 npm run db:seed
 ```
 
-This creates a user with the username "test", in order to interact with it. 
+This creates a user with the username "test", in order to interact with it.
 
 ### 3. Create `.env`
 

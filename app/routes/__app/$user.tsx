@@ -1,6 +1,5 @@
-import type { LoaderArgs, MetaFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { Outlet } from '@remix-run/react'
+import type { LoaderArgs, MetaFunction } from '~/remix'
+import { json, Outlet } from '~/remix'
 
 import { getUserByUsername, getUserId } from '~/models/user.server'
 

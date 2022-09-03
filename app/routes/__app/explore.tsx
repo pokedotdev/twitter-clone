@@ -1,5 +1,5 @@
-import type { MetaFunction } from '@remix-run/node'
-import { Outlet } from '@remix-run/react'
+import type { MetaFunction } from '~/remix'
+import { Outlet } from '~/remix'
 
 import { Tabs } from '~/components'
 

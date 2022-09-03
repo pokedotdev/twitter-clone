@@ -1,4 +1,4 @@
-import { Link, useFetcher } from '@remix-run/react'
+import { Link, useFetcher } from '~/remix'
 
 import { Avatar, Button, Text } from '~/components'
 import { useOptionalUser } from '~/utils'

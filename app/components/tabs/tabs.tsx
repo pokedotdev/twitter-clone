@@ -1,5 +1,5 @@
-import type { NavLinkProps } from '@remix-run/react'
-import { NavLink } from '@remix-run/react'
+import type { NavLinkProps } from '~/remix'
+import { NavLink } from '~/remix'
 import cn from 'clsx'
 
 import { Text } from '~/components'

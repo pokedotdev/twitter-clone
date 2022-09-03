@@ -1,5 +1,5 @@
-import type { LoaderArgs } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
+import type { LoaderArgs } from '~/remix'
+import { redirect } from '~/remix'
 
 import { authenticator } from '~/lib/auth.server'
 

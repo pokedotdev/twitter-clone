@@ -1,5 +1,5 @@
-import type { ActionArgs, LoaderArgs } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '~/remix'
+import { json, redirect } from '~/remix'
 
 import { followUser, getUserId } from '~/models/user.server'
 

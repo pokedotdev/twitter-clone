@@ -1,13 +1,13 @@
-import type { LinksFunction, LoaderArgs, MetaFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import type { LinksFunction, LoaderArgs, MetaFunction } from '~/remix'
 import {
+	json,
 	Links,
 	LiveReload,
 	Meta,
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-} from '@remix-run/react'
+} from '~/remix'
 import reset from '@unocss/reset/tailwind.css'
 
 import unocss from '~/styles/uno.css'

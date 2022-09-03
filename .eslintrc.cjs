@@ -11,7 +11,13 @@ module.exports = {
 		// Import
 		'import/no-duplicates': 2,
 		'import/newline-after-import': [2, { count: 1 }],
-		'import/order': [2, { 'newlines-between': 'always' }],
+		'import/order': [
+			2,
+			{
+				'newlines-between': 'always',
+				pathGroups: [{ pattern: '~/remix', group: 'external' }],
+			},
+		],
 		// React
 		'react/jsx-uses-react': 0,
 		'react/jsx-pascal-case': 2,

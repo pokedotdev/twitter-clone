@@ -1,4 +1,4 @@
-import { Link, Outlet } from '@remix-run/react'
+import { Link, Outlet } from '~/remix'
 
 import {
 	Button,

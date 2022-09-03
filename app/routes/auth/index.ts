@@ -1,5 +1,5 @@
-import type { ActionArgs } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
+import type { ActionArgs } from '~/remix'
+import { redirect } from '~/remix'
 
 import { authenticator } from '~/lib/auth.server'
 

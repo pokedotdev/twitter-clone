@@ -1,4 +1,4 @@
-import { useFetcher } from '@remix-run/react'
+import { useFetcher } from '~/remix'
 
 import { Button } from '~/components'
 import type { ButtonProps } from '~/components'

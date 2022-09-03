@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useMatches } from '@remix-run/react'
+import { useMatches } from '~/remix'
 
 import type { User } from '~/db.server'
 import type { RootLoaderType, UserProfileLoaderType } from '~/types/routes'

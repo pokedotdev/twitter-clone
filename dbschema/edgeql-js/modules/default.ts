@@ -19,14 +19,14 @@ export type $BaseTweetλShape = $.typeutil.flatten<_has.$CreatedAtλShape & {
   "<tweets[is User]": $.LinkDesc<$User, $.Cardinality.Many, {}, false, false,  false, false>;
   "<likes[is User]": $.LinkDesc<$User, $.Cardinality.Many, {}, false, false,  false, false>;
   "<quote[is BaseTweet]": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<quote[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<quote[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<quote[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<replied_to[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<retweets[is BaseTweet]": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<retweets[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<retweets[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<quote[is Retweet]": $.LinkDesc<$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<retweets[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<retweets[is Retweet]": $.LinkDesc<$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<quote[is Retweet]": $.LinkDesc<$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<likes": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
   "<quote": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
   "<replied_to": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
@@ -34,20 +34,20 @@ export type $BaseTweetλShape = $.typeutil.flatten<_has.$CreatedAtλShape & {
   "<tweets": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
 }>;
 type $BaseTweet = $.ObjectType<"default::BaseTweet", $BaseTweetλShape, null>;
-const $BaseTweet = $.makeType<$BaseTweet>(_.spec, "aa02a6a8-20fe-11ed-a21e-41d52fafa98f", _.syntax.literal);
+const $BaseTweet = $.makeType<$BaseTweet>(_.spec, "162fe8e4-2182-11ed-8451-f542d60bbb14", _.syntax.literal);
 
 const BaseTweet: $.$expr_PathNode<$.TypeSet<$BaseTweet, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($BaseTweet, $.Cardinality.Many), null, true);
 
 export type $ReplyλShape = $.typeutil.flatten<$BaseTweetλShape & {
   "replied_to": $.LinkDesc<$BaseTweet, $.Cardinality.One, {}, false, false,  false, false>;
   "<replies[is BaseTweet]": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<replies[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<replies[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<replies[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<replies[is Retweet]": $.LinkDesc<$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<replies": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
 }>;
 type $Reply = $.ObjectType<"default::Reply", $ReplyλShape, null>;
-const $Reply = $.makeType<$Reply>(_.spec, "aa0883b6-20fe-11ed-83fe-433c41a72a32", _.syntax.literal);
+const $Reply = $.makeType<$Reply>(_.spec, "1635c17e-2182-11ed-b679-43fc8146256c", _.syntax.literal);
 
 const Reply: $.$expr_PathNode<$.TypeSet<$Reply, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($Reply, $.Cardinality.Many), null, true);
 
@@ -55,14 +55,14 @@ export type $RetweetλShape = $.typeutil.flatten<Omit<$BaseTweetλShape, "quote"
   "quote": $.LinkDesc<$BaseTweet, $.Cardinality.One, {}, false, false,  false, false>;
 }>;
 type $Retweet = $.ObjectType<"default::Retweet", $RetweetλShape, null>;
-const $Retweet = $.makeType<$Retweet>(_.spec, "c4a47874-20fe-11ed-acea-511f319f7582", _.syntax.literal);
+const $Retweet = $.makeType<$Retweet>(_.spec, "1a650a48-2182-11ed-b9ee-f1abc055abad", _.syntax.literal);
 
 const Retweet: $.$expr_PathNode<$.TypeSet<$Retweet, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($Retweet, $.Cardinality.Many), null, true);
 
 export type $TweetλShape = $.typeutil.flatten<$BaseTweetλShape & {
 }>;
 type $Tweet = $.ObjectType<"default::Tweet", $TweetλShape, null>;
-const $Tweet = $.makeType<$Tweet>(_.spec, "a7eed508-20fe-11ed-9455-2d7a6a8f8607", _.syntax.literal);
+const $Tweet = $.makeType<$Tweet>(_.spec, "1420c122-2182-11ed-8994-8f68c5a1611f", _.syntax.literal);
 
 const Tweet: $.$expr_PathNode<$.TypeSet<$Tweet, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($Tweet, $.Cardinality.Many), null, true);
 
@@ -90,21 +90,21 @@ export type $UserλShape = $.typeutil.flatten<_has.$CreatedAtλShape & {
   "num_following": $.PropertyDesc<_std.$int64, $.Cardinality.One, false, true, false, false>;
   "<following[is User]": $.LinkDesc<$User, $.Cardinality.Many, {}, false, false,  false, false>;
   "<followers[is User]": $.LinkDesc<$User, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<user[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<likes[is BaseTweet]": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<likes[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<likes[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<user[is BaseTweet]": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<user[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<user[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<user[is Retweet]": $.LinkDesc<$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<likes[is BaseTweet]": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<likes[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<likes[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<likes[is Retweet]": $.LinkDesc<$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<user[is Retweet]": $.LinkDesc<$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<followers": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
   "<following": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
   "<likes": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
   "<user": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
 }>;
 type $User = $.ObjectType<"default::User", $UserλShape, null>;
-const $User = $.makeType<$User>(_.spec, "a7dcb828-20fe-11ed-93ae-db89e4f7e3be", _.syntax.literal);
+const $User = $.makeType<$User>(_.spec, "14117474-2182-11ed-aaff-476a38661dc4", _.syntax.literal);
 
 const User: $.$expr_PathNode<$.TypeSet<$User, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($User, $.Cardinality.Many), null, true);
 

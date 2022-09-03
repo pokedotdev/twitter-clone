@@ -1,6 +1,5 @@
-import { useLoaderData } from '@remix-run/react'
-import type { LoaderArgs } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
+import { useLoaderData, json, redirect } from '~/remix'
+import type { LoaderArgs } from '~/remix'
 
 import { TweetForm, TweetList } from '~/components'
 import { useOptionalUser } from '~/utils'

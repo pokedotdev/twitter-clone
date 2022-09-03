@@ -1,4 +1,4 @@
-import { redirect } from '@remix-run/node'
+import { redirect } from '~/remix'
 
 export const loader = async () => {
 	return redirect('/home')
