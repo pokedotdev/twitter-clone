@@ -2,19 +2,19 @@
 	"private": true,
 	"sideEffects": false,
 	"scripts": {
-		"build": "npm run gen:css && remix build",
+		"setup": "run-p gen:*",
+		"build": "npm run setup && remix build",
 		"deploy": "fly deploy --remote-only",
 		"dev:remix": "remix dev",
 		"dev:css": "npm run gen:css -- --watch",
-		"dev": "npm run build && run-p dev:*",
+		"dev": "npm run setup && run-p dev:*",
 		"start": "remix-serve build",
 		"format": "prettier --write .",
 		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
 		"gen:css": "unocss './app/**/*.{ts,tsx}' -o ./app/styles/uno.css",
-		"gen:edgeql": "edgeql-js --target ts",
 		"gen:remix": "rmx gen-remix --config ./config/gen-remix.config.json",
-		"db:setup": "edgedb migrate && npm run gen:edgeql",
-		"db:seed": "npx esbuild-runner dbschema/seed.ts",
+		"gen:edgeql": "edgeql-js",
+		"db:seed": "npm run gen:edgeql & npx esbuild-runner dbschema/seed.ts",
 		"postinstall": "patch-package && npm run gen:remix"
 	},
 	"dependencies": {
@@ -53,6 +53,6 @@
 		"unocss": "^0.45.1"
 	},
 	"engines": {
-		"node": ">=14"
+		"node": ">=16"
 	}
 }

@@ -1,6 +1,6 @@
 import type { GitHubProfile } from 'remix-auth-github'
 
-import type { InsertShape } from 'dbschema/edgeql-js/syntax/insert'
+import type { InsertShape } from '~/../dbschema/edgeql-js/syntax/insert'
 import type { CTX } from '~/db.server'
 import { client, e } from '~/db.server'
 import { authenticator } from '~/lib/auth.server'

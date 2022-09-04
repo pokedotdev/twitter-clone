@@ -1,4 +1,4 @@
-import type { InsertShape } from 'dbschema/edgeql-js/syntax/insert'
+import type { InsertShape } from '~/../dbschema/edgeql-js/syntax/insert'
 import type { CTX, $infer } from '~/db.server'
 import { client, e } from '~/db.server'
 import { currentUser } from '~/models/user.server'

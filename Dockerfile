@@ -1,15 +1,12 @@
 # pull in EdgeDB CLI
-FROM edgedb/edgedb AS edgedb
+FROM edgedb/edgedb:2.1 AS edgedb
 
 
 # base node image
 FROM node:16-bullseye-slim as base
-# set for base and all layer that inherit from it
 ENV NODE_ENV production
 ENV PORT 8080
 ENV EDGEDB_CLIENT_TLS_SECURITY insecure
-# Install openssl
-RUN apt-get update && apt-get install -y openssl
 
 
 # Install all node_modules, including dev dependencies
@@ -33,6 +30,8 @@ FROM base as build
 WORKDIR /app
 COPY --from=deps /app/node_modules /app/node_modules
 ADD . .
+# Remove gen:edgeql script from package.json
+RUN sed -i '/gen:edgeql/d' package.json
 RUN npm run build
 
 
@@ -46,7 +45,7 @@ COPY --from=edgedb /usr/bin/edgedb /usr/bin/edgedb
 COPY --from=build /app/build /app/build
 COPY --from=build /app/public /app/public
 COPY --from=build /app/package.json /app/package.json
-COPY --from=build /app/dbschema /app/dbschema
+COPY --from=build /app/dbschema/migrations /app/dbschema/migrations
 COPY --from=build /app/start.sh /app/start.sh
 
 

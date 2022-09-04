@@ -31,7 +31,6 @@ First install the cli via the [EdgeDB installation guide](https://www.edgedb.com
 
 ```sh
 edgedb project init # Initialize a local db instance
-npm run gen:edgeql # Generate the query builder
 ```
 
 This will install the latest version of EdgeDB, spin up an instance, and apply all migrations from `dbschema/migrations`.

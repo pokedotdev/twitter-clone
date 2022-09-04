@@ -34,7 +34,7 @@ export type $BaseTweetλShape = $.typeutil.flatten<_has.$CreatedAtλShape & {
   "<tweets": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
 }>;
 type $BaseTweet = $.ObjectType<"default::BaseTweet", $BaseTweetλShape, null>;
-const $BaseTweet = $.makeType<$BaseTweet>(_.spec, "162fe8e4-2182-11ed-8451-f542d60bbb14", _.syntax.literal);
+const $BaseTweet = $.makeType<$BaseTweet>(_.spec, "b3f11342-2c49-11ed-bc49-f78962309f0d", _.syntax.literal);
 
 const BaseTweet: $.$expr_PathNode<$.TypeSet<$BaseTweet, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($BaseTweet, $.Cardinality.Many), null, true);
 
@@ -47,7 +47,7 @@ export type $ReplyλShape = $.typeutil.flatten<$BaseTweetλShape & {
   "<replies": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
 }>;
 type $Reply = $.ObjectType<"default::Reply", $ReplyλShape, null>;
-const $Reply = $.makeType<$Reply>(_.spec, "1635c17e-2182-11ed-b679-43fc8146256c", _.syntax.literal);
+const $Reply = $.makeType<$Reply>(_.spec, "b3f7771e-2c49-11ed-b3b1-17c85e6d1858", _.syntax.literal);
 
 const Reply: $.$expr_PathNode<$.TypeSet<$Reply, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($Reply, $.Cardinality.Many), null, true);
 
@@ -55,14 +55,14 @@ export type $RetweetλShape = $.typeutil.flatten<Omit<$BaseTweetλShape, "quote"
   "quote": $.LinkDesc<$BaseTweet, $.Cardinality.One, {}, false, false,  false, false>;
 }>;
 type $Retweet = $.ObjectType<"default::Retweet", $RetweetλShape, null>;
-const $Retweet = $.makeType<$Retweet>(_.spec, "1a650a48-2182-11ed-b9ee-f1abc055abad", _.syntax.literal);
+const $Retweet = $.makeType<$Retweet>(_.spec, "b87c80ae-2c49-11ed-9e7a-b7caaf74f417", _.syntax.literal);
 
 const Retweet: $.$expr_PathNode<$.TypeSet<$Retweet, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($Retweet, $.Cardinality.Many), null, true);
 
 export type $TweetλShape = $.typeutil.flatten<$BaseTweetλShape & {
 }>;
 type $Tweet = $.ObjectType<"default::Tweet", $TweetλShape, null>;
-const $Tweet = $.makeType<$Tweet>(_.spec, "1420c122-2182-11ed-8994-8f68c5a1611f", _.syntax.literal);
+const $Tweet = $.makeType<$Tweet>(_.spec, "b198b816-2c49-11ed-9377-cb2f5e63c961", _.syntax.literal);
 
 const Tweet: $.$expr_PathNode<$.TypeSet<$Tweet, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($Tweet, $.Cardinality.Many), null, true);
 
@@ -104,7 +104,7 @@ export type $UserλShape = $.typeutil.flatten<_has.$CreatedAtλShape & {
   "<user": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
 }>;
 type $User = $.ObjectType<"default::User", $UserλShape, null>;
-const $User = $.makeType<$User>(_.spec, "14117474-2182-11ed-aaff-476a38661dc4", _.syntax.literal);
+const $User = $.makeType<$User>(_.spec, "b18839aa-2c49-11ed-a879-03d3115efc60", _.syntax.literal);
 
 const User: $.$expr_PathNode<$.TypeSet<$User, $.Cardinality.Many>, null, true> = _.syntax.$PathNode($.$toSet($User, $.Cardinality.Many), null, true);
 
