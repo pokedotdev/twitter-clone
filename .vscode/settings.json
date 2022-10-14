@@ -11,5 +11,6 @@
 		"**/.cache/**": true,
 		"**/build/**": true,
 		"**/public/build/**": true
-	}
+	},
+	"typescript.preferences.importModuleSpecifier": "non-relative"
 }
