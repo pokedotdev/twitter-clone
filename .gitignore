@@ -9,4 +9,5 @@ node_modules
 app/styles/uno.css
 app/remix.ts
 
-dbschema/codegen
+# TODO: ignore this
+# dbschema/codegen
