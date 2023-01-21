@@ -30,8 +30,8 @@ FROM base as build
 WORKDIR /app
 COPY --from=deps /app/node_modules /app/node_modules
 ADD . .
-# Remove gen:edgeql script from package.json
-RUN sed -i '/gen:edgeql/d' package.json
+# Remove @edgedb/generate scripts from package.json
+RUN sed -i '/@edgedb\/generate/d' package.json
 RUN npm run build
 
 
