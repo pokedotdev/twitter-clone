@@ -13,5 +13,10 @@
 		"**/build/**": true,
 		"**/public/build/**": true
 	},
+	"files.exclude": {
+		"node_modules": true,
+		"build": true,
+		".cache": true
+	},
 	"typescript.preferences.importModuleSpecifier": "non-relative"
 }
