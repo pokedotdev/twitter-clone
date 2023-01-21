@@ -47,8 +47,8 @@ export default function ProfileLayout() {
 								</a>
 							) : (
 								<>
-									<Button variant="ghost" outline icon="dots" />
-									<Button variant="ghost" outline icon="message" />
+									{/*<Button variant="ghost" outline icon="dots" />
+									<Button variant="ghost" outline icon="message" />*/}
 									<ButtonFollow profile={profile} />
 								</>
 							)}

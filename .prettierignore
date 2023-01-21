@@ -9,6 +9,6 @@ yarn.lock
 /public/build
 .env
 
-dbschema/edgeql-js
+dbschema/codegen
 
 app/styles/uno.css

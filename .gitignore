@@ -8,3 +8,6 @@ node_modules
 # generated files
 app/styles/uno.css
 app/remix.ts
+
+# TODO: ignore this
+# dbschema/codegen

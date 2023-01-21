@@ -22,7 +22,7 @@ export const AccountMenu = () => {
 					alt={user.username}
 				/>
 				<div className="hidden flex-auto items-center justify-between xl:flex">
-					<div className="text-start mx-3.5 flex flex-col text-lg">
+					<div className="mx-3.5 flex flex-col text-start text-lg">
 						<Text weight={7} className="leading-tight">
 							{user.name}
 						</Text>

@@ -1,39 +1,10 @@
-import type { InsertShape } from '~/../dbschema/edgeql-js/syntax/insert'
-import type { CTX, $infer } from '~/db.server'
-import { client, e } from '~/db.server'
+import type { CTX, $infer } from '~/lib/db.server'
+import { client, e } from '~/lib/db.server'
 import { currentUser } from '~/models/user.server'
 
 export type TweetCardFieldsType = $infer<typeof selectTweets>[0]
 
-export async function createTweet(
-	data: Omit<InsertShape<typeof e['Tweet']>, 'user'>,
-	ctx: CTX
-) {
-	const insert = e.insert(e.Tweet, {
-		...data,
-		user: currentUser,
-	})
-	return insert.run(client.withGlobals(ctx))
-}
-
-export async function likeTweet(
-	data: { id: string; remove?: boolean },
-	ctx: CTX
-) {
-	const tweet = e.select(e.Tweet, (tweet) => ({
-		filter: e.op(tweet.id, '=', e.uuid(data.id)),
-	}))
-	const update = e
-		.update(currentUser, () => ({
-			set: {
-				likes: data.remove ? { '-=': tweet } : { '+=': tweet },
-			},
-		}))
-		.assert_single()
-	return update.run(client.withGlobals(ctx))
-}
-
-const TweetCardFields = {
+const baseTweetShape = e.shape(e.BaseTweet, () => ({
 	tag: true,
 	id: true,
 	created_at: true,
@@ -48,9 +19,34 @@ const TweetCardFields = {
 	num_likes: true,
 	num_retweets: true,
 	num_replies: true,
-} as const
+}))
 
-const selectTweets = e.select(e.BaseTweet, () => TweetCardFields)
+export async function createTweet(data: { body: string }, ctx: CTX) {
+	const insert = e.insert(e.Tweet, {
+		...data,
+		user: currentUser,
+	})
+	return insert.run(client.withGlobals(ctx))
+}
+
+export async function likeTweet(
+	data: { id: string; remove?: boolean },
+	ctx: CTX
+) {
+	const tweet = e.select(e.Tweet, (tweet) => ({
+		filter_single: { id: data.id },
+	}))
+	const update = e
+		.update(currentUser, () => ({
+			set: {
+				likes: data.remove ? { '-=': tweet } : { '+=': tweet },
+			},
+		}))
+		.assert_single()
+	return update.run(client.withGlobals(ctx))
+}
+
+const selectTweets = e.select(e.BaseTweet, baseTweetShape)
 
 export async function getTweets(ctx: CTX) {
 	const query = e.select(e.BaseTweet, (tweet) => ({
@@ -58,7 +54,7 @@ export async function getTweets(ctx: CTX) {
 			expression: tweet.created_at,
 			direction: e.DESC,
 		},
-		...TweetCardFields,
+		...baseTweetShape(tweet),
 	}))
 	return query.run(client.withGlobals(ctx))
 }
@@ -74,34 +70,34 @@ export async function getHomeTweets(ctx: CTX) {
 			expression: tweet.created_at,
 			direction: e.DESC,
 		},
-		...TweetCardFields,
+		...baseTweetShape(tweet),
 	}))
 	return query.run(client.withGlobals(ctx))
 }
 
 export async function getUserTweets(data: { username: string }, ctx: CTX) {
 	const filter = e.select(e.User, (user) => ({
-		filter: e.op(user.username, '=', data.username),
+		filter_single: { username: data.username },
 	})).tweets
 	const query = e.select(filter, (tweet) => ({
 		order_by: {
 			expression: tweet.created_at,
 			direction: e.DESC,
 		},
-		...TweetCardFields,
+		...baseTweetShape(tweet),
 	}))
 	return query.run(client.withGlobals(ctx))
 }
 
 export async function getUserLikedTweets(data: { username: string }, ctx: CTX) {
-	const query = e.select(e.User, (user) => ({
-		filter: e.op(user.username, '=', data.username),
+	const query = e.select(e.User, () => ({
+		filter_single: { username: data.username },
 		likes: (tweet) => ({
 			order_by: {
 				expression: tweet['@created_at'],
 				direction: e.DESC,
 			},
-			...TweetCardFields,
+			...baseTweetShape(tweet),
 		}),
 	}))
 	const res = await query.run(client.withGlobals(ctx))
