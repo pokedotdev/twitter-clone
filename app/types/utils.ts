@@ -7,3 +7,7 @@ export type RecursivelyReplaceNullWithUndefined<T> = T extends null
 				? RecursivelyReplaceNullWithUndefined<U>[]
 				: RecursivelyReplaceNullWithUndefined<T[K]>
 	  }
+
+export type WithoutNullableKeys<Type> = {
+	[Key in keyof Type]-?: WithoutNullableKeys<NonNullable<Type[Key]>>
+}

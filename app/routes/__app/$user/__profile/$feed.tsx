@@ -1,9 +1,9 @@
 import type { LoaderArgs } from '~/remix'
 import { json, useLoaderData } from '~/remix'
 
-import { TweetList } from '~/components'
+import { getContext } from '~/models/user.server'
 import * as TweetModel from '~/models/tweet.server'
-import * as UserModel from '~/models/user.server'
+import { TweetList } from '~/components'
 
 export async function loader({ params, request }: LoaderArgs) {
 	let tweets: TweetModel.TweetCardFieldsType[] = []
@@ -11,9 +11,7 @@ export async function loader({ params, request }: LoaderArgs) {
 	const { user: username, feed } = params
 	if (!username) return json({ data: { tweets } })
 
-	const ctx = {
-		current_user_id: await UserModel.getUserId(request),
-	}
+	const ctx = await getContext(request)
 
 	if (feed === undefined)
 		tweets = await TweetModel.getUserTweets({ username }, ctx)

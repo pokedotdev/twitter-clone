@@ -1,15 +1,24 @@
 import { createClient, $ } from 'edgedb'
+import { z } from 'zod'
 
-import type { RecursivelyReplaceNullWithUndefined } from '~/types/utils'
-import type { $infer } from '$root/dbschema/codegen/edgeql'
 import e from '$root/dbschema/codegen/edgeql'
 
 export * from '$root/dbschema/codegen/edgeql'
 export * from '$root/dbschema/codegen/interfaces'
 
-const client = createClient()
+export const client = createClient()
 
-const globals = e.select(e.global)
-export type CTX = RecursivelyReplaceNullWithUndefined<$infer<typeof globals>>
+export const globals = {
+	currentUser: e.select(e.User, () => ({
+		filter_single: { id: e.global.current_user_id },
+	})),
+}
 
-export { client, e, $ }
+export const ContextSchema = z.object({
+	current_user_id: z.string().uuid().optional(),
+})
+export const ContextRequiredSchema = ContextSchema.required()
+export type Context = z.infer<typeof ContextSchema>
+export type ContextRequired = z.infer<typeof ContextRequiredSchema>
+
+export { e, $ }

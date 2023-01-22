@@ -1,4 +1,4 @@
-import { Form, useLocation } from '~/remix'
+import { Form } from '~/remix'
 import * as AriaKit from 'ariakit'
 
 import { useUser } from '~/utils'
@@ -6,7 +6,6 @@ import { Icon, Avatar, Text } from '~/components'
 
 export const AccountMenu = () => {
 	const user = useUser()
-	const location = useLocation()
 	const popover = AriaKit.usePopoverState()
 
 	return (
@@ -38,11 +37,7 @@ export const AccountMenu = () => {
 					<AriaKit.PopoverArrow className="first:!fill-white" />
 					<div className="flex rounded-xl border-t border-gray-100 bg-white py-3">
 						<Form action="/auth/logout" method="post" className="w-full">
-							<button
-								name="redirectTo"
-								value={location.pathname}
-								className="w-full p-4 text-left text-lg leading-6 hover:bg-gray-100"
-							>
+							<button className="w-full p-4 text-left text-lg leading-6 hover:bg-gray-100">
 								Log out @{user.username}
 							</button>
 						</Form>

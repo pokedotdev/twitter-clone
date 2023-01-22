@@ -1,13 +1,13 @@
 import type { ActionArgs } from '~/remix'
 import { redirect } from '~/remix'
+import { safeRedirect } from 'remix-utils'
 
 import { authenticator } from '~/lib/auth.server'
-import { safeRedirect } from '~/utils'
 
 export const loader = () => redirect('/')
 
 export const action = async ({ request }: ActionArgs) => {
-	const form = await request.formData()
-	const redirectTo = safeRedirect(form.get('redirectTo'), '/')
+	const { pathname } = new URL(request.headers.get('Referer') ?? '/')
+	const redirectTo = safeRedirect(pathname)
 	await authenticator.logout(request, { redirectTo })
 }

@@ -3,15 +3,11 @@ import type { LoaderArgs } from '~/remix'
 
 import { TweetForm, TweetList } from '~/components'
 import { useOptionalUser } from '~/utils'
-import { getUserId } from '~/models/user.server'
+import { getContext } from '~/models/user.server'
 import { getHomeTweets } from '~/models/tweet.server'
 
 export async function loader({ request }: LoaderArgs) {
-	const userId = await getUserId(request)
-	if (!userId) return redirect('/explore')
-	const ctx = {
-		current_user_id: userId,
-	}
+	const ctx = await getContext(request)
 	const tweets = await getHomeTweets(ctx)
 	return json({
 		data: { tweets },

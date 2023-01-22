@@ -28,7 +28,7 @@ export const TweetForm = ({ onSubmit }: TweetFormProps) => {
 				fetcher={fetcher}
 				onSubmit={() => onSubmit && onSubmit(fetcher.data)}
 				resetAfterSubmit
-				action="/forms/tweet"
+				action="/actions/tweet"
 				method="post"
 				className="flex flex-auto flex-col gap-3.5"
 			>

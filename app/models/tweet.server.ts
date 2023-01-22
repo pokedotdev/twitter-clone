@@ -1,6 +1,5 @@
-import type { CTX, $infer } from '~/lib/db.server'
-import { client, e } from '~/lib/db.server'
-import { currentUser } from '~/models/user.server'
+import type { Context, $infer } from '~/lib/db.server'
+import { client, e, globals } from '~/lib/db.server'
 
 export type TweetCardFieldsType = $infer<typeof selectTweets>[0]
 
@@ -21,23 +20,23 @@ const baseTweetShape = e.shape(e.BaseTweet, () => ({
 	num_replies: true,
 }))
 
-export async function createTweet(data: { body: string }, ctx: CTX) {
+export async function createTweet(data: { body: string }, ctx: Context) {
 	const insert = e.insert(e.Tweet, {
 		...data,
-		user: currentUser,
+		user: globals.currentUser,
 	})
 	return insert.run(client.withGlobals(ctx))
 }
 
 export async function likeTweet(
 	data: { id: string; remove?: boolean },
-	ctx: CTX
+	ctx: Context
 ) {
-	const tweet = e.select(e.Tweet, (tweet) => ({
+	const tweet = e.select(e.Tweet, () => ({
 		filter_single: { id: data.id },
 	}))
 	const update = e
-		.update(currentUser, () => ({
+		.update(globals.currentUser, () => ({
 			set: {
 				likes: data.remove ? { '-=': tweet } : { '+=': tweet },
 			},
@@ -48,7 +47,7 @@ export async function likeTweet(
 
 const selectTweets = e.select(e.BaseTweet, baseTweetShape)
 
-export async function getTweets(ctx: CTX) {
+export async function getTweets(ctx: Context) {
 	const query = e.select(e.BaseTweet, (tweet) => ({
 		order_by: {
 			expression: tweet.created_at,
@@ -59,12 +58,12 @@ export async function getTweets(ctx: CTX) {
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getHomeTweets(ctx: CTX) {
+export async function getHomeTweets(ctx: Context) {
 	const query = e.select(e.BaseTweet, (tweet) => ({
 		filter: e.op(
-			e.op(tweet.user, 'in', currentUser.following),
+			e.op(tweet.user, 'in', globals.currentUser.following),
 			'or',
-			e.op(tweet.user, '=', currentUser)
+			e.op(tweet.user, '=', globals.currentUser)
 		),
 		order_by: {
 			expression: tweet.created_at,
@@ -75,8 +74,8 @@ export async function getHomeTweets(ctx: CTX) {
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getUserTweets(data: { username: string }, ctx: CTX) {
-	const filter = e.select(e.User, (user) => ({
+export async function getUserTweets(data: { username: string }, ctx: Context) {
+	const filter = e.select(e.User, () => ({
 		filter_single: { username: data.username },
 	})).tweets
 	const query = e.select(filter, (tweet) => ({
@@ -89,7 +88,10 @@ export async function getUserTweets(data: { username: string }, ctx: CTX) {
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getUserLikedTweets(data: { username: string }, ctx: CTX) {
+export async function getUserLikedTweets(
+	data: { username: string },
+	ctx: Context
+) {
 	const query = e.select(e.User, () => ({
 		filter_single: { username: data.username },
 		likes: (tweet) => ({

@@ -36,7 +36,8 @@
 		"remix-typedjson": "^0.1.7",
 		"remix-utils": "^6.0.0",
 		"remix-validated-form": "^4.6.7",
-		"zod": "^3.20.2"
+		"zod": "^3.20.2",
+		"zodix": "^0.4.0"
 	},
 	"devDependencies": {
 		"@edgedb/generate": "^0.0.7",

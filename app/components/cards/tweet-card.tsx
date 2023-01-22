@@ -55,7 +55,7 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 
 					{/* Stats */}
 					<fetcher.Form
-						action="/forms/tweet"
+						action="/actions/tweet"
 						method="post"
 						className="my-1 flex justify-between text-gray-500"
 					>

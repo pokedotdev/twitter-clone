@@ -2,13 +2,11 @@ import type { LoaderArgs } from '~/remix'
 import { json, useLoaderData } from '~/remix'
 
 import { UserList } from '~/components'
-import { getFollowings, getUserId } from '~/models/user.server'
+import { getContext, getFollowings } from '~/models/user.server'
 
 export async function loader({ request, params }: LoaderArgs) {
 	if (!params.user) throw new Error('User not found')
-	const ctx = {
-		current_user_id: await getUserId(request),
-	}
+	const ctx = await getContext(request)
 	const users = await getFollowings({ username: params.user }, ctx)
 	return json({ data: { users } })
 }

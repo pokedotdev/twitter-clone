@@ -15,8 +15,8 @@ export const ButtonFollow = ({ profile, ...rest }: ButtonFollowProps) => {
 	const isFollowed = profile.is_followed
 
 	return profile.is_own ? null : (
-		<fetcher.Form action="/forms/user" method="post">
-			<input type="hidden" name="user" value={profile.id} />
+		<fetcher.Form action="/actions/user" method="post">
+			<input type="hidden" name="userId" value={profile.id} />
 			<input type="hidden" name="remove" value={`${isFollowed}`} />
 			<Button
 				type={user ? 'submit' : 'button'}

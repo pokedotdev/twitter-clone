@@ -1,7 +1,8 @@
 import type { GitHubProfile } from 'remix-auth-github'
+import { unauthorized } from 'remix-utils'
 
-import type { CTX, User } from '~/lib/db.server'
-import { client, e } from '~/lib/db.server'
+import type { User, Context, ContextRequired } from '~/lib/db.server'
+import { client, e, globals, ContextSchema } from '~/lib/db.server'
 import { authenticator } from '~/lib/auth.server'
 
 type InputUser = Pick<
@@ -37,6 +38,18 @@ export async function getUserId(request: Request) {
 	return session?.id
 }
 
+export async function getContext(request: Request) {
+	const context: Context = {
+		current_user_id: await getUserId(request),
+	}
+	return ContextSchema.parse(context)
+}
+export async function getContextRequired(request: Request) {
+	const res = ContextSchema.required().safeParse(await getContext(request))
+	if (!res.success) throw unauthorized({ message: 'You need to login.' })
+	return res.data
+}
+
 export async function getUser(request: Request) {
 	const userId = await getUserId(request)
 	if (!userId) return
@@ -45,11 +58,7 @@ export async function getUser(request: Request) {
 	throw await authenticator.logout(request, { redirectTo: '/404' })
 }
 
-export const currentUser = e.select(e.User, () => ({
-	filter_single: { id: e.global.current_user_id },
-}))
-
-export function getUsers(ctx: CTX) {
+export function getUsers(ctx: Context) {
 	const query = e.select(e.User, (user) => ({
 		order_by: {
 			expression: user.created_at,
@@ -68,7 +77,7 @@ export function getUserById(id: string) {
 	return query.run(client)
 }
 
-export function getUserByUsername(username: string, ctx: CTX) {
+export function getUserByUsername(username: string, ctx: Context) {
 	const query = e.select(e.User, (user) => ({
 		filter_single: { username },
 		...baseUserShape(user),
@@ -76,7 +85,7 @@ export function getUserByUsername(username: string, ctx: CTX) {
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getFollowers(data: { username: string }, ctx: CTX) {
+export async function getFollowers(data: { username: string }, ctx: Context) {
 	const query = e.select(e.User, () => ({
 		filter_single: { username: data.username },
 		followers: baseUserShape,
@@ -85,7 +94,7 @@ export async function getFollowers(data: { username: string }, ctx: CTX) {
 	return res?.followers || []
 }
 
-export async function getFollowings(data: { username: string }, ctx: CTX) {
+export async function getFollowings(data: { username: string }, ctx: Context) {
 	const query = e.select(e.User, () => ({
 		filter_single: { username: data.username },
 		following: baseUserShape,
@@ -102,14 +111,15 @@ export function findOrCreateUser(data: InputUser) {
 	return insert.run(client)
 }
 
-export function followUser(data: { id: string; remove?: boolean }, ctx: CTX) {
-	const friend = e.select(e.User, () => ({
+export function followUser(
+	data: { id: string; remove?: boolean },
+	ctx: ContextRequired
+) {
+	const friend = e.select(e.User, (user) => ({
 		filter_single: { id: data.id },
 	}))
-	const query = e.update(currentUser, () => ({
-		set: {
-			following: data.remove ? { '-=': friend } : { '+=': friend },
-		},
+	const query = e.update(globals.currentUser, () => ({
+		set: { following: data.remove ? { '-=': friend } : { '+=': friend } },
 	}))
 	return query.run(client.withGlobals(ctx))
 }

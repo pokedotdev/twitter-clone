@@ -3,12 +3,10 @@ import { json, useLoaderData } from '~/remix'
 
 import { TweetList } from '~/components'
 import { getTweets } from '~/models/tweet.server'
-import { getUserId } from '~/models/user.server'
+import { getContext } from '~/models/user.server'
 
 export async function loader({ request }: LoaderArgs) {
-	const ctx = {
-		current_user_id: await getUserId(request),
-	}
+	const ctx = await getContext(request)
 	const tweets = await getTweets(ctx)
 	return json({ data: { tweets } })
 }

@@ -1,7 +1,7 @@
 import type { LoaderArgs, MetaFunction } from '~/remix'
 import { json, Outlet } from '~/remix'
 
-import { getUserByUsername, getUserId } from '~/models/user.server'
+import { getContext, getUserByUsername } from '~/models/user.server'
 
 export const meta: MetaFunction = ({ data }) => {
 	if (!data?.user) return { title: 'Profile / Twitter' }
@@ -13,9 +13,7 @@ export const meta: MetaFunction = ({ data }) => {
 export const loader = async ({ params, request }: LoaderArgs) => {
 	if (!params.user) throw new Error('User not found')
 
-	const ctx = {
-		current_user_id: await getUserId(request),
-	}
+	const ctx = await getContext(request)
 
 	const profile = await getUserByUsername(params.user, ctx)
 	if (!profile) throw new Response('User not found', { status: 404 })
