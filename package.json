@@ -3,8 +3,8 @@
 	"sideEffects": false,
 	"scripts": {
 		"setup": "run-p gen:*",
-		"build": "npm run setup && remix build",
-		"deploy": "fly deploy --remote-only",
+		"vercel": "run-p gen:css gen:remix",
+		"build": "npm run vercel && remix build",
 		"dev:remix": "remix dev",
 		"dev:css": "npm run gen:css -- --watch",
 		"dev": "npm run setup && run-p dev:*",
@@ -16,14 +16,15 @@
 		"gen:edgeql": "npx @edgedb/generate edgeql-js --target ts --out ./dbschema/codegen/edgeql/",
 		"gen:queries": "npx @edgedb/generate queries --file ./dbschema/codegen/queries --target ts",
 		"gen:interfaces": "npx @edgedb/generate interfaces --file ./dbschema/codegen/interfaces.ts",
-		"db:seed": "npm run gen:edgeql & npx esbuild-runner dbschema/seed.ts",
-		"postinstall": "patch-package && npm run gen:remix"
+		"db:seed": "npx esbuild-runner dbschema/seed.ts",
+		"postinstall": "patch-package"
 	},
 	"dependencies": {
-		"@remix-run/node": "^1.11.0",
-		"@remix-run/react": "^1.11.0",
-		"@remix-run/serve": "^1.11.0",
+		"@remix-run/node": "^1.11.1",
+		"@remix-run/react": "^1.11.1",
+		"@remix-run/vercel": "^1.11.1",
 		"@remix-validated-form/with-zod": "^2.0.5",
+		"@vercel/node": "^2.8.15",
 		"ariakit": "2.0.0-next.43",
 		"clsx": "^1.2.1",
 		"cross-env": "^7.0.3",
@@ -42,8 +43,9 @@
 	"devDependencies": {
 		"@edgedb/generate": "^0.0.7",
 		"@iconify/json": "^2.2.9",
-		"@remix-run/dev": "^1.11.0",
-		"@remix-run/eslint-config": "^1.11.0",
+		"@remix-run/dev": "^1.11.1",
+		"@remix-run/eslint-config": "^1.11.1",
+		"@remix-run/serve": "^1.11.1",
 		"@types/react": "^18.0.27",
 		"@types/react-dom": "^18.0.10",
 		"@unocss/cli": "^0.48.4",

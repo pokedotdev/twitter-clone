@@ -7,7 +7,7 @@ index 7b79d3c..e160472 100755
 +/* build-hook-start *//*00001*/try { require('/Users/arturo/.vscode/extensions/wallabyjs.console-ninja-0.0.70/out/buildHook/index.js').default({tool: 'remix'}); } catch(e) { try { import('file:///Users/arturo/.vscode/extensions/wallabyjs.console-ninja-0.0.70/out/buildHook/index.js').then(m => m.default.default({tool: 'remix'})).catch(p => {}) } catch(e) { }}/* build-hook-end */
 +
  /**
-  * @remix-run/dev v1.11.0
+  * @remix-run/dev v1.11.1
   *
 diff --git a/node_modules/@remix-run/dev/dist/compiler/compileBrowser.js b/node_modules/@remix-run/dev/dist/compiler/compileBrowser.js
 old mode 100644
