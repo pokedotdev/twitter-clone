@@ -8,6 +8,7 @@ import { getHomeTweets } from '~/models/tweet.server'
 
 export async function loader({ request }: LoaderArgs) {
 	const ctx = await getContext(request)
+	if (!ctx.current_user_id) throw redirect('/explore')
 	const tweets = await getHomeTweets(ctx)
 	return json({
 		data: { tweets },
