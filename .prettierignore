@@ -4,10 +4,15 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
-/.cache
+.cache
+.env
+.vercel
+.output
+
 /build
 /public/build
-.env
+/api/index.js
+/api/index.js.map
 
 dbschema/codegen
 
