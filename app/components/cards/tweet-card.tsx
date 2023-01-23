@@ -1,7 +1,23 @@
 import { Link, useFetcher } from '~/remix'
+import * as React from 'react'
 
 import { Avatar, Button, Text } from '~/components'
-import { useOptionalUser } from '~/utils'
+import { getTimeSinceTweet, MS, useOptionalUser } from '~/utils'
+
+export const useTimeAgo = (date: Date) => {
+	const [time, setTime] = React.useState(Date.now())
+
+	React.useEffect(() => {
+		const diff = time - date.getTime()
+		if (diff >= MS.HOUR) return
+		const intervalId = setInterval(() => setTime(Date.now()), MS.MINUTE)
+		return () => clearInterval(intervalId)
+	}, [date, time])
+
+	return getTimeSinceTweet(date)
+}
+
+const TimeAgo = (props: { date: Date }) => <>{useTimeAgo(props.date)}</>
 
 export const Tweet = ({ tweet }: { tweet: any }) => {
 	const user = useOptionalUser()
@@ -35,7 +51,7 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 							</Link>
 							<Text color="gray">·</Text>
 							<Text color="gray" className="hover:underline">
-								1h
+								<TimeAgo date={tweet.created_at} />
 							</Text>
 						</div>
 					</div>

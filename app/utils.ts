@@ -58,6 +58,31 @@ export function formatUserCreatedDate(created_at: Date) {
 	}).format(created_at)
 }
 
+export const MS = {
+	SECOND: 1000,
+	MINUTE: 1000 * 60,
+	HOUR: 1000 * 60 * 60,
+	DAY: 1000 * 60 * 60 * 24,
+} as const
+
+export function getTimeSinceTweet(tweetDate: Date): string {
+	const currentDate = new Date()
+	const diff = currentDate.getTime() - tweetDate.getTime()
+
+	if (diff < MS.SECOND) return '1s'
+	if (diff < MS.MINUTE) return Math.floor(diff / MS.SECOND) + 's'
+	if (diff < MS.HOUR) return Math.floor(diff / MS.MINUTE) + 'm'
+	if (diff < MS.DAY) return Math.floor(diff / MS.HOUR) + 'h'
+
+	const isCurrentYear = tweetDate.getFullYear() === currentDate.getFullYear()
+	const options: Intl.DateTimeFormatOptions = {
+		month: 'short',
+		day: 'numeric',
+		year: isCurrentYear ? undefined : 'numeric',
+	}
+	return new Intl.DateTimeFormat('en-US', options).format(tweetDate)
+}
+
 export function removeExtraBreakLines(text: string) {
 	return text.replace(/\n\s*\n\s*\n/g, '\n\n')
 }
