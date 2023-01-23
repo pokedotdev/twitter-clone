@@ -6,7 +6,9 @@ import e from '$root/dbschema/codegen/edgeql'
 export * from '$root/dbschema/codegen/edgeql'
 export * from '$root/dbschema/codegen/interfaces'
 
-export const client = createClient()
+export const client = createClient({
+	tlsSecurity: 'insecure',
+})
 
 export const globals = {
 	currentUser: e.select(e.User, () => ({

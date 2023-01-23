@@ -1,9 +1,14 @@
 node_modules
 
-/.cache
+.cache
+.env
+.vercel
+.output
+
 /build
 /public/build
-.env
+/api/index.js
+/api/index.js.map
 
 # generated files
 app/styles/uno.css
