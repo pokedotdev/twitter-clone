@@ -15,7 +15,7 @@ export type TabsProps = {
 export const Tabs = ({ list, className, ...rest }: TabsProps) => {
 	const classes = cn(
 		'no-scrollbar flex h-16 w-full snap-x snap-mandatory flex-col flex-wrap items-stretch overflow-x-auto overflow-y-hidden border-b border-gray-200 bg-white/80 backdrop-blur-lg',
-		className
+		className,
 	)
 	return (
 		<div className={classes} {...rest}>
@@ -44,9 +44,7 @@ const Tab = ({ children, ...rest }: NavLinkProps) => {
 					>
 						{children}
 					</Text>
-					{isActive && (
-						<div className="bg-primary-500 absolute bottom-0 h-1 w-full rounded-full" />
-					)}
+					{isActive && <div className="bg-primary-500 absolute bottom-0 h-1 w-full rounded-full" />}
 				</div>
 			)}
 		</NavLink>

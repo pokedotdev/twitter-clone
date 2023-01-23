@@ -1,10 +1,6 @@
 import { Link, Outlet } from '~/remix'
 
-import {
-	formatUserCreatedDate,
-	parseDomainToValidUrl,
-	useProfile,
-} from '~/utils'
+import { formatUserCreatedDate, parseDomainToValidUrl, useProfile } from '~/utils'
 import { Button, Text, Icon, Tabs, Avatar, ButtonFollow } from '~/components'
 
 export default function ProfileLayout() {
@@ -14,11 +10,7 @@ export default function ProfileLayout() {
 		<div className="flex flex-col">
 			<div>
 				{/* Banner */}
-				<div
-					className="aspect-[3/1] bg-gray-200 dark:bg-gray-600"
-					aria-hidden="true"
-					tabIndex={-1}
-				>
+				<div className="aspect-[3/1] bg-gray-200 dark:bg-gray-600" aria-hidden="true" tabIndex={-1}>
 					{profile.coverUrl && (
 						<img
 							alt=""
@@ -69,12 +61,7 @@ export default function ProfileLayout() {
 				<Text className="my-3 block leading-snug">{profile.bio}</Text>
 
 				{/* Info */}
-				<Text
-					as="div"
-					color="gray"
-					size="md"
-					className="my-3 flex flex-wrap gap-3"
-				>
+				<Text as="div" color="gray" size="md" className="my-3 flex flex-wrap gap-3">
 					{profile.location && (
 						<span className="flex items-center gap-1">
 							<Icon name="location" size="md" />
@@ -105,12 +92,10 @@ export default function ProfileLayout() {
 				{/* Stats */}
 				<div className="my-3 flex gap-4">
 					<Link to="following" className="hover:underline">
-						<Text weight={7}>{profile.num_following}</Text>{' '}
-						<Text color="gray">Following</Text>
+						<Text weight={7}>{profile.num_following}</Text> <Text color="gray">Following</Text>
 					</Link>
 					<Link to="followers" className="hover:underline">
-						<Text weight={7}>{profile.num_followers}</Text>{' '}
-						<Text color="gray">Followers</Text>
+						<Text weight={7}>{profile.num_followers}</Text> <Text color="gray">Followers</Text>
 					</Link>
 				</div>
 			</div>

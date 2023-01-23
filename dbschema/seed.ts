@@ -14,7 +14,7 @@ async function seed() {
 			filter: e.op(
 				e.op(u.provider.id, '=', provider.id),
 				'and',
-				e.op(u.provider.name, '=', provider.name)
+				e.op(u.provider.name, '=', provider.name),
 			),
 		}))
 		.assert_single()
@@ -41,7 +41,7 @@ async function seed() {
 			e.insert(e.Tweet, {
 				body: 'Second tweet',
 				user,
-			})
+			}),
 		)
 		.run(client)
 

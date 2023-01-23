@@ -21,7 +21,7 @@ export const Text = ({
 		Theme.sizes.text[size],
 		color && Theme.color.text[color],
 		weight && Theme.font.weight[weight],
-		className
+		className,
 	)
 	return <Component className={classes}>{children}</Component>
 }

@@ -28,10 +28,7 @@ export async function createTweet(data: { body: string }, ctx: Context) {
 	return insert.run(client.withGlobals(ctx))
 }
 
-export async function likeTweet(
-	data: { id: string; remove?: boolean },
-	ctx: Context
-) {
+export async function likeTweet(data: { id: string; remove?: boolean }, ctx: Context) {
 	const tweet = e.select(e.Tweet, () => ({
 		filter_single: { id: data.id },
 	}))
@@ -63,7 +60,7 @@ export async function getHomeTweets(ctx: Context) {
 		filter: e.op(
 			e.op(tweet.user, 'in', globals.currentUser.following),
 			'or',
-			e.op(tweet.user, '=', globals.currentUser)
+			e.op(tweet.user, '=', globals.currentUser),
 		),
 		order_by: {
 			expression: tweet.created_at,
@@ -88,10 +85,7 @@ export async function getUserTweets(data: { username: string }, ctx: Context) {
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getUserLikedTweets(
-	data: { username: string },
-	ctx: Context
-) {
+export async function getUserLikedTweets(data: { username: string }, ctx: Context) {
 	const query = e.select(e.User, () => ({
 		filter_single: { username: data.username },
 		likes: (tweet) => ({

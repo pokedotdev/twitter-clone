@@ -25,7 +25,7 @@ export async function action({ request }: ActionArgs) {
 	})
 	const data = await zx.parseForm(
 		formData,
-		z.discriminatedUnion('action', [createSchema, likeSchema])
+		z.discriminatedUnion('action', [createSchema, likeSchema]),
 	)
 
 	const ctx = await getContextRequired(request)

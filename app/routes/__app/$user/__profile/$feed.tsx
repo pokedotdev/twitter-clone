@@ -13,12 +13,10 @@ export async function loader({ params, request }: LoaderArgs) {
 
 	const ctx = await getContext(request)
 
-	if (feed === undefined)
-		tweets = await TweetModel.getUserTweets({ username }, ctx)
+	if (feed === undefined) tweets = await TweetModel.getUserTweets({ username }, ctx)
 	else if (feed === 'with_replies') tweets = []
 	else if (feed === 'media') tweets = []
-	else if (feed === 'likes')
-		tweets = await TweetModel.getUserLikedTweets({ username }, ctx)
+	else if (feed === 'likes') tweets = await TweetModel.getUserLikedTweets({ username }, ctx)
 
 	return json({ data: { tweets } })
 }

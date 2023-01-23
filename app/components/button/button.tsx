@@ -16,8 +16,7 @@ export type ButtonProps = {
 	active?: boolean
 }
 
-type PolymorphicProps<E extends React.ElementType> = ButtonProps &
-	React.ComponentPropsWithoutRef<E>
+type PolymorphicProps<E extends React.ElementType> = ButtonProps & React.ComponentPropsWithoutRef<E>
 
 const DEFAULT_ELEMENT = 'button'
 
@@ -45,16 +44,14 @@ export const Button = <E extends React.ElementType = typeof DEFAULT_ELEMENT>({
 		active && Theme.color.text[color],
 		square ? Theme.sizes.square[size] : !icon && Theme.sizes.field[size],
 		icon && children && Theme.sizes.gap[size],
-		className
+		className,
 	)
 
 	return (
 		<Component className={classes} {...rest}>
 			{icon &&
 				(children ? (
-					<span
-						className={cn('grid place-items-center', Theme.sizes.square[size])}
-					>
+					<span className={cn('grid place-items-center', Theme.sizes.square[size])}>
 						<Icon name={icon} size={size} />
 					</span>
 				) : (
@@ -81,8 +78,7 @@ export const ButtonStyles = {
 		ghost: {
 			base: '',
 			default: 'hover:bg-gray-500/10 border-gray-200',
-			primary:
-				'hover:bg-primary-500/10 hover:text-primary-500 border-primary-500',
+			primary: 'hover:bg-primary-500/10 hover:text-primary-500 border-primary-500',
 			green: 'hover:bg-green-500/10 hover:text-emerald-500 border-emerald-500',
 			red: 'hover:bg-rose-500/10 hover:text-rose-500 border-rose-500',
 			white: 'hover:bg-white/10 hover:text-gray-500 border-gray-500',
@@ -99,7 +95,4 @@ export const ButtonStyles = {
 } as const
 
 type ButtonVariants = keyof typeof ButtonStyles.variant
-type ButtonColors = Exclude<
-	keyof typeof ButtonStyles.variant[ButtonVariants],
-	'base'
->
+type ButtonColors = Exclude<keyof (typeof ButtonStyles.variant)[ButtonVariants], 'base'>

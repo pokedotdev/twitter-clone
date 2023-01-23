@@ -1,13 +1,6 @@
 import { Link, Outlet } from '~/remix'
 
-import {
-	Button,
-	ButtonProvider,
-	FormAuth,
-	NavList,
-	AccountMenu,
-	RouteHeader,
-} from '~/components'
+import { Button, ButtonProvider, FormAuth, NavList, AccountMenu, RouteHeader } from '~/components'
 import { useOptionalUser } from '~/utils'
 
 export default function App() {
@@ -52,9 +45,7 @@ export default function App() {
 					{/* Sidebar */}
 					<div className="lgx:pl-7.5 mdl:flex col-start-3 row-start-1 mb-12 hidden flex-col pl-5 pr-2.5">
 						{/* display conditionally by page  */}
-						<div className="sticky top-0 z-10 col-start-3 row-start-1 h-16 bg-white">
-							Search
-						</div>
+						<div className="sticky top-0 z-10 col-start-3 row-start-1 h-16 bg-white">Search</div>
 						{/* get the list of widgets from helper matches */}
 						<div className="sticky top-16">sidebar</div>
 					</div>

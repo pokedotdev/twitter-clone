@@ -11,10 +11,6 @@ export type IconProps = {
 } & React.ComponentProps<'div'>
 
 export const Icon = ({ name, size, className, ...rest }: IconProps) => {
-	const classes = cn(
-		name && icons[name],
-		size && Theme.sizes.icon[size],
-		className
-	)
+	const classes = cn(name && icons[name], size && Theme.sizes.icon[size], className)
 	return <div className={classes} {...rest} />
 }

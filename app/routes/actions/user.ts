@@ -16,10 +16,7 @@ export async function action({ request }: ActionArgs) {
 		userId: z.string().uuid(),
 		remove: zx.BoolAsString,
 	})
-	const data = await zx.parseForm(
-		request,
-		z.discriminatedUnion('action', [followSchema])
-	)
+	const data = await zx.parseForm(request, z.discriminatedUnion('action', [followSchema]))
 
 	switch (data.action) {
 		case 'follow': {

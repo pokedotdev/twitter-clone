@@ -7,13 +7,7 @@ import { authenticator } from '~/lib/auth.server'
 
 type InputUser = Pick<
 	User,
-	| 'provider'
-	| 'username'
-	| 'name'
-	| 'avatarUrl'
-	| 'bio'
-	| 'location'
-	| 'website'
+	'provider' | 'username' | 'name' | 'avatarUrl' | 'bio' | 'location' | 'website'
 >
 
 const baseUserShape = e.shape(e.User, () => ({
@@ -111,10 +105,7 @@ export function findOrCreateUser(data: InputUser) {
 	return insert.run(client)
 }
 
-export function followUser(
-	data: { id: string; remove?: boolean },
-	ctx: ContextRequired
-) {
+export function followUser(data: { id: string; remove?: boolean }, ctx: ContextRequired) {
 	const friend = e.select(e.User, (user) => ({
 		filter_single: { id: data.id },
 	}))

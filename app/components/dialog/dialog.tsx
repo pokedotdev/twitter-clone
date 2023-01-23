@@ -42,12 +42,7 @@ export const Header = ({
 		<header className="flex h-16 w-full items-center justify-between px-2">
 			<Button as={Dialog.DialogDismiss} variant="ghost" icon="close" />
 			{title && (
-				<Text
-					as={Dialog.DialogHeading}
-					size="xl"
-					weight={7}
-					className="flex-auto pl-8"
-				>
+				<Text as={Dialog.DialogHeading} size="xl" weight={7} className="flex-auto pl-8">
 					{title}
 				</Text>
 			)}

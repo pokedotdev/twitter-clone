@@ -6,11 +6,7 @@ type ButtonAuthProps = {
 	redirectTo?: string
 } & ButtonProps
 
-export const ButtonProvider = ({
-	provider,
-	redirectTo,
-	...props
-}: ButtonAuthProps) => {
+export const ButtonProvider = ({ provider, redirectTo, ...props }: ButtonAuthProps) => {
 	return (
 		<Button {...props} icon={provider} name="provider" value={provider}>
 			Sign in with {Providers[provider].displayName}

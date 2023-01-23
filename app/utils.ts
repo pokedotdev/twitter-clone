@@ -12,7 +12,7 @@ export function useMatchesData<T>(routeId: string) {
 	const matchingRoutes = useMatches()
 	const route = React.useMemo(
 		() => matchingRoutes.find((route) => route.id === routeId),
-		[matchingRoutes, routeId]
+		[matchingRoutes, routeId],
 	)
 	return route?.data as unknown as T
 }
@@ -31,7 +31,7 @@ export function useUser() {
 	const maybeUser = useOptionalUser()
 	if (!maybeUser)
 		throw new Error(
-			'No user found in root loader, but user is required by useUser. If user is optional, try useOptionalUser instead.'
+			'No user found in root loader, but user is required by useUser. If user is optional, try useOptionalUser instead.',
 		)
 	return maybeUser
 }
@@ -46,7 +46,7 @@ export function useProfile() {
 	const maybeProfile = useOptionalProfile()
 	if (!maybeProfile)
 		throw new Error(
-			'No profile found in $user loader, but user is required by useProfile. If profile is optional, try useOptionalProfile instead.'
+			'No profile found in $user loader, but user is required by useProfile. If profile is optional, try useOptionalProfile instead.',
 		)
 	return maybeProfile
 }

@@ -4,9 +4,7 @@ import { Text } from '~/components'
 
 function useHeader() {
 	const matches = useMatches()
-	const match = matches
-		.reverse()
-		.find((match) => match.data?.header || match.handle?.header)
+	const match = matches.reverse().find((match) => match.data?.header || match.handle?.header)
 	return match?.data?.header || match?.handle?.header
 }
 

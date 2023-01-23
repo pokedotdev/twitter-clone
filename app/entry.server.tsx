@@ -11,28 +11,18 @@ export default function handleRequest(
 	request: Request,
 	responseStatusCode: number,
 	responseHeaders: Headers,
-	remixContext: EntryContext
+	remixContext: EntryContext,
 ) {
 	return isbot(request.headers.get('user-agent'))
-		? handleBotRequest(
-				request,
-				responseStatusCode,
-				responseHeaders,
-				remixContext
-		  )
-		: handleBrowserRequest(
-				request,
-				responseStatusCode,
-				responseHeaders,
-				remixContext
-		  )
+		? handleBotRequest(request, responseStatusCode, responseHeaders, remixContext)
+		: handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext)
 }
 
 function handleBotRequest(
 	request: Request,
 	responseStatusCode: number,
 	responseHeaders: Headers,
-	remixContext: EntryContext
+	remixContext: EntryContext,
 ) {
 	return new Promise((resolve, reject) => {
 		let didError = false
@@ -49,7 +39,7 @@ function handleBotRequest(
 						new Response(body, {
 							headers: responseHeaders,
 							status: didError ? 500 : responseStatusCode,
-						})
+						}),
 					)
 
 					pipe(body)
@@ -62,7 +52,7 @@ function handleBotRequest(
 
 					console.error(error)
 				},
-			}
+			},
 		)
 
 		setTimeout(abort, ABORT_DELAY)
@@ -73,7 +63,7 @@ function handleBrowserRequest(
 	request: Request,
 	responseStatusCode: number,
 	responseHeaders: Headers,
-	remixContext: EntryContext
+	remixContext: EntryContext,
 ) {
 	return new Promise((resolve, reject) => {
 		let didError = false
@@ -90,7 +80,7 @@ function handleBrowserRequest(
 						new Response(body, {
 							headers: responseHeaders,
 							status: didError ? 500 : responseStatusCode,
-						})
+						}),
 					)
 
 					pipe(body)
@@ -103,7 +93,7 @@ function handleBrowserRequest(
 
 					console.error(error)
 				},
-			}
+			},
 		)
 
 		setTimeout(abort, ABORT_DELAY)

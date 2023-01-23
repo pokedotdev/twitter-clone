@@ -22,9 +22,7 @@ export const UserCard = ({ user }: UserCardProps) => {
 			<div className="flex flex-auto flex-col gap-2">
 				<div className="flex justify-between">
 					<Link to={`/${user.username}`} className="flex flex-auto flex-col">
-						<Text className="font-bold leading-none hover:underline">
-							{user.name}
-						</Text>
+						<Text className="font-bold leading-none hover:underline">{user.name}</Text>
 						<Text color="gray">{'@' + user.username}</Text>
 					</Link>
 					<ButtonFollow profile={user} onClick={(e) => e.stopPropagation()} />

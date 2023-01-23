@@ -1,13 +1,5 @@
 import type { LinksFunction, LoaderArgs, MetaFunction } from '~/remix'
-import {
-	json,
-	Links,
-	LiveReload,
-	Meta,
-	Outlet,
-	Scripts,
-	ScrollRestoration,
-} from '~/remix'
+import { json, Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '~/remix'
 import reset from '@unocss/reset/tailwind.css'
 
 import unocss from '~/styles/uno.css'
@@ -64,20 +56,14 @@ export function ErrorBoundary() {
 			<div className="grid h-screen place-items-center">
 				<div className="flex flex-col items-center gap-6">
 					<h1 className="text-6xl font-bold">Oops :(</h1>
-					<p className="text-2xl text-gray-500">
-						an error has occurred on the server
-					</p>
+					<p className="text-2xl text-gray-500">an error has occurred on the server</p>
 					<div className="flex gap-2">
 						<a href="/">
 							<Button as="div" variant="fill" color="primary">
 								Go to home
 							</Button>
 						</a>
-						<a
-							href="https://github.com/pokedotdev/twitter-clone"
-							target="_blank"
-							rel="noreferrer"
-						>
+						<a href="https://github.com/pokedotdev/twitter-clone" target="_blank" rel="noreferrer">
 							<Button as="div" icon="github">
 								See repo
 							</Button>

@@ -16,21 +16,13 @@ export const NavList = () => {
 				</NavButton>
 			)}
 
-			<NavButton
-				to="/explore"
-				icon="hash_to_search"
-				iconActive="hash_to_search_fill"
-			>
+			<NavButton to="/explore" icon="hash_to_search" iconActive="hash_to_search_fill">
 				Explore
 			</NavButton>
 
 			{user && (
 				<>
-					<NavButton
-						to={`/${user.username}`}
-						icon="user"
-						iconActive="user_fill"
-					>
+					<NavButton to={`/${user.username}`} icon="user" iconActive="user_fill">
 						Profile
 					</NavButton>
 					{/* Button New Tweet */}
@@ -63,9 +55,7 @@ const NavButton = ({
 				icon={isActive && iconActive ? iconActive : icon}
 				className="ring-6 !block w-16 ring-inset ring-white sm:ring-0 xl:!inline-flex xl:w-auto"
 			>
-				<span className={cn(!isActive && 'font-normal', 'hidden xl:block')}>
-					{children}
-				</span>
+				<span className={cn(!isActive && 'font-normal', 'hidden xl:block')}>{children}</span>
 			</Button>
 		)}
 	</NavLink>

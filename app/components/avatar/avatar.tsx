@@ -7,28 +7,15 @@ type AvatarProps = {
 
 const DEFAULT_AVATAR = '/images/avatar.svg'
 
-export const Avatar = ({
-	src,
-	alt,
-	size = 'md',
-	className,
-	...rest
-}: AvatarProps) => {
+export const Avatar = ({ src, alt, size = 'md', className, ...rest }: AvatarProps) => {
 	src ||= DEFAULT_AVATAR
 	const classes = cn(
 		AvatarStyles.base,
 		AvatarStyles.size[size],
-		className
+		className,
 		//
 	)
-	return (
-		<img
-			src={src}
-			alt={alt && `@${alt} avatar`}
-			className={classes}
-			{...rest}
-		/>
-	)
+	return <img src={src} alt={alt && `@${alt} avatar`} className={classes} {...rest} />
 }
 
 const AvatarStyles = {
