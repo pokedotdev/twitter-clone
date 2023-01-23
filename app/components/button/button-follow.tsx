@@ -7,6 +7,7 @@ import { useOptionalUser } from '~/utils'
 
 type ButtonFollowProps = {
 	profile: UserProfileLoaderType['data']['profile']
+	onClick?: React.ComponentProps<'button'>['onClick']
 } & ButtonProps
 
 export const ButtonFollow = ({ profile, ...rest }: ButtonFollowProps) => {
