@@ -397,6 +397,15 @@ const $Function = $.makeType<$Function>(_.spec, "21c71b56-1506-11ed-9c85-275f04e
 
 const Function: $.$expr_PathNode<$.TypeSet<$Function, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($Function, $.Cardinality.Many), null);
 
+export type $FutureBehaviorλShape = $.typeutil.flatten<$Object_1f195e00150611edbe98cf12aeecb828λShape & {
+}>;
+type $FutureBehavior = $.ObjectType<"schema::FutureBehavior", $FutureBehaviorλShape, null, [
+  ...$Object_1f195e00150611edbe98cf12aeecb828['__exclusives__'],
+]>;
+const $FutureBehavior = $.makeType<$FutureBehavior>(_.spec, "5460610a-9da8-11ed-8c04-ab4a1560535f", _.syntax.literal);
+
+const FutureBehavior: $.$expr_PathNode<$.TypeSet<$FutureBehavior, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($FutureBehavior, $.Cardinality.Many), null);
+
 export type $GlobalλShape = $.typeutil.flatten<$AnnotationSubjectλShape & {
   "target": $.LinkDesc<$Type, $.Cardinality.One, {}, false, false,  false, false>;
   "required": $.PropertyDesc<_std.$bool, $.Cardinality.AtMostOne, false, false, false, false>;
@@ -597,6 +606,7 @@ export type $ObjectTypeλShape = $.typeutil.flatten<$InheritingObjectλShape & O
   "<__type__[is BaseTweet]": $.LinkDesc<_default.$BaseTweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<__type__[is Reply]": $.LinkDesc<_default.$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<__type__[is Retweet]": $.LinkDesc<_default.$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<__type__[is schema::FutureBehavior]": $.LinkDesc<$FutureBehavior, $.Cardinality.Many, {}, false, false,  false, false>;
   "<__type__": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
   "<intersection_of": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
   "<subject": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;
@@ -722,7 +732,7 @@ const TupleElement: $.$expr_PathNode<$.TypeSet<$TupleElement, $.Cardinality.Many
 
 
 
-export { AccessKind, AccessPolicyAction, Cardinality, OperatorKind, ParameterKind, SourceDeleteAction, TargetDeleteAction, TypeModifier, Volatility, $Object_1f195e00150611edbe98cf12aeecb828, Object_1f195e00150611edbe98cf12aeecb828, $SubclassableObject, SubclassableObject, $InheritingObject, InheritingObject, $AnnotationSubject, AnnotationSubject, $AccessPolicy, AccessPolicy, $Alias, Alias, $Annotation, Annotation, $Type, Type, $PrimitiveType, PrimitiveType, $CollectionType, CollectionType, $Array, Array, $CallableObject, CallableObject, $VolatilitySubject, VolatilitySubject, $Cast, Cast, $ConsistencySubject, ConsistencySubject, $Constraint, Constraint, $Delta, Delta, $Extension, Extension, $Function, Function, $Global, Global, $Index, Index, $Pointer, Pointer, $Source, Source, $Link, Link, $Migration, Migration, $Module, Module, $ObjectType, ObjectType, $Operator, Operator, $Parameter, Parameter, $Property, Property, $PseudoType, PseudoType, $Range, Range, $ScalarType, ScalarType, $Tuple, Tuple, $TupleElement, TupleElement };
+export { AccessKind, AccessPolicyAction, Cardinality, OperatorKind, ParameterKind, SourceDeleteAction, TargetDeleteAction, TypeModifier, Volatility, $Object_1f195e00150611edbe98cf12aeecb828, Object_1f195e00150611edbe98cf12aeecb828, $SubclassableObject, SubclassableObject, $InheritingObject, InheritingObject, $AnnotationSubject, AnnotationSubject, $AccessPolicy, AccessPolicy, $Alias, Alias, $Annotation, Annotation, $Type, Type, $PrimitiveType, PrimitiveType, $CollectionType, CollectionType, $Array, Array, $CallableObject, CallableObject, $VolatilitySubject, VolatilitySubject, $Cast, Cast, $ConsistencySubject, ConsistencySubject, $Constraint, Constraint, $Delta, Delta, $Extension, Extension, $Function, Function, $FutureBehavior, FutureBehavior, $Global, Global, $Index, Index, $Pointer, Pointer, $Source, Source, $Link, Link, $Migration, Migration, $Module, Module, $ObjectType, ObjectType, $Operator, Operator, $Parameter, Parameter, $Property, Property, $PseudoType, PseudoType, $Range, Range, $ScalarType, ScalarType, $Tuple, Tuple, $TupleElement, TupleElement };
 
 type __defaultExports = {
   "AccessKind": typeof AccessKind;
@@ -753,6 +763,7 @@ type __defaultExports = {
   "Delta": typeof Delta;
   "Extension": typeof Extension;
   "Function": typeof Function;
+  "FutureBehavior": typeof FutureBehavior;
   "Global": typeof Global;
   "Index": typeof Index;
   "Pointer": typeof Pointer;
@@ -799,6 +810,7 @@ const __defaultExports: __defaultExports = {
   "Delta": Delta,
   "Extension": Extension,
   "Function": Function,
+  "FutureBehavior": FutureBehavior,
   "Global": Global,
   "Index": Index,
   "Pointer": Pointer,

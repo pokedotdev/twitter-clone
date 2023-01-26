@@ -185,6 +185,7 @@ export namespace schema {
     "language": string;
     "used_globals": Global[];
   }
+  export interface FutureBehavior extends $Object {}
   export interface Global extends AnnotationSubject {
     "target": Type;
     "required"?: boolean | null;
@@ -339,6 +340,7 @@ export interface types {
     "Delta": schema.Delta;
     "Extension": schema.Extension;
     "Function": schema.Function;
+    "FutureBehavior": schema.FutureBehavior;
     "Global": schema.Global;
     "Index": schema.Index;
     "Pointer": schema.Pointer;

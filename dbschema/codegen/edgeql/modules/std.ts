@@ -3,16 +3,16 @@
 
 import * as $ from "../reflection";
 import * as _ from "../imports";
-import type * as _cal from "./cal";
 import type * as _cfg from "./cfg";
+import type * as _cal from "./cal";
 import type * as _schema from "./schema";
-type $anyscalar = $uuid | $str | $bytes | $bool | $datetime | _cal.$local_datetime | _cal.$local_date | _cal.$local_time | $duration | $json | _cal.$relative_duration | _cal.$date_duration | _cfg.$memory | $anypoint | $anyreal | $.EnumType;
+type $anyscalar = $anypoint | $anyreal | $.EnumType | $bool | $bytes | $uuid | $str | $json | $datetime | $duration | _cfg.$memory | _cal.$local_datetime | _cal.$local_date | _cal.$local_time | _cal.$relative_duration | _cal.$date_duration;
 
 type $anypoint = $anydiscrete | $anycontiguous;
 
 type $anydiscrete = $number | _cal.$local_date;
 
-type $anycontiguous = $decimal | $datetime | _cal.$local_datetime | $duration | $anyfloat;
+type $anycontiguous = $anyfloat | $datetime | $duration | $decimal | _cal.$local_datetime;
 
 export type $JsonEmpty = {
   "ReturnEmpty": $.$expr_Literal<$JsonEmpty>;
@@ -3302,10 +3302,10 @@ type range_unpackλFuncExpr5<
   $number, $.Cardinality.Many
 >;
 type range_unpackλFuncExpr6<
-  P1 extends $.TypeSet<$.RangeType<$number>>,
-  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<$number>>,
+  P1 extends $.TypeSet<$.RangeType<_cal.$local_date>>,
+  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<_cal.$date_duration>>,
 > = $.$expr_Function<
-  $number, $.Cardinality.Many
+  _cal.$local_date, $.Cardinality.Many
 >;
 type range_unpackλFuncExpr7<
   P1 extends $.TypeSet<$.RangeType<$number>>,
@@ -3314,16 +3314,16 @@ type range_unpackλFuncExpr7<
   $number, $.Cardinality.Many
 >;
 type range_unpackλFuncExpr8<
+  P1 extends $.TypeSet<$.RangeType<$number>>,
+  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<$number>>,
+> = $.$expr_Function<
+  $number, $.Cardinality.Many
+>;
+type range_unpackλFuncExpr9<
   P1 extends $.TypeSet<$.RangeType<$datetime>>,
   P2 extends _.castMaps.orScalarLiteral<$.TypeSet<$duration>>,
 > = $.$expr_Function<
   $datetime, $.Cardinality.Many
->;
-type range_unpackλFuncExpr9<
-  P1 extends $.TypeSet<$.RangeType<_cal.$local_date>>,
-  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<_cal.$date_duration>>,
-> = $.$expr_Function<
-  _cal.$local_date, $.Cardinality.Many
 >;
 type range_unpackλFuncExpr10<
   P1 extends $.TypeSet<$.RangeType<$decimalλICastableTo>>,
@@ -3367,8 +3367,8 @@ function range_unpack<
   step: P2,
 ): range_unpackλFuncExpr5<P1, P2>;
 function range_unpack<
-  P1 extends $.TypeSet<$.RangeType<$number>>,
-  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<$number>>,
+  P1 extends $.TypeSet<$.RangeType<_cal.$local_date>>,
+  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<_cal.$date_duration>>,
 >(
   val: P1,
   step: P2,
@@ -3381,15 +3381,15 @@ function range_unpack<
   step: P2,
 ): range_unpackλFuncExpr7<P1, P2>;
 function range_unpack<
-  P1 extends $.TypeSet<$.RangeType<$datetime>>,
-  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<$duration>>,
+  P1 extends $.TypeSet<$.RangeType<$number>>,
+  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<$number>>,
 >(
   val: P1,
   step: P2,
 ): range_unpackλFuncExpr8<P1, P2>;
 function range_unpack<
-  P1 extends $.TypeSet<$.RangeType<_cal.$local_date>>,
-  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<_cal.$date_duration>>,
+  P1 extends $.TypeSet<$.RangeType<$datetime>>,
+  P2 extends _.castMaps.orScalarLiteral<$.TypeSet<$duration>>,
 >(
   val: P1,
   step: P2,
@@ -3413,12 +3413,12 @@ function range_unpack(...args: any[]) {
     {args: [{typeId: "9cd6f1bb-820a-e4e0-15cf-bc45c4e7baa0", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-0000000001ff", returnTypemod: "SetOfType"},
     {args: [{typeId: "2dcd88a1-d377-baa4-c12e-d4abfef28c86", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-0000000001ff", returnTypemod: "SetOfType"},
     {args: [{typeId: "ca752a6b-54a8-ba10-285b-13a79b02a110", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-00000000010c", returnTypemod: "SetOfType"},
-    {args: [{typeId: "9cd6f1bb-820a-e4e0-15cf-bc45c4e7baa0", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-0000000001ff", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-0000000001ff", returnTypemod: "SetOfType"},
-    {args: [{typeId: "2dcd88a1-d377-baa4-c12e-d4abfef28c86", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-0000000001ff", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-0000000001ff", returnTypemod: "SetOfType"},
     {args: [{typeId: "e0169746-82b2-efaf-ec9e-fea17257877c", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-0000000001ff", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-0000000001ff", returnTypemod: "SetOfType"},
     {args: [{typeId: "b5052505-ceb2-a54d-f438-97a8f6a2120b", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-0000000001ff", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-0000000001ff", returnTypemod: "SetOfType"},
-    {args: [{typeId: "1847fc4b-5f10-5b74-8257-168c3a85faa5", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-00000000010e", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-00000000010a", returnTypemod: "SetOfType"},
     {args: [{typeId: "ca752a6b-54a8-ba10-285b-13a79b02a110", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-000000000112", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-00000000010c", returnTypemod: "SetOfType"},
+    {args: [{typeId: "9cd6f1bb-820a-e4e0-15cf-bc45c4e7baa0", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-0000000001ff", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-0000000001ff", returnTypemod: "SetOfType"},
+    {args: [{typeId: "2dcd88a1-d377-baa4-c12e-d4abfef28c86", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-0000000001ff", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-0000000001ff", returnTypemod: "SetOfType"},
+    {args: [{typeId: "1847fc4b-5f10-5b74-8257-168c3a85faa5", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-00000000010e", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-00000000010a", returnTypemod: "SetOfType"},
     {args: [{typeId: "c98e3620-6f26-d050-921e-24fbfb0b5873", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-000000000108", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-000000000108", returnTypemod: "SetOfType"},
     {args: [{typeId: "31bc1223-f64b-a6f0-b9b3-c7f3df5321dc", optional: false, setoftype: false, variadic: false}, {typeId: "00000000-0000-0000-0000-000000000111", optional: false, setoftype: false, variadic: false}], returnTypeId: "00000000-0000-0000-0000-00000000010b", returnTypemod: "SetOfType"},
   ]);
