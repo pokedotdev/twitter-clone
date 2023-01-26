@@ -29,12 +29,12 @@ const $ConfigObject = $.makeType<$ConfigObject>(_.spec, "22bd5426-1506-11ed-9c66
 const ConfigObject: $.$expr_PathNode<$.TypeSet<$ConfigObject, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($ConfigObject, $.Cardinality.Many), null);
 
 export type $AbstractConfigλShape = $.typeutil.flatten<$ConfigObjectλShape & {
+  "auth": $.LinkDesc<$Auth, $.Cardinality.Many, {}, false, false,  false, false>;
   "session_idle_timeout": $.PropertyDesc<_std.$duration, $.Cardinality.One, false, false, false, true>;
   "session_idle_transaction_timeout": $.PropertyDesc<_std.$duration, $.Cardinality.One, false, false, false, true>;
   "query_execution_timeout": $.PropertyDesc<_std.$duration, $.Cardinality.One, false, false, false, false>;
   "listen_port": $.PropertyDesc<_std.$int16, $.Cardinality.One, false, false, false, true>;
   "listen_addresses": $.PropertyDesc<_std.$str, $.Cardinality.Many, false, false, false, false>;
-  "auth": $.LinkDesc<$Auth, $.Cardinality.Many, {}, false, false,  false, false>;
   "allow_dml_in_functions": $.PropertyDesc<_std.$bool, $.Cardinality.AtMostOne, false, false, false, true>;
   "allow_bare_ddl": $.PropertyDesc<$AllowBareDDL, $.Cardinality.AtMostOne, false, false, false, true>;
   "apply_access_policies": $.PropertyDesc<_std.$bool, $.Cardinality.AtMostOne, false, false, false, true>;
@@ -53,9 +53,9 @@ const $AbstractConfig = $.makeType<$AbstractConfig>(_.spec, "22eb5e52-1506-11ed-
 const AbstractConfig: $.$expr_PathNode<$.TypeSet<$AbstractConfig, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($AbstractConfig, $.Cardinality.Many), null);
 
 export type $AuthλShape = $.typeutil.flatten<$ConfigObjectλShape & {
+  "method": $.LinkDesc<$AuthMethod, $.Cardinality.AtMostOne, {}, true, false,  true, false>;
   "priority": $.PropertyDesc<_std.$int64, $.Cardinality.One, true, false, true, false>;
   "user": $.PropertyDesc<_std.$str, $.Cardinality.Many, false, false, true, true>;
-  "method": $.LinkDesc<$AuthMethod, $.Cardinality.AtMostOne, {}, true, false,  true, false>;
   "comment": $.PropertyDesc<_std.$str, $.Cardinality.AtMostOne, false, false, true, false>;
   "<auth[is cfg::AbstractConfig]": $.LinkDesc<$AbstractConfig, $.Cardinality.Many, {}, false, false,  false, false>;
   "<auth[is cfg::Config]": $.LinkDesc<$Config, $.Cardinality.Many, {}, false, false,  false, false>;

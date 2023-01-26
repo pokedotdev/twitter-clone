@@ -13,12 +13,12 @@ export namespace std {
 export namespace cfg {
   export interface ConfigObject extends std.BaseObject {}
   export interface AbstractConfig extends ConfigObject {
+    "auth": Auth[];
     "session_idle_timeout": edgedb.Duration;
     "session_idle_transaction_timeout": edgedb.Duration;
     "query_execution_timeout": edgedb.Duration;
     "listen_port": number;
     "listen_addresses": string[];
-    "auth": Auth[];
     "allow_dml_in_functions"?: boolean | null;
     "allow_bare_ddl"?: AllowBareDDL | null;
     "apply_access_policies"?: boolean | null;
@@ -31,9 +31,9 @@ export namespace cfg {
   }
   export type AllowBareDDL = "AlwaysAllow" | "NeverAllow";
   export interface Auth extends ConfigObject {
+    "method"?: AuthMethod | null;
     "priority": number;
     "user": string[];
-    "method"?: AuthMethod | null;
     "comment"?: string | null;
   }
   export interface AuthMethod extends ConfigObject {
@@ -53,22 +53,22 @@ export namespace cfg {
 }
 export namespace has {
   export interface CreatedAt extends std.$Object {
-    "created_at"?: Date | null;
+    "created_at": Date;
   }
 }
 export interface BaseTweet extends has.CreatedAt {
-  "body"?: string | null;
-  "is_own": boolean;
-  "tag": string;
   "likes": User[];
-  "is_liked": boolean;
-  "num_likes": number;
   "quote"?: BaseTweet | null;
   "replies": Reply[];
   "retweets": BaseTweet[];
   "user": User;
-  "is_retweeted": boolean;
+  "body"?: string | null;
+  "is_own": boolean;
+  "tag": string;
   "num_replies": number;
+  "is_liked": boolean;
+  "num_likes": number;
+  "is_retweeted": boolean;
   "num_retweets": number;
 }
 export interface Reply extends BaseTweet {
@@ -80,19 +80,19 @@ export interface Retweet extends BaseTweet {
 export interface Tweet extends BaseTweet {}
 export interface User extends has.CreatedAt {
   "followers": User[];
+  "following": User[];
+  "tweets": BaseTweet[];
+  "likes": BaseTweet[];
   "avatarUrl"?: string | null;
   "bio"?: string | null;
   "coverUrl"?: string | null;
-  "is_own": boolean;
   "location"?: string | null;
   "name": string;
   "provider": {name: string, id: string};
   "username": string;
   "website"?: string | null;
-  "tweets": BaseTweet[];
+  "is_own": boolean;
   "num_tweets": number;
-  "following": User[];
-  "likes": BaseTweet[];
   "is_followed": boolean;
   "num_followers": number;
   "num_following": number;
@@ -128,8 +128,8 @@ export namespace schema {
   }
   export type AccessPolicyAction = "Allow" | "Deny";
   export interface Alias extends AnnotationSubject {
-    "expr": string;
     "type": Type;
+    "expr": string;
   }
   export interface Annotation extends InheritingObject, AnnotationSubject {
     "inheritable"?: boolean | null;
@@ -164,6 +164,7 @@ export namespace schema {
     "constraints": Constraint[];
   }
   export interface Constraint extends CallableObject, InheritingObject {
+    "subject"?: ConsistencySubject | null;
     "params": Parameter[];
     "expr"?: string | null;
     "subjectexpr"?: string | null;
@@ -171,7 +172,6 @@ export namespace schema {
     "errmessage"?: string | null;
     "delegated"?: boolean | null;
     "except_expr"?: string | null;
-    "subject"?: ConsistencySubject | null;
   }
   export interface Delta extends $Object {
     "parents": Delta[];
@@ -180,10 +180,10 @@ export namespace schema {
     "package": sys.ExtensionPackage;
   }
   export interface Function extends CallableObject, VolatilitySubject {
-    "preserves_optionality"?: boolean | null;
+    "used_globals": Global[];
     "body"?: string | null;
     "language": string;
-    "used_globals": Global[];
+    "preserves_optionality"?: boolean | null;
   }
   export interface FutureBehavior extends $Object {}
   export interface Global extends AnnotationSubject {
@@ -198,17 +198,17 @@ export namespace schema {
     "except_expr"?: string | null;
   }
   export interface Pointer extends InheritingObject, ConsistencySubject, AnnotationSubject {
+    "source"?: Source | null;
+    "target"?: Type | null;
     "cardinality"?: Cardinality | null;
     "required"?: boolean | null;
     "readonly"?: boolean | null;
     "default"?: string | null;
     "expr"?: string | null;
-    "source"?: Source | null;
-    "target"?: Type | null;
   }
   export interface Source extends $Object {
-    "indexes": Index[];
     "pointers": Pointer[];
+    "indexes": Index[];
   }
   export interface Link extends Pointer, Source {
     "target"?: ObjectType | null;
@@ -225,16 +225,16 @@ export namespace schema {
   export interface ObjectType extends InheritingObject, ConsistencySubject, AnnotationSubject, Type, Source {
     "union_of": ObjectType[];
     "intersection_of": ObjectType[];
+    "links": Link[];
+    "properties": Property[];
     "access_policies": AccessPolicy[];
     "compound_type": boolean;
     "is_compound_type": boolean;
-    "links": Link[];
-    "properties": Property[];
   }
   export interface Operator extends CallableObject, VolatilitySubject {
     "operator_kind"?: OperatorKind | null;
-    "abstract"?: boolean | null;
     "is_abstract"?: boolean | null;
+    "abstract"?: boolean | null;
   }
   export type OperatorKind = "Infix" | "Postfix" | "Prefix" | "Ternary";
   export interface Parameter extends $Object {
@@ -257,8 +257,8 @@ export namespace schema {
   export type SourceDeleteAction = "DeleteTarget" | "Allow" | "DeleteTargetIfOrphan";
   export type TargetDeleteAction = "Restrict" | "DeleteSource" | "Allow" | "DeferredRestrict";
   export interface Tuple extends CollectionType {
-    "named": boolean;
     "element_types": TupleElement[];
+    "named": boolean;
   }
   export interface TupleElement extends std.BaseObject {
     "type": Type;
@@ -277,11 +277,11 @@ export namespace sys {
     "version": {major: number, minor: number, stage: VersionStage, stage_no: number, local: string[]};
   }
   export interface Role extends SystemObject, schema.InheritingObject, schema.AnnotationSubject {
-    "name": string;
-    "superuser": boolean;
-    "is_superuser": boolean;
-    "password"?: string | null;
     "member_of": Role[];
+    "superuser": boolean;
+    "password"?: string | null;
+    "name": string;
+    "is_superuser": boolean;
   }
   export type TransactionIsolation = "RepeatableRead" | "Serializable";
   export type VersionStage = "dev" | "alpha" | "beta" | "rc" | "final";

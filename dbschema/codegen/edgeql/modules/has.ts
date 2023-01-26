@@ -5,7 +5,7 @@ import * as $ from "../reflection";
 import * as _ from "../imports";
 import type * as _std from "./std";
 export type $CreatedAtλShape = $.typeutil.flatten<_std.$Object_1eda6830150611ed8c8fb5fe6745a9baλShape & {
-  "created_at": $.PropertyDesc<_std.$datetime, $.Cardinality.AtMostOne, false, false, true, true>;
+  "created_at": $.PropertyDesc<_std.$datetime, $.Cardinality.One, false, false, true, true>;
 }>;
 type $CreatedAt = $.ObjectType<"has::CreatedAt", $CreatedAtλShape, null, [
   ..._std.$Object_1eda6830150611ed8c8fb5fe6745a9ba['__exclusives__'],

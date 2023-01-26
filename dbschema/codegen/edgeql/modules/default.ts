@@ -6,18 +6,18 @@ import * as _ from "../imports";
 import type * as _has from "./has";
 import type * as _std from "./std";
 export type $BaseTweetλShape = $.typeutil.flatten<_has.$CreatedAtλShape & {
-  "body": $.PropertyDesc<_std.$str, $.Cardinality.AtMostOne, false, false, false, false>;
-  "is_own": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
-  "tag": $.PropertyDesc<_std.$str, $.Cardinality.One, false, true, false, false>;
   "likes": $.LinkDesc<$User, $.Cardinality.Many, {}, false, true,  false, false>;
-  "is_liked": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
-  "num_likes": $.PropertyDesc<_std.$int64, $.Cardinality.One, false, true, false, false>;
   "quote": $.LinkDesc<$BaseTweet, $.Cardinality.AtMostOne, {}, false, false,  false, false>;
   "replies": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, true,  false, false>;
   "retweets": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, true,  false, false>;
   "user": $.LinkDesc<$User, $.Cardinality.One, {}, false, false,  false, false>;
-  "is_retweeted": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
+  "body": $.PropertyDesc<_std.$str, $.Cardinality.AtMostOne, false, false, false, false>;
+  "is_own": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
+  "tag": $.PropertyDesc<_std.$str, $.Cardinality.One, false, true, false, false>;
   "num_replies": $.PropertyDesc<_std.$int64, $.Cardinality.One, false, true, false, false>;
+  "is_liked": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
+  "num_likes": $.PropertyDesc<_std.$int64, $.Cardinality.One, false, true, false, false>;
+  "is_retweeted": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
   "num_retweets": $.PropertyDesc<_std.$int64, $.Cardinality.One, false, true, false, false>;
   "<tweets[is User]": $.LinkDesc<$User, $.Cardinality.Many, {}, false, false,  false, false>;
   "<likes[is User]": $.LinkDesc<$User, $.Cardinality.Many, {}, false, false,  false, false>;
@@ -79,34 +79,34 @@ const Tweet: $.$expr_PathNode<$.TypeSet<$Tweet, $.Cardinality.Many>, null> = _.s
 
 export type $UserλShape = $.typeutil.flatten<_has.$CreatedAtλShape & {
   "followers": $.LinkDesc<$User, $.Cardinality.Many, {}, false, true,  false, false>;
+  "following": $.LinkDesc<$User, $.Cardinality.Many, {
+    "@created_at": $.PropertyDesc<_std.$datetime, $.Cardinality.AtMostOne>;
+  }, false, false, false, false>;
+  "tweets": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, true,  false, false>;
+  "likes": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {
+    "@created_at": $.PropertyDesc<_std.$datetime, $.Cardinality.AtMostOne>;
+  }, false, false, false, false>;
   "avatarUrl": $.PropertyDesc<_std.$str, $.Cardinality.AtMostOne, false, false, false, false>;
   "bio": $.PropertyDesc<_std.$str, $.Cardinality.AtMostOne, false, false, false, false>;
   "coverUrl": $.PropertyDesc<_std.$str, $.Cardinality.AtMostOne, false, false, false, false>;
-  "is_own": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
   "location": $.PropertyDesc<_std.$str, $.Cardinality.AtMostOne, false, false, false, false>;
   "name": $.PropertyDesc<_std.$str, $.Cardinality.One, false, false, false, false>;
   "provider": $.PropertyDesc<$.NamedTupleType<{name: _std.$str, id: _std.$str}>, $.Cardinality.One, true, false, false, false>;
   "username": $.PropertyDesc<_std.$str, $.Cardinality.One, true, false, false, false>;
   "website": $.PropertyDesc<_std.$str, $.Cardinality.AtMostOne, false, false, false, false>;
-  "tweets": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, true,  false, false>;
+  "is_own": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
   "num_tweets": $.PropertyDesc<_std.$int64, $.Cardinality.One, false, true, false, false>;
-  "following": $.LinkDesc<$User, $.Cardinality.Many, {
-    "@created_at": $.PropertyDesc<_std.$datetime, $.Cardinality.AtMostOne>;
-  }, false, false, false, false>;
-  "likes": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {
-    "@created_at": $.PropertyDesc<_std.$datetime, $.Cardinality.AtMostOne>;
-  }, false, false, false, false>;
   "is_followed": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
   "num_followers": $.PropertyDesc<_std.$int64, $.Cardinality.One, false, true, false, false>;
   "num_following": $.PropertyDesc<_std.$int64, $.Cardinality.One, false, true, false, false>;
-  "<following[is User]": $.LinkDesc<$User, $.Cardinality.Many, {}, false, false,  false, false>;
   "<followers[is User]": $.LinkDesc<$User, $.Cardinality.Many, {}, false, false,  false, false>;
-  "<user[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<following[is User]": $.LinkDesc<$User, $.Cardinality.Many, {}, false, false,  false, false>;
   "<likes[is BaseTweet]": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<likes[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<likes[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
   "<user[is BaseTweet]": $.LinkDesc<$BaseTweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<user[is Reply]": $.LinkDesc<$Reply, $.Cardinality.Many, {}, false, false,  false, false>;
+  "<user[is Tweet]": $.LinkDesc<$Tweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<likes[is Retweet]": $.LinkDesc<$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<user[is Retweet]": $.LinkDesc<$Retweet, $.Cardinality.Many, {}, false, false,  false, false>;
   "<followers": $.LinkDesc<$.ObjectType, $.Cardinality.Many, {}, false, false,  false, false>;

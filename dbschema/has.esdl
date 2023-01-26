@@ -1,7 +1,7 @@
 module has {
 
   abstract type CreatedAt {
-    property created_at -> datetime {
+    required property created_at -> datetime {
       default := datetime_current();
       readonly := true;
     }
