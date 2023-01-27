@@ -72,11 +72,11 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 						<input type="hidden" name="tweet" value={tweet.id} />
 						{/* Comments */}
 						<span className="-ml-1 flex-1">
-							<Button variant="ghost" color="primary" icon="comment" />
+							<Button variant="ghost" color="primary" icon="comment" disabled />
 						</span>
 						{/* Retweets */}
 						<span className="flex-1">
-							<Button variant="ghost" color="green" icon="retweet" />
+							<Button variant="ghost" color="green" icon="retweet" disabled />
 						</span>
 						{/* Likes */}
 						<span className="flex flex-1 items-center gap-1">
@@ -93,7 +93,7 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 						</span>
 						{/* Share */}
 						<span className="flex-1">
-							<Button variant="ghost" color="primary" icon="share" />
+							<Button variant="ghost" color="primary" icon="share" disabled />
 						</span>
 					</fetcher.Form>
 				</div>

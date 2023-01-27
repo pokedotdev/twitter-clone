@@ -33,7 +33,7 @@ export default function ProfileLayout() {
 						<div className="flex gap-2.5">
 							{profile.is_own ? (
 								<a href="#edit:profile">
-									<Button as="div" variant="ghost" outline>
+									<Button as="div" variant="ghost" outline disabled>
 										Edit Profile
 									</Button>
 								</a>
