@@ -8,13 +8,11 @@ export async function loader({ request }: LoaderArgs) {
 	const users = await getUsers({
 		current_user_id: await getUserId(request),
 	})
-	return json({ data: { users } })
+	return json({ users })
 }
 
 export default function LatestUsersRoute() {
-	const { data } = useLoaderData<typeof loader>()
-
-	console.log(data)
+	const data = useLoaderData<typeof loader>()
 
 	return <UserList list={data.users} />
 }

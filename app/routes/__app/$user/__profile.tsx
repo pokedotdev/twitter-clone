@@ -81,12 +81,10 @@ export default function ProfileLayout() {
 							</a>
 						</span>
 					)}
-					{profile.created_at && (
-						<span className="flex items-center gap-1">
-							<Icon name="calendar" size="md" />
-							{'Joined ' + formatUserCreatedDate(new Date(profile.created_at))}
-						</span>
-					)}
+					<span className="flex items-center gap-1">
+						<Icon name="calendar" size="md" />
+						{'Joined ' + formatUserCreatedDate(new Date(profile.created_at))}
+					</span>
 				</Text>
 
 				{/* Stats */}

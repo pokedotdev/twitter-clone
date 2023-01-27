@@ -45,7 +45,7 @@ export const Tweet = ({ tweet }: { tweet: any }) => {
 							</Link>
 							<Text color="gray">·</Text>
 							<Text color="gray" className="hover:underline">
-								<TimeAgo date={tweet.created_at} />
+								<TimeAgo date={new Date(tweet.created_at)} />
 							</Text>
 						</div>
 					</div>

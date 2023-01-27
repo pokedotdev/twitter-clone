@@ -9,7 +9,7 @@ export async function loader({ params, request }: LoaderArgs) {
 	let tweets: TweetModel.TweetCardFieldsType[] = []
 
 	const { user: username, feed } = params
-	if (!username) return json({ data: { tweets } })
+	if (!username) return json({ tweets })
 
 	const ctx = await getContext(request)
 
@@ -18,11 +18,11 @@ export async function loader({ params, request }: LoaderArgs) {
 	else if (feed === 'media') tweets = []
 	else if (feed === 'likes') tweets = await TweetModel.getUserLikedTweets({ username }, ctx)
 
-	return json({ data: { tweets } })
+	return json({ tweets })
 }
 
 export default function UserFeedRoute() {
-	const { data } = useLoaderData<typeof loader>()
+	const data = useLoaderData<typeof loader>()
 
 	return <TweetList list={data.tweets} />
 }

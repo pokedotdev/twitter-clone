@@ -8,10 +8,10 @@ export async function loader({ request, params }: LoaderArgs) {
 	if (!params.user) throw new Error('User not found')
 	const ctx = await getContext(request)
 	const users = await getFollowers({ username: params.user }, ctx)
-	return json({ data: { users } })
+	return json({ users })
 }
 
 export default function FollowersRoute() {
-	const { data } = useLoaderData<typeof loader>()
+	const data = useLoaderData<typeof loader>()
 	return <UserList list={data.users} />
 }

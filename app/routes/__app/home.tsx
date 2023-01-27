@@ -11,7 +11,7 @@ export async function loader({ request }: LoaderArgs) {
 	if (!ctx.current_user_id) throw redirect('/explore')
 	const tweets = await getHomeTweets(ctx)
 	return json({
-		data: { tweets },
+		tweets,
 	})
 }
 
@@ -23,7 +23,7 @@ export const handle = {
 
 export default function Home() {
 	const user = useOptionalUser()
-	const { data } = useLoaderData<typeof loader>()
+	const data = useLoaderData<typeof loader>()
 
 	return (
 		<div>

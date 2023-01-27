@@ -21,7 +21,7 @@ export const meta: MetaFunction = () => ({
 
 export const loader = async ({ request }: LoaderArgs) => {
 	return json({
-		data: { user: await getUser(request) },
+		user: await getUser(request),
 	})
 }
 
