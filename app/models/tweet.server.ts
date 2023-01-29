@@ -28,6 +28,16 @@ export async function createTweet(data: { body: string }, ctx: Context) {
 	return insert.run(client.withGlobals(ctx))
 }
 
+export async function findTweetById(data: { id: string }, ctx: Context) {
+	const query = e.select(e.Tweet, (tweet) => ({
+		filter_single: {
+			id: data.id,
+		},
+		...baseTweetShape(tweet),
+	}))
+	return query.run(client.withGlobals(ctx))
+}
+
 export async function likeTweet(data: { id: string; remove?: boolean }, ctx: Context) {
 	const tweet = e.select(e.Tweet, () => ({
 		filter_single: { id: data.id },

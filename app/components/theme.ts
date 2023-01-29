@@ -47,7 +47,7 @@ export const Theme = {
 		icon: {
 			sm: 'text-2xl',
 			md: 'text-2xl',
-			lg: 'text-2xl',
+			lg: 'text-[1.7rem]',
 			xl: 'text-3xl',
 		},
 		gap: {

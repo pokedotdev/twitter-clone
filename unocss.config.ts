@@ -5,6 +5,7 @@ const theme = presetUno().theme
 export default defineConfig({
 	shortcuts: {
 		link: 'text-primary-500 hover:underline',
+		'text-gray': 'text-gray-500',
 	},
 	theme: {
 		colors: {
