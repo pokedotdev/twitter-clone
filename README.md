@@ -43,13 +43,20 @@ npm run db:seed
 
 This creates a user with the username "test", in order to interact with it.
 
-### 3. Create `.env`
+### 3. GitHub OAuth
+
+Configure a [GitHub OAuth application](https://github.com/settings/applications/new) with "**Authorization callback URL**" as:
+```txt
+http://localhost:3000/auth/callback/github
+```
+
+### 4. Create `.env`
 
 Rename the file `.env.example` to `.env` and only change the values of the variables.
 
-### 4. Start the server
+### 5. Start the server
 
-This starts your app in development mode, rebuilding assets on file changes.
+This starts your app in development mode.
 
 ```sh
 npm run dev
