@@ -1,5 +1,6 @@
 import type { LoaderArgs, MetaFunction } from '~/remix'
 import { json, Outlet } from '~/remix'
+import { notFound } from 'remix-utils'
 
 import { getContext, getUserByUsername } from '~/models/user.server'
 
@@ -11,12 +12,12 @@ export const meta: MetaFunction = ({ data }) => {
 }
 
 export const loader = async ({ params, request }: LoaderArgs) => {
-	if (!params.user) throw new Error('User not found')
+	if (!params.user) throw notFound({ message: 'User not found' })
 
 	const ctx = await getContext(request)
 
 	const profile = await getUserByUsername(params.user, ctx)
-	if (!profile) throw new Response('User not found', { status: 404 })
+	if (!profile) throw notFound({ message: 'User not found' })
 
 	return json({
 		profile,

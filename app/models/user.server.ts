@@ -75,6 +75,13 @@ export function getUserByUsername(username: string, ctx: Context) {
 	const query = e.select(e.User, (user) => ({
 		filter_single: { username },
 		...baseUserShape(user),
+		some_followers_you_know: e.select(user.followers_you_know, () => ({
+			limit: 3,
+			name: true,
+			username: true,
+			avatarUrl: true,
+		})),
+		num_followers_you_know: true,
 	}))
 	return query.run(client.withGlobals(ctx))
 }
@@ -86,6 +93,16 @@ export async function getFollowers(data: { username: string }, ctx: Context) {
 	}))
 	const res = await query.run(client.withGlobals(ctx))
 	return res?.followers || []
+}
+
+export async function getFollowersYouKnow(data: { username: string }, ctx: Context) {
+	const query = e.select(e.User, () => ({
+		filter_single: { username: data.username },
+		followers_you_know: baseUserShape,
+		num_followers_you_know: true,
+	}))
+	const res = await query.run(client.withGlobals(ctx))
+	return res?.followers_you_know || []
 }
 
 export async function getFollowings(data: { username: string }, ctx: Context) {

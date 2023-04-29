@@ -13,9 +13,10 @@
 		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
 		"gen:css": "unocss './app/**/*.{ts,tsx}' -o ./app/styles/uno.css",
 		"gen:remix": "rmx gen-remix --packages @remix-run/node @remix-run/react",
-		"gen:edgeql": "npx @edgedb/generate edgeql-js --target ts --out ./dbschema/codegen/edgeql/",
-		"gen:queries": "npx @edgedb/generate queries --file ./dbschema/codegen/queries --target ts",
-		"gen:interfaces": "npx @edgedb/generate interfaces --file ./dbschema/codegen/interfaces.ts",
+		"gen:edgedb": "run-p edgedb:*",
+		"edgedb:ql": "npx @edgedb/generate edgeql-js --target ts --out ./dbschema/codegen/edgeql/",
+		"edgedb:queries": "npx @edgedb/generate queries --file ./dbschema/codegen/queries --target ts",
+		"edgedb:interfaces": "npx @edgedb/generate interfaces --file ./dbschema/codegen/interfaces.ts",
 		"db:seed": "npx esbuild-runner dbschema/seed.ts",
 		"postinstall": "patch-package"
 	},

@@ -8,14 +8,9 @@ module default {
 		}
 		required property username -> str {
 			constraint exclusive;
-			constraint min_len_value(4);
-			constraint max_len_value(15);
 			constraint expression on (__subject__ = str_trim(__subject__));
 		}
-		required property name -> str {
-			constraint min_len_value(1);
-			constraint max_len_value(50);
-		}
+		required property name -> str;
 		property bio -> str;
 		property location -> str;
 		property website -> str;
@@ -26,6 +21,9 @@ module default {
 			on target delete allow;
 		}
 		multi link followers := .<following[is User];
+		multi link followers_you_know := (select .followers filter User.followers in (
+			select detached User filter .id = global current_user_id
+		).following);
 		multi link tweets := .<user[is BaseTweet];
 		multi link likes extending has::created_at -> BaseTweet {
 			on target delete allow;
@@ -35,6 +33,7 @@ module default {
 		property is_followed := (global current_user_id in .followers.id) ?? false;
 		property num_following := count(.following);
 		property num_followers := count(.followers);
+		property num_followers_you_know := count(.followers_you_know);
 		property num_tweets := count(.tweets);
 	}
 

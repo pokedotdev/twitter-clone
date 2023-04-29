@@ -96,6 +96,9 @@ export default function ProfileLayout() {
 						<Text weight={7}>{profile.num_followers}</Text> <Text color="gray">Followers</Text>
 					</Link>
 				</div>
+
+				{/* Followers you know */}
+				<SomeFollowersYouKnow />
 			</div>
 
 			{/* Tabs */}
@@ -103,7 +106,7 @@ export default function ProfileLayout() {
 				list={[
 					{ label: 'Tweets', to: '', end: true },
 					// TODO: implement replies & media tabs
-					// { label: 'Tweets & replies', to: 'with_replies' },
+					// { label: 'Replies', to: 'with_replies' },
 					// { label: 'Media', to: 'media' },
 					{ label: 'Likes', to: 'likes' },
 				]}
@@ -112,5 +115,33 @@ export default function ProfileLayout() {
 			{/* Feed */}
 			<Outlet />
 		</div>
+	)
+}
+
+const SomeFollowersYouKnow = () => {
+	const profile = useProfile()
+	if (profile.is_own || !profile.num_followers_you_know) return null
+	let list = profile.some_followers_you_know.slice(0, 3)
+	const count = profile.num_followers_you_know
+	const text =
+		count > 3
+			? `${list.map((u) => u.name).join(', ')} and ${count - 3} others you follow`
+			: new Intl.ListFormat('en-US').format(list.map((u) => u.name))
+	return (
+		<Link to="followers_you_follow" className="group my-3 flex items-center gap-3">
+			<div className="flex -space-x-2.5">
+				{profile.some_followers_you_know.map((follower, i) => (
+					<Avatar
+						key={follower.username}
+						src={follower.avatarUrl}
+						alt={follower.username}
+						size="xs"
+						className="bg-white ring ring-white"
+						style={{ zIndex: i * -1 }}
+					/>
+				))}
+			</div>
+			<span className="text-gray text-sm group-hover:underline">Followed by {text}</span>
+		</Link>
 	)
 }

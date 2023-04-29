@@ -1,6 +1,6 @@
 import { createClient } from 'edgedb'
 
-import e from './edgeql-js'
+import e from './codegen/edgeql'
 
 const client = createClient()
 

@@ -156,7 +156,7 @@ function abs<
 ): absλFuncExpr<P1>;
 function abs(...args: any[]) {
   const {returnType, cardinality, args: positionalArgs, namedArgs} = _.syntax.$resolveOverload('math::abs', args, _.spec, [
-    {args: [{typeId: "1b3a7346-1506-11ed-8459-39845123b8a2", optional: false, setoftype: false, variadic: false}], returnTypeId: "1b3a7346-1506-11ed-8459-39845123b8a2"},
+    {args: [{typeId: "183d094a-b413-11ed-80cf-e3758dcf22a8", optional: false, setoftype: false, variadic: false}], returnTypeId: "183d094a-b413-11ed-80cf-e3758dcf22a8"},
   ]);
   return _.syntax.$expressionify({
     __kind__: $.ExpressionKind.Function,
@@ -380,12 +380,12 @@ function stddev_pop(...args: any[]) {
   }) as any;
 };
 
-type var_224e918a150611eda4398b5f21ab4acaλFuncExpr<
+type var_1f6a9516b41311edaa9bbbcb4cc897baλFuncExpr<
   P1 extends _.castMaps.orScalarLiteral<$.TypeSet<_std.$number>>,
 > = $.$expr_Function<
   _std.$number, $.cardutil.overrideLowerBound<$.Cardinality.One, 'Zero'>
 >;
-type var_224e918a150611eda4398b5f21ab4acaλFuncExpr2<
+type var_1f6a9516b41311edaa9bbbcb4cc897baλFuncExpr2<
   P1 extends _.castMaps.orScalarLiteral<$.TypeSet<_std.$decimalλICastableTo>>,
 > = $.$expr_Function<
   _std.$decimal, $.cardutil.overrideLowerBound<$.Cardinality.One, 'Zero'>
@@ -393,20 +393,20 @@ type var_224e918a150611eda4398b5f21ab4acaλFuncExpr2<
 /**
  * Return the sample variance of the input set.
  */
-function var_224e918a150611eda4398b5f21ab4aca<
+function var_1f6a9516b41311edaa9bbbcb4cc897ba<
   P1 extends _.castMaps.orScalarLiteral<$.TypeSet<_std.$number>>,
 >(
   vals: P1,
-): var_224e918a150611eda4398b5f21ab4acaλFuncExpr<P1>;
+): var_1f6a9516b41311edaa9bbbcb4cc897baλFuncExpr<P1>;
 /**
  * Return the sample variance of the input set.
  */
-function var_224e918a150611eda4398b5f21ab4aca<
+function var_1f6a9516b41311edaa9bbbcb4cc897ba<
   P1 extends _.castMaps.orScalarLiteral<$.TypeSet<_std.$decimalλICastableTo>>,
 >(
   vals: P1,
-): var_224e918a150611eda4398b5f21ab4acaλFuncExpr2<P1>;
-function var_224e918a150611eda4398b5f21ab4aca(...args: any[]) {
+): var_1f6a9516b41311edaa9bbbcb4cc897baλFuncExpr2<P1>;
+function var_1f6a9516b41311edaa9bbbcb4cc897ba(...args: any[]) {
   const {returnType, cardinality, args: positionalArgs, namedArgs} = _.syntax.$resolveOverload('math::var', args, _.spec, [
     {args: [{typeId: "00000000-0000-0000-0000-0000000001ff", optional: false, setoftype: true, variadic: false}], returnTypeId: "00000000-0000-0000-0000-0000000001ff", returnTypemod: "OptionalType"},
     {args: [{typeId: "00000000-0000-0000-0000-000000000108", optional: false, setoftype: true, variadic: false}], returnTypeId: "00000000-0000-0000-0000-000000000108", returnTypemod: "OptionalType"},
@@ -474,7 +474,7 @@ type __defaultExports = {
   "mean": typeof mean;
   "stddev": typeof stddev;
   "stddev_pop": typeof stddev_pop;
-  "var": typeof var_224e918a150611eda4398b5f21ab4aca;
+  "var": typeof var_1f6a9516b41311edaa9bbbcb4cc897ba;
   "var_pop": typeof var_pop
 };
 const __defaultExports: __defaultExports = {
@@ -487,7 +487,7 @@ const __defaultExports: __defaultExports = {
   "mean": mean,
   "stddev": stddev,
   "stddev_pop": stddev_pop,
-  "var": var_224e918a150611eda4398b5f21ab4aca,
+  "var": var_1f6a9516b41311edaa9bbbcb4cc897ba,
   "var_pop": var_pop
 };
 export default __defaultExports;
