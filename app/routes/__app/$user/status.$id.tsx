@@ -3,34 +3,34 @@ import { useFetcher, Link, useLoaderData } from '~/remix'
 import { badRequest, notFound } from 'remix-utils'
 
 import { Avatar, Text, Button, Icon } from '~/components'
-import { findTweetById } from '~/models/tweet.server'
+import { findPostById } from '~/models/post.server'
 import { getContext } from '~/models/user.server'
 import { useOptionalUser } from '~/utils'
 
 export async function loader({ request, params }: LoaderArgs) {
 	if (!params.id) throw badRequest({ message: 'param ID required' })
 	const ctx = await getContext(request)
-	const tweet = await findTweetById({ id: params.id }, ctx)
-	if (!tweet) throw notFound({ message: 'Tweet not found' })
+	const post = await findPostById({ id: params.id }, ctx)
+	if (!post) throw notFound({ message: 'Post not found' })
 
-	return { tweet }
+	return { post }
 }
 
-export const handle = { header: { title: 'Tweet' } }
+export const handle = { header: { title: 'Post' } }
 
-export default function TweetRoute() {
-	const { tweet } = useLoaderData<typeof loader>()
+export default function PostRoute() {
+	const { post } = useLoaderData<typeof loader>()
 	const user = useOptionalUser()
 	const fetcher = useFetcher()
 
 	return (
 		<div>
 			<article className="mt-3.5 px-5">
-				<Link to={`/${tweet.user.username}`} className="flex gap-3.5">
-					<Avatar src={tweet.user.avatarUrl} alt={tweet.user.username} size="lg" />
+				<Link to={`/${post.user.username}`} className="flex gap-3.5">
+					<Avatar src={post.user.avatarUrl} alt={post.user.username} size="lg" />
 					<div className="flex flex-col justify-center text-lg leading-tight">
-						<span className="font-bold hover:underline">{tweet.user.name}</span>
-						<Text color="gray">{'@' + tweet.user.username}</Text>
+						<span className="font-bold hover:underline">{post.user.name}</span>
+						<Text color="gray">{'@' + post.user.username}</Text>
 					</div>
 				</Link>
 				{/* Content */}
@@ -42,12 +42,12 @@ export default function TweetRoute() {
 							whiteSpace: 'pre-wrap',
 						}}
 					>
-						{tweet.body}
+						{post.body}
 					</span>
 				</div>
 				{/* info */}
 				<div className="text-gray my-5 text-lg leading-tight">
-					{new Date(tweet.created_at).toLocaleString('en-US', {
+					{new Date(post.created_at).toLocaleString('en-US', {
 						hour: 'numeric',
 						minute: '2-digit',
 						hour12: true,
@@ -57,39 +57,39 @@ export default function TweetRoute() {
 					})}
 				</div>
 				{/* stats */}
-				{tweet.num_likes ? (
+				{post.num_likes ? (
 					<ul className="flex h-14 items-center border-t px-1.5 text-lg">
 						<li>
-							<strong>{tweet.num_likes}</strong> <span className="text-gray">Likes</span>
+							<strong>{post.num_likes}</strong> <span className="text-gray">Likes</span>
 						</li>
 					</ul>
 				) : null}
 				{/* actions */}
 				<fetcher.Form
-					action="/actions/tweet"
+					action="/actions/post"
 					method="post"
 					className="flex h-14 items-center justify-around border-y text-gray-500"
 				>
-					<input type="hidden" name="tweet" value={tweet.id} />
+					<input type="hidden" name="post" value={post.id} />
 					{/* Comments */}
 					<Button variant="ghost" color="primary" square disabled>
 						<Icon name="comment" size="lg" />
 					</Button>
-					{/* Retweets */}
+					{/* Reposts */}
 					<Button variant="ghost" color="green" square disabled>
-						<Icon name="retweet" size="lg" />
+						<Icon name="repost" size="lg" />
 					</Button>
 					{/* Likes */}
 					<Button
 						type={user ? 'submit' : 'button'}
 						name="action"
-						value={tweet.is_liked ? 'unlike' : 'like'}
+						value={post.is_liked ? 'unlike' : 'like'}
 						variant="ghost"
 						color="red"
 						square
-						active={tweet.is_liked}
+						active={post.is_liked}
 					>
-						<Icon name={tweet.is_liked ? 'like_fill' : 'like'} size="lg" />
+						<Icon name={post.is_liked ? 'like_fill' : 'like'} size="lg" />
 					</Button>
 					{/* Share */}
 					<Button variant="ghost" color="primary" square disabled>

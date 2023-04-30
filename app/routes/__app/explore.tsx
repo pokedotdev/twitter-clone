@@ -19,7 +19,7 @@ export default function Explore() {
 			<Tabs
 				list={[
 					{
-						label: 'Latest Tweets',
+						label: 'Latest Posts',
 						to: '',
 						end: true,
 					},

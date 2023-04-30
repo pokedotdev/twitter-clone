@@ -1,9 +1,9 @@
 import type { Context, $infer } from '~/lib/db.server'
 import { client, e, globals } from '~/lib/db.server'
 
-export type TweetCardFieldsType = $infer<typeof selectTweets>[0]
+export type PostCardFieldsType = $infer<typeof selectPosts>[0]
 
-const baseTweetShape = e.shape(e.Post, () => ({
+const basePostShape = e.shape(e.Post, () => ({
 	tag: true,
 	id: true,
 	created_at: true,
@@ -14,13 +14,13 @@ const baseTweetShape = e.shape(e.Post, () => ({
 	},
 	body: true,
 	is_liked: true,
-	is_retweeted: true,
+	is_reposted: true,
 	num_likes: true,
-	num_retweets: true,
+	num_reposts: true,
 	num_replies: true,
 }))
 
-export async function createTweet(data: { body: string }, ctx: Context) {
+export async function createPost(data: { body: string }, ctx: Context) {
 	const insert = e.insert(e.Post, {
 		...data,
 		user: globals.currentUser,
@@ -28,15 +28,15 @@ export async function createTweet(data: { body: string }, ctx: Context) {
 	return insert.run(client.withGlobals(ctx))
 }
 
-export async function findTweetById(data: { id: string }, ctx: Context) {
-	const query = e.select(e.Post, (tweet) => ({
+export async function findPostById(data: { id: string }, ctx: Context) {
+	const query = e.select(e.Post, (post) => ({
 		filter_single: { id: data.id },
-		...baseTweetShape(tweet),
+		...basePostShape(post),
 	}))
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function likeTweet(data: { id: string; remove?: boolean }, ctx: Context) {
+export async function likePost(data: { id: string; remove?: boolean }, ctx: Context) {
 	const post = e.select(e.Post, () => ({ filter_single: { id: data.id } }))
 	if (data.remove) {
 		const remove_like = e.delete(e.PostLike, () => ({
@@ -48,57 +48,57 @@ export async function likeTweet(data: { id: string; remove?: boolean }, ctx: Con
 	return like.run(client.withGlobals(ctx))
 }
 
-const selectTweets = e.select(e.Post, baseTweetShape)
+const selectPosts = e.select(e.Post, basePostShape)
 
-export async function getTweets(ctx: Context) {
-	const query = e.select(e.Post, (tweet) => ({
+export async function getPosts(ctx: Context) {
+	const query = e.select(e.Post, (post) => ({
 		order_by: {
-			expression: tweet.created_at,
+			expression: post.created_at,
 			direction: e.DESC,
 		},
-		...baseTweetShape(tweet),
+		...basePostShape(post),
 	}))
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getHomeTweets(ctx: Context) {
-	const query = e.select(e.Post, (tweet) => ({
+export async function getHomeFeed(ctx: Context) {
+	const query = e.select(e.Post, (post) => ({
 		filter: e.op(
-			e.op(tweet.user, 'in', globals.currentUser.following),
+			e.op(post.user, 'in', globals.currentUser.following),
 			'or',
-			e.op(tweet.user, '=', globals.currentUser),
+			e.op(post.user, '=', globals.currentUser),
 		),
 		order_by: {
-			expression: tweet.created_at,
+			expression: post.created_at,
 			direction: e.DESC,
 		},
-		...baseTweetShape(tweet),
+		...basePostShape(post),
 	}))
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getUserTweets(data: { username: string }, ctx: Context) {
+export async function getUserPosts(data: { username: string }, ctx: Context) {
 	const filter = e.select(e.User, () => ({
 		filter_single: { username: data.username },
-	})).tweets
-	const query = e.select(filter, (tweet) => ({
+	})).posts
+	const query = e.select(filter, (post) => ({
 		order_by: {
-			expression: tweet.created_at,
+			expression: post.created_at,
 			direction: e.DESC,
 		},
-		...baseTweetShape(tweet),
+		...basePostShape(post),
 	}))
 	return query.run(client.withGlobals(ctx))
 }
 
-export async function getUserLikedTweets(data: { username: string }, ctx: Context) {
+export async function getUserLikedPosts(data: { username: string }, ctx: Context) {
 	const user = e.select(e.User, () => ({ filter_single: { username: data.username } }))
 	const likes = e.select(user.likes, (item) => ({
 		order_by: {
 			expression: item.created_at,
 			direction: 'DESC',
 		},
-		post: baseTweetShape,
+		post: basePostShape,
 	}))
 	const res = await likes.run(client.withGlobals(ctx))
 	return res.map((item) => item.post)

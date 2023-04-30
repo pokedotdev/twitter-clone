@@ -1,17 +1,17 @@
 import { useLoaderData, json, redirect } from '~/remix'
 import type { LoaderArgs } from '~/remix'
 
-import { TweetForm, TweetList } from '~/components'
+import { PostForm, PostList } from '~/components'
 import { useOptionalUser } from '~/utils'
 import { getContext } from '~/models/user.server'
-import { getHomeTweets } from '~/models/tweet.server'
+import { getHomeFeed } from '~/models/post.server'
 
 export async function loader({ request }: LoaderArgs) {
 	const ctx = await getContext(request)
 	if (!ctx.current_user_id) throw redirect('/explore')
-	const tweets = await getHomeTweets(ctx)
+	const posts = await getHomeFeed(ctx)
 	return json({
-		tweets,
+		posts,
 	})
 }
 
@@ -29,11 +29,11 @@ export default function Home() {
 		<div>
 			{user && (
 				<>
-					<TweetForm />
+					<PostForm />
 					<div className="my-[5px] h-0 border-b border-gray-200" />
 				</>
 			)}
-			<TweetList list={data.tweets} />
+			<PostList list={data.posts} />
 		</div>
 	)
 }

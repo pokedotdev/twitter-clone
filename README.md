@@ -6,19 +6,19 @@ Twitter clone made with Remix, EdgeDB & UnoCSS.
 
 ### Features
 
-- Signup/Login (With GitHub OAuth)
-- Create tweets
-- Follow people
-- Like tweets
-- View tweets from people you follow
-- View profile
+- Authentication (GitHub)
+- Creating Posts
+- Post Lists
+- Post Likes
+- User Profiles
+- Follow User
 
 ### Upcoming features
 
-- Edit profile
-- Retweet & Reply to tweets
+- Edit Profile
+- Repost & Post Comments
 - Hashtags & Mentions
-- Search tweets & people
+- Search for Posts & Users
 - Dark Mode
 - Optimistic UI
 - Cache (for faster loading)

@@ -23,7 +23,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 		profile,
 		header: {
 			title: profile.name,
-			subtitle: profile.num_tweets + ' tweets',
+			subtitle: profile.num_posts + ' posts',
 		},
 	})
 }

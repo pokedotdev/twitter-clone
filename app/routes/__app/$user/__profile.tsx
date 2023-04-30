@@ -104,7 +104,7 @@ export default function ProfileLayout() {
 			{/* Tabs */}
 			<Tabs
 				list={[
-					{ label: 'Tweets', to: '', end: true },
+					{ label: 'Posts', to: '', end: true },
 					// TODO: implement replies & media tabs
 					// { label: 'Replies', to: 'with_replies' },
 					// { label: 'Media', to: 'media' },

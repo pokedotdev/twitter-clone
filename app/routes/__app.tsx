@@ -58,7 +58,7 @@ export default function App() {
 }
 
 const AuthBanner = () => (
-	<div className="bg-primary-500 fixed bottom-0 z-40 w-full py-4 px-6 text-white">
+	<div className="bg-primary-500 fixed bottom-0 z-40 w-full px-6 py-4 text-white">
 		<div className="mx-auto flex max-w-7xl items-center justify-center md:justify-between">
 			<div className="hidden flex-col md:inline-flex">
 				<span className="text-2xl font-bold">Don’t miss what’s happening</span>

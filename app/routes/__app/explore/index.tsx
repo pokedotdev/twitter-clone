@@ -1,18 +1,18 @@
 import type { LoaderArgs } from '~/remix'
 import { json, useLoaderData } from '~/remix'
 
-import { TweetList } from '~/components'
-import { getTweets } from '~/models/tweet.server'
+import { PostList } from '~/components'
+import { getPosts } from '~/models/post.server'
 import { getContext } from '~/models/user.server'
 
 export async function loader({ request }: LoaderArgs) {
 	const ctx = await getContext(request)
-	const tweets = await getTweets(ctx)
-	return json({ tweets })
+	const posts = await getPosts(ctx)
+	return json({ posts })
 }
 
-export default function LatestTweetsRoute() {
+export default function LatestPostsRoute() {
 	const data = useLoaderData<typeof loader>()
 
-	return <TweetList list={data.tweets} />
+	return <PostList list={data.posts} />
 }

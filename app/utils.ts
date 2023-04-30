@@ -65,22 +65,22 @@ export const MS = {
 	DAY: 1000 * 60 * 60 * 24,
 } as const
 
-export function getTimeSinceTweet(tweetDate: Date): string {
+export function getTimeSincePost(postDate: Date): string {
 	const currentDate = new Date()
-	const diff = currentDate.getTime() - tweetDate.getTime()
+	const diff = currentDate.getTime() - postDate.getTime()
 
 	if (diff < MS.SECOND) return '1s'
 	if (diff < MS.MINUTE) return Math.floor(diff / MS.SECOND) + 's'
 	if (diff < MS.HOUR) return Math.floor(diff / MS.MINUTE) + 'm'
 	if (diff < MS.DAY) return Math.floor(diff / MS.HOUR) + 'h'
 
-	const isCurrentYear = tweetDate.getFullYear() === currentDate.getFullYear()
+	const isCurrentYear = postDate.getFullYear() === currentDate.getFullYear()
 	const options: Intl.DateTimeFormatOptions = {
 		month: 'short',
 		day: 'numeric',
 		year: isCurrentYear ? undefined : 'numeric',
 	}
-	return new Intl.DateTimeFormat('en-US', options).format(tweetDate)
+	return new Intl.DateTimeFormat('en-US', options).format(postDate)
 }
 
 export function removeExtraBreakLines(text: string) {

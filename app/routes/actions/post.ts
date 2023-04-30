@@ -5,9 +5,9 @@ import { z } from 'zod'
 import { zx } from 'zodix'
 import { redirectBack } from 'remix-utils'
 
-import { createTweet, likeTweet } from '~/models/tweet.server'
+import { createPost, likePost } from '~/models/post.server'
 import { getContextRequired } from '~/models/user.server'
-import { TweetFormValidator } from '~/components'
+import { PostFormValidator } from '~/components'
 
 export async function loader() {
 	return redirect('/')
@@ -21,7 +21,7 @@ export async function action({ request }: ActionArgs) {
 	})
 	const likeSchema = z.object({
 		action: z.enum(['like', 'unlike']),
-		tweet: z.string().uuid(),
+		post: z.string().uuid(),
 	})
 	const data = await zx.parseForm(
 		formData,
@@ -32,15 +32,15 @@ export async function action({ request }: ActionArgs) {
 
 	switch (data.action) {
 		case 'create': {
-			const fieldValues = await TweetFormValidator.validate(formData)
+			const fieldValues = await PostFormValidator.validate(formData)
 			if (fieldValues.error) return validationError(fieldValues.error)
 			const { body } = fieldValues.data
-			await createTweet({ body }, ctx)
+			await createPost({ body }, ctx)
 			return redirectBack(request, { fallback: '/home' })
 		}
 		case 'like':
 		case 'unlike': {
-			await likeTweet({ id: data.tweet, remove: data.action === 'unlike' }, ctx)
+			await likePost({ id: data.post, remove: data.action === 'unlike' }, ctx)
 			return redirectBack(request, { fallback: '/home' })
 		}
 	}

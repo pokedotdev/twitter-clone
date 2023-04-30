@@ -31,7 +31,7 @@ async function seed() {
 		})
 		.run(client)
 
-	// create tweets
+	// create posts
 	await e
 		.set(
 			e.insert(e.Post, {
@@ -39,7 +39,7 @@ async function seed() {
 				user,
 			}),
 			e.insert(e.Post, {
-				body: 'Second tweet',
+				body: 'Second post',
 				user,
 			}),
 		)

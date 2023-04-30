@@ -11,4 +11,4 @@ export * from './cards'
 
 export * from './account-menu'
 export * from './route-header'
-export * from './tweet-form'
+export * from './post'

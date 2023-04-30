@@ -24,7 +24,7 @@ const baseUserShape = e.shape(e.User, () => ({
 	is_followed: true,
 	num_following: true,
 	num_followers: true,
-	num_tweets: true,
+	num_posts: true,
 }))
 
 export async function getUserId(request: Request) {

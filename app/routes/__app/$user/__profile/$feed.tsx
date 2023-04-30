@@ -2,27 +2,27 @@ import type { LoaderArgs } from '~/remix'
 import { json, useLoaderData } from '~/remix'
 
 import { getContext } from '~/models/user.server'
-import * as TweetModel from '~/models/tweet.server'
-import { TweetList } from '~/components'
+import * as PostModel from '~/models/post.server'
+import { PostList } from '~/components'
 
 export async function loader({ params, request }: LoaderArgs) {
-	let tweets: TweetModel.TweetCardFieldsType[] = []
+	let posts: PostModel.PostCardFieldsType[] = []
 
 	const { user: username, feed } = params
-	if (!username) return json({ tweets })
+	if (!username) return json({ posts })
 
 	const ctx = await getContext(request)
 
-	if (feed === undefined) tweets = await TweetModel.getUserTweets({ username }, ctx)
-	else if (feed === 'with_replies') tweets = []
-	else if (feed === 'media') tweets = []
-	else if (feed === 'likes') tweets = await TweetModel.getUserLikedTweets({ username }, ctx)
+	if (feed === undefined) posts = await PostModel.getUserPosts({ username }, ctx)
+	else if (feed === 'with_replies') posts = []
+	else if (feed === 'media') posts = []
+	else if (feed === 'likes') posts = await PostModel.getUserLikedPosts({ username }, ctx)
 
-	return json({ tweets })
+	return json({ posts })
 }
 
 export default function UserFeedRoute() {
 	const data = useLoaderData<typeof loader>()
 
-	return <TweetList list={data.tweets} />
+	return <PostList list={data.posts} />
 }

@@ -61,18 +61,18 @@ export interface Post extends has.CreatedAt {
   "quote"?: Post | null;
   "user": User;
   "replied_to"?: Post | null;
-  "retweet"?: Post | null;
   "num_likes": number;
   "quotes": Post[];
   "replies": Post[];
   "num_replies": number;
-  "retweets": Post[];
-  "is_retweeted": boolean;
-  "num_retweets": number;
   "is_own": boolean;
   "tag": string;
   "likes": PostLike[];
   "is_liked": boolean;
+  "repost"?: Post | null;
+  "reposts": Post[];
+  "is_reposted": boolean;
+  "num_reposts": number;
 }
 export interface PostLike extends has.CreatedAt {
   "post": Post;
@@ -87,8 +87,6 @@ export interface User extends has.CreatedAt {
   "location"?: string | null;
   "provider": {name: string, id: string};
   "website"?: string | null;
-  "tweets": Post[];
-  "num_tweets": number;
   "following": User[];
   "is_followed": boolean;
   "num_followers": number;
@@ -98,6 +96,8 @@ export interface User extends has.CreatedAt {
   "name": string;
   "username": string;
   "likes": PostLike[];
+  "posts": Post[];
+  "num_posts": number;
 }
 export namespace schema {
   export type AccessKind = "Select" | "UpdateRead" | "UpdateWrite" | "Delete" | "Insert";

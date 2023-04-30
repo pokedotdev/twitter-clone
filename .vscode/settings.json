@@ -11,7 +11,9 @@
 		"**/node_modules/**": true,
 		"**/.cache/**": true,
 		"**/build/**": true,
-		"**/public/build/**": true
+		"**/public/build/**": true,
+		"**/dbschema/codegen/**": true,
+		"**/dbschema/migrations/**": true
 	},
 	"files.exclude": {
 		"node_modules": true,
