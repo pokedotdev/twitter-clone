@@ -34,11 +34,11 @@ async function seed() {
 	// create tweets
 	await e
 		.set(
-			e.insert(e.Tweet, {
+			e.insert(e.Post, {
 				body: 'Hello, world!',
 				user,
 			}),
-			e.insert(e.Tweet, {
+			e.insert(e.Post, {
 				body: 'Second tweet',
 				user,
 			}),

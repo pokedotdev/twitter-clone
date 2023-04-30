@@ -24,10 +24,8 @@ module default {
 		multi link followers_you_know := (select .followers filter User.followers in (
 			select detached User filter .id = global current_user_id
 		).following);
-		multi link tweets := .<user[is BaseTweet];
-		multi link likes extending has::created_at -> BaseTweet {
-			on target delete allow;
-		}
+		multi link tweets := .<user[is Post];
+		multi link likes := .<user[is PostLike];
 
 		property is_own := (.id ?= global current_user_id);
 		property is_followed := (global current_user_id in .followers.id) ?? false;
@@ -37,47 +35,33 @@ module default {
 		property num_tweets := count(.tweets);
 	}
 
-	abstract type BaseTweet extending has::CreatedAt {
-		property body -> str {
-			constraint min_len_value(1);
-			constraint max_len_value(280);
-		}
+	type Post extending has::CreatedAt {
+		required link user -> User { on target delete delete source; }
+		property body -> str { constraint min_len_value(1); constraint max_len_value(280); }
+		link quote -> Post { on target delete allow }
+		link retweet -> Post { on target delete delete source }
+		link replied_to -> Post { on target delete allow }
 
-		required link user -> User {
-			on target delete delete source;
-		}
-		link quote -> BaseTweet {
-			on target delete allow;
-		}
-		multi link likes := .<likes[is User];
-		multi link retweets := .<quote[is BaseTweet];
-		multi link replies := .<replied_to[is Reply];
+		multi link likes := .<post[is PostLike];
+		multi link quotes := .<quote[is Post];
+		multi link retweets := .<retweet[is Post];
+		multi link replies := .<replied_to[is Post];
 
 		property tag := str_split(.__type__.name, '::')[1];
 		property is_own := (.user.id ?= global current_user_id);
-		property is_liked := (global current_user_id in .likes.id) ?? false;
+		property is_liked := (global current_user_id in .likes.user.id) ?? false;
 		property is_retweeted := (global current_user_id in .retweets.user.id) ?? false;
 		property num_likes := count(.likes);
 		property num_retweets := count(.retweets);
 		property num_replies := count(.replies);
+
+		# constraint exclusive on ((.user, .body, .quote, .replied_to, .retweet));
 	}
 
-	type Tweet extending BaseTweet {
-		constraint exclusive on ((.user, .body, .quote));
-	}
-
-	type Retweet extending BaseTweet {
-		overloaded required link quote -> BaseTweet {
-			on target delete delete source;
-		}
-		constraint exclusive on ((.user, .quote));
-	}
-
-	type Reply extending BaseTweet {
-		required link replied_to -> BaseTweet {
-			on target delete delete source;
-		}
-		constraint exclusive on ((.user, .body, .quote, .replied_to));
+	type PostLike extending has::CreatedAt {
+		required link user -> User { on target delete delete source }
+		required link post -> Post { on target delete delete source }
+		constraint exclusive on ((.user, .post));
 	}
 
 }
