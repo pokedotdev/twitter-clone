@@ -33,33 +33,40 @@ First install the cli via the [EdgeDB installation guide](https://www.edgedb.com
 edgedb project init # Initialize a local db instance
 ```
 
-This will install the latest version of EdgeDB, spin up an instance, and apply all migrations from `dbschema/migrations`.
+This creates an EdgeDB instance and applies all migrations from `dbschema/migrations`.
 
-### 2. Seed the database
+### 2. Codegen
+
+Generate code for EdgeDB, UnoCSS and Remix.
+```sh
+pnpm codegen
+```
+
+### 3. Seed the database
 
 ```sh
-npm run db:seed
+pnpm db:seed
 ```
 
 This creates a user with the username "test", in order to interact with it.
 
-### 3. GitHub OAuth
+### 4. GitHub OAuth
 
 Configure a [GitHub OAuth application](https://github.com/settings/applications/new) with "**Authorization callback URL**" as:
 ```txt
 http://localhost:3000/auth/callback/github
 ```
 
-### 4. Create `.env`
+### 5. Create `.env`
 
 Rename the file `.env.example` to `.env` and only change the values of the variables.
 
-### 5. Start the server
+### 6. Start the server
 
 This starts your app in development mode.
 
 ```sh
-npm run dev
+pnpm dev
 ```
 
 Go to [localhost:3000](http://localhost:3000), create an account with your GitHub account, and explore the application.

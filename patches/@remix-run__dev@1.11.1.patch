@@ -1,0 +1,24 @@
+diff --git a/dist/config/routesConvention.js b/dist/config/routesConvention.js
+index 66c5ef6f345d392d7255843f44a00aa2bf56c9db..97ec358406baca0e4d95831f341038f2f3c163a1 100644
+--- a/dist/config/routesConvention.js
++++ b/dist/config/routesConvention.js
+@@ -14,7 +14,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
+ 
+ var fs = require('fs');
+ var path = require('path');
++
+ var minimatch = require('minimatch');
++
+ var routes = require('./routes.js');
+ 
+ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+@@ -84,7 +86,8 @@ function defineConventionalRoutes(appDir, ignoredFilePatterns) {
+       let isIndexRoute = routeId.endsWith("/index");
+       let fullPath = createRoutePath(routeId.slice("routes".length + 1));
+       let uniqueRouteId = (fullPath || "") + (isIndexRoute ? "?index" : "");
+-      if (uniqueRouteId) {
++			let isPathlessLayoutRoute = routeId.split("/").pop()?.startsWith("__") === true;
++      if (uniqueRouteId && !isPathlessLayoutRoute) {
+         if (uniqueRoutes.has(uniqueRouteId)) {
+           throw new Error(`Path ${JSON.stringify(fullPath)} defined by route ${JSON.stringify(routeId)} conflicts with route ${JSON.stringify(uniqueRoutes.get(uniqueRouteId))}`);
+         } else {
