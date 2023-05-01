@@ -1,17 +1,17 @@
 import { Form } from '~/remix'
-import * as AriaKit from 'ariakit'
+import * as AK from '@ariakit/react'
 
 import { useUser } from '~/utils'
 import { Icon, Avatar, Text } from '~/components'
 
 export const AccountMenu = () => {
 	const user = useUser()
-	const popover = AriaKit.usePopoverState()
+	const popover = AK.usePopoverStore()
 
 	return (
 		<>
-			<AriaKit.PopoverDisclosure
-				state={popover}
+			<AK.PopoverDisclosure
+				store={popover}
 				className="relative flex w-full cursor-pointer select-none items-center rounded-full p-3.5 transition-colors hover:bg-gray-100 active:bg-gray-200"
 			>
 				<Avatar
@@ -31,10 +31,10 @@ export const AccountMenu = () => {
 					</div>
 					<Icon name="dots" size="md" />
 				</div>
-			</AriaKit.PopoverDisclosure>
-			<AriaKit.Popover state={popover}>
+			</AK.PopoverDisclosure>
+			<AK.Popover store={popover}>
 				<div className="w-72 drop-shadow-lg group-hover:block">
-					<AriaKit.PopoverArrow className="first:!fill-white" />
+					<AK.PopoverArrow className="first:!fill-white" />
 					<div className="flex rounded-xl border-t border-gray-100 bg-white py-3">
 						<Form action="/auth/logout" method="post" className="w-full">
 							<button className="w-full p-4 text-left text-lg leading-6 hover:bg-gray-100">
@@ -43,7 +43,7 @@ export const AccountMenu = () => {
 						</Form>
 					</div>
 				</div>
-			</AriaKit.Popover>
+			</AK.Popover>
 		</>
 	)
 }

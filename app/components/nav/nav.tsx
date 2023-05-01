@@ -76,7 +76,7 @@ const PostButton = () => {
 				<Icon name="pen" className="xl:hidden" size="xl" />
 			</Button>
 
-			<Dialog.Content state={dialog}>
+			<Dialog.Content store={dialog}>
 				<Dialog.Header />
 				<PostForm
 					onSubmit={() => {

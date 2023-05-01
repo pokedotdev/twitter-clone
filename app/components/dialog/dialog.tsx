@@ -1,28 +1,27 @@
 import * as React from 'react'
-import * as Dialog from 'ariakit/dialog'
-import type { DisclosureState } from 'ariakit'
+import * as AK from '@ariakit/react'
 
 import { Button, Text } from '~/components'
 
-export const useDialog = Dialog.useDialogState
+export const useDialog = AK.useDialogStore
 
 export const Content = ({
 	children,
-	state,
+	store,
 }: {
 	children: React.ReactNode
-	state: DisclosureState
+	store: AK.DialogStore
 }) => {
 	return (
-		<Dialog.Dialog
-			state={state}
+		<AK.Dialog
+			store={store}
 			className="z-50 mx-auto h-screen w-full bg-white md:mt-[5%] md:h-auto md:max-w-[600px] md:rounded-2xl"
 			backdropProps={{
 				className: 'bg-black/50',
 			}}
 		>
 			{children}
-		</Dialog.Dialog>
+		</AK.Dialog>
 	)
 }
 
@@ -40,9 +39,9 @@ export const Header = ({
 }>) => {
 	return (
 		<header className="flex h-16 w-full items-center justify-between px-2">
-			<Button as={Dialog.DialogDismiss} variant="ghost" icon="close" />
+			<Button as={AK.DialogDismiss} variant="ghost" icon="close" />
 			{title && (
-				<Text as={Dialog.DialogHeading} size="xl" weight={7} className="flex-auto pl-8">
+				<Text as={AK.DialogHeading} size="xl" weight={7} className="flex-auto pl-8">
 					{title}
 				</Text>
 			)}
@@ -52,5 +51,5 @@ export const Header = ({
 }
 
 export const Description = ({ children }: React.PropsWithChildren<{}>) => {
-	return <Dialog.DialogDescription>{children}</Dialog.DialogDescription>
+	return <AK.DialogDescription>{children}</AK.DialogDescription>
 }
