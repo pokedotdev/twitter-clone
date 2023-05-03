@@ -12,7 +12,7 @@ export const AccountMenu = () => {
 		<>
 			<AK.PopoverDisclosure
 				store={popover}
-				className="relative flex w-full cursor-pointer select-none items-center rounded-full p-3.5 transition-colors hover:bg-gray-100 active:bg-gray-200"
+				className="flex-center relative w-full cursor-pointer select-none rounded-full p-2 transition-colors hover:bg-gray-100 active:bg-gray-200 xl:p-3.5"
 			>
 				<Avatar
 					size="sm"

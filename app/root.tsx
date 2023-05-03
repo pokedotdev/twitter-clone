@@ -4,14 +4,11 @@ import reset from '@unocss/reset/tailwind.css'
 
 import unocss from '~/styles/uno.css'
 import { getUser } from '~/models/user.server'
-import { Button } from '~/components'
 
-export const links: LinksFunction = () => {
-	return [
-		{ rel: 'stylesheet', href: reset },
-		{ rel: 'stylesheet', href: unocss },
-	]
-}
+export const links: LinksFunction = () => [
+	{ rel: 'stylesheet', href: reset },
+	{ rel: 'stylesheet', href: unocss },
+]
 
 export const meta: MetaFunction = () => ({
 	charset: 'utf-8',
@@ -32,7 +29,7 @@ function Document({ children }: { children: React.ReactNode }) {
 				<Meta />
 				<Links />
 			</head>
-			<body>
+			<body className="bg-base text-base">
 				{children}
 				<ScrollRestoration />
 				<Scripts />
@@ -58,15 +55,17 @@ export function ErrorBoundary() {
 					<h1 className="text-6xl font-bold">Oops :(</h1>
 					<p className="text-2xl text-gray-500">an error has occurred on the server</p>
 					<div className="flex gap-2">
-						<a href="/">
-							<Button as="div" variant="fill" color="primary">
-								Go to home
-							</Button>
+						<a href="/" className="btn solid primary">
+							Go to home
 						</a>
-						<a href="https://github.com/pokedotdev/twitter-clone" target="_blank" rel="noreferrer">
-							<Button as="div" icon="github">
-								See repo
-							</Button>
+						<a
+							href="https://github.com/pokedotdev/twitter-clone"
+							target="_blank"
+							rel="noreferrer"
+							className="btn solid dark pl-0"
+						>
+							<span className="icon i-github text-2xl" />
+							See repo
 						</a>
 					</div>
 				</div>

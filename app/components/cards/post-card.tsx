@@ -1,7 +1,7 @@
 import { Link, useFetcher } from '~/remix'
 import * as React from 'react'
 
-import { Avatar, Button, Text } from '~/components'
+import { Avatar, Text } from '~/components'
 import { getTimeSincePost, MS, useOptionalUser } from '~/utils'
 
 export const useTimeAgo = (date: Date) => {
@@ -74,40 +74,38 @@ export const Post = ({ post }: { post: any }) => {
 					<fetcher.Form
 						action="/actions/post"
 						method="post"
-						className="my-1 flex justify-between text-gray-500"
+						className="text-gray my-1 flex justify-between"
 					>
 						<input type="hidden" name="post" value={post.id} />
 						{/* Comments */}
 						<span className="-ml-1 flex-1">
-							<Button
-								className="relative"
-								variant="ghost"
-								color="primary"
-								icon="comment"
-								disabled
-							/>
+							<button className="btn-icon i-comment ghost primary" disabled />
 						</span>
 						{/* Reposts */}
 						<span className="flex-1">
-							<Button className="relative" variant="ghost" color="green" icon="repost" disabled />
+							<button className="btn-icon i-repost ghost green" disabled />
 						</span>
 						{/* Likes */}
-						<span className="flex flex-1 items-center gap-1">
-							<Button
-								className="relative"
+						<div className="flex-1">
+							<button
 								type={user ? 'submit' : 'button'}
 								name="action"
 								value={post.is_liked ? 'unlike' : 'like'}
-								variant="ghost"
-								color="red"
-								icon={post.is_liked ? 'like_fill' : 'like'}
-								active={post.is_liked}
-							/>
-							{post.num_likes}
-						</span>
+								className={`rose hover:text-$color relative flex flex-1 items-center gap-1 rounded-full pr-2 ${
+									post.is_liked ? 'text-$color' : ''
+								}`}
+							>
+								<span
+									className={`btn-icon ghost ${
+										post.is_liked ? 'i-like_fill text-$color' : 'i-like'
+									}`}
+								/>
+								{post.num_likes || ''}
+							</button>
+						</div>
 						{/* Share */}
 						<span className="flex-1">
-							<Button className="relative" variant="ghost" color="primary" icon="share" disabled />
+							<button className="btn-icon i-share ghost primary" disabled />
 						</span>
 					</fetcher.Form>
 				</div>

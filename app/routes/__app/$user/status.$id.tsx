@@ -2,7 +2,7 @@ import type { LoaderArgs } from '~/remix'
 import { useFetcher, Link, useLoaderData } from '~/remix'
 import { badRequest, notFound } from 'remix-utils'
 
-import { Avatar, Text, Button, Icon } from '~/components'
+import { Avatar, Text } from '~/components'
 import { findPostById } from '~/models/post.server'
 import { getContext } from '~/models/user.server'
 import { useOptionalUser } from '~/utils'
@@ -72,29 +72,20 @@ export default function PostRoute() {
 				>
 					<input type="hidden" name="post" value={post.id} />
 					{/* Comments */}
-					<Button variant="ghost" color="primary" square disabled>
-						<Icon name="comment" size="lg" />
-					</Button>
+					<button className="btn-icon i-comment ghost primary text-[1.7rem]" disabled />
 					{/* Reposts */}
-					<Button variant="ghost" color="green" square disabled>
-						<Icon name="repost" size="lg" />
-					</Button>
+					<button className="btn-icon i-repost ghost green text-[1.7rem]" disabled />
 					{/* Likes */}
-					<Button
+					<button
 						type={user ? 'submit' : 'button'}
 						name="action"
 						value={post.is_liked ? 'unlike' : 'like'}
-						variant="ghost"
-						color="red"
-						square
-						active={post.is_liked}
-					>
-						<Icon name={post.is_liked ? 'like_fill' : 'like'} size="lg" />
-					</Button>
+						className={`btn-icon ghost rose text-[1.7rem] ${
+							post.is_liked ? 'i-like_fill text-$color' : 'i-like'
+						}`}
+					/>
 					{/* Share */}
-					<Button variant="ghost" color="primary" square disabled>
-						<Icon name="share" size="lg" />
-					</Button>
+					<button className="btn-icon i-share ghost primary text-[1.7rem]" disabled />
 				</fetcher.Form>
 			</article>
 			{/* reply form */}

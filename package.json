@@ -6,7 +6,7 @@
 		"build": "pnpm gen:css && pnpm gen:remix && remix build",
 		"start": "remix-serve build",
 		"dev:remix": "remix dev",
-		"dev:css": "pnpm run gen:css -- --watch",
+		"dev:css": "pnpm run gen:css --watch",
 		"dev": "pnpm run /^dev:.*/",
 		"format": "prettier --write .",
 		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
@@ -45,15 +45,16 @@
 		"@remix-run/serve": "^1.11.1",
 		"@types/react": "^18.0.27",
 		"@types/react-dom": "^18.0.10",
-		"@unocss/cli": "^0.48.5",
-		"@unocss/reset": "^0.48.5",
+		"@unocss/cli": "^0.51.8",
+		"@unocss/reset": "^0.51.8",
+		"colord": "^2.9.3",
 		"eslint": "^8.32.0",
 		"eslint-config-prettier": "^8.6.0",
 		"prettier": "^2.8.8",
 		"prettier-plugin-tailwindcss": "^0.2.8",
 		"rmx-cli": "^0.3.5",
 		"typescript": "^4.9.4",
-		"unocss": "^0.48.5"
+		"unocss": "^0.51.8"
 	},
 	"engines": {
 		"node": ">=18"

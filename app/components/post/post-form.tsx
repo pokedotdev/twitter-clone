@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { withZod } from '@remix-validated-form/with-zod'
 
 import { removeExtraBreakLines, useUser } from '~/utils'
-import { Avatar, Button } from '~/components'
+import { Avatar } from '~/components'
 
 const PostFormSchema = z.object({
 	body: z.string().trim().min(1).max(280).transform(removeExtraBreakLines),
@@ -67,15 +67,15 @@ const PostButtonSubmit = () => {
 	const { isValid } = RVF.useFormContext()
 	const disabled = isSubmitting || !isValid
 	return (
-		<Button
+		<button
 			name="action"
 			value="create"
 			type="submit"
-			color="primary"
+			className="btn solid primary"
 			aria-label="Create post"
 			disabled={disabled}
 		>
 			Publish
-		</Button>
+		</button>
 	)
 }

@@ -1,7 +1,7 @@
 import { Link, Outlet } from '~/remix'
 
 import { formatUserCreatedDate, parseDomainToValidUrl, useProfile } from '~/utils'
-import { Button, Text, Icon, Tabs, Avatar, ButtonFollow } from '~/components'
+import { Text, Icon, Tabs, Avatar, ButtonFollow } from '~/components'
 
 export default function ProfileLayout() {
 	const profile = useProfile()
@@ -32,15 +32,11 @@ export default function ProfileLayout() {
 						/>
 						<div className="flex gap-2.5">
 							{profile.is_own ? (
-								<a href="#edit:profile">
-									<Button as="div" variant="ghost" outline disabled>
-										Edit Profile
-									</Button>
-								</a>
+								<button className="btn ghost dark outline">Edit Profile</button>
 							) : (
 								<>
-									{/*<Button variant="ghost" outline icon="dots" />
-									<Button variant="ghost" outline icon="message" />*/}
+									{/* <button className="btn-icon i-dots ghost dark outline" />
+									<button className="btn-icon i-message ghost dark outline" /> */}
 									<ButtonFollow profile={profile} />
 								</>
 							)}

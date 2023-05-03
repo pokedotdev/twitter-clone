@@ -1,63 +1,51 @@
 import { NavLink } from '~/remix'
 import type { NavLinkProps } from '~/remix'
-import cn from 'clsx'
 
 import { useOptionalUser } from '~/utils'
-import type { IconCollection } from '~/components'
-import { PostForm, Button, Icon, Dialog } from '~/components'
+import { PostForm, Dialog } from '~/components'
 
 export const NavList = () => {
 	const user = useOptionalUser()
 	return (
-		<nav className="flex flex-auto justify-around gap-2 sm:my-1 sm:flex-col sm:justify-start xl:w-full">
-			{user && (
-				<NavButton to="/home" icon="home" iconActive="home_fill">
-					Home
+		<div className="flex flex-auto items-center gap-1 sm:my-1 sm:flex-col sm:justify-start xl:w-full xl:items-start">
+			<nav className="flex w-full justify-around gap-2 sm:w-auto sm:flex-col sm:gap-0 xl:items-start">
+				{user && (
+					<NavButton to="/home" icon="i-home group-[[aria-current=page]]:i-home_fill">
+						Home
+					</NavButton>
+				)}
+
+				<NavButton
+					to="/explore"
+					icon="i-search group-[[aria-current=page]]:i-search_fill lg:i-hash lg:group-[[aria-current=page]]:i-hash_fill"
+				>
+					Explore
 				</NavButton>
-			)}
 
-			<NavButton to="/explore" icon="hash_to_search" iconActive="hash_to_search_fill">
-				Explore
-			</NavButton>
-
-			{user && (
-				<>
-					<NavButton to={`/${user.username}`} icon="user" iconActive="user_fill">
+				{user && (
+					<NavButton to={`/${user.username}`} icon="i-user group-[[aria-current=page]]:i-user_fill">
 						Profile
 					</NavButton>
-					{/* Button New Post */}
-					<div className="bottom-21 fixed right-5 sm:static sm:my-5 xl:w-11/12">
-						<PostButton />
-					</div>
-				</>
+				)}
+			</nav>
+			{/* Button New Post */}
+			{user && (
+				<div className="bottom-21 fixed right-5 sm:static sm:my-5 xl:w-11/12">
+					<PostButton />
+				</div>
 			)}
-		</nav>
+		</div>
 	)
 }
 
-const NavButton = ({
-	children,
-	to,
-	icon,
-	iconActive,
-}: {
-	to: NavLinkProps['to']
-	children: React.ReactNode
-	icon: IconCollection
-	iconActive?: IconCollection
-}) => (
-	<NavLink to={to} prefetch="intent">
-		{({ isActive }) => (
-			<Button
-				as="div"
-				variant="ghost"
-				size="xl"
-				icon={isActive && iconActive ? iconActive : icon}
-				className="ring-6 !block w-16 ring-inset ring-white sm:ring-0 xl:!inline-flex xl:w-auto"
-			>
-				<span className={cn(!isActive && 'font-normal', 'hidden xl:block')}>{children}</span>
-			</Button>
-		)}
+const NavButton = (props: { to: NavLinkProps['to']; children: React.ReactNode; icon: string }) => (
+	<NavLink
+		to={props.to}
+		prefetch="intent"
+		className="btn solid light group h-16 p-0 text-2xl font-normal [&[aria-current=page]]:font-bold"
+	>
+		<span className={`icon ${props.icon} text-3xl`} />
+		<span className="hidden pr-6 xl:block">{props.children}</span>
 	</NavLink>
 )
 
@@ -65,24 +53,16 @@ const PostButton = () => {
 	const dialog = Dialog.useDialog()
 	return (
 		<>
-			<Button
+			<button
 				onClick={dialog.toggle}
-				color="primary"
-				size="xl"
-				className="shadow-md sm:shadow-none xl:w-full"
-				square
+				className="btn solid primary aspect-square h-16 p-0 text-xl font-bold shadow sm:shadow-none xl:aspect-auto xl:w-full"
 			>
+				<div className="icon i-pen text-3xl xl:hidden" />
 				<span className="hidden text-xl xl:block">Compose</span>
-				<Icon name="pen" className="xl:hidden" size="xl" />
-			</Button>
-
+			</button>
 			<Dialog.Content store={dialog}>
 				<Dialog.Header />
-				<PostForm
-					onSubmit={() => {
-						dialog.setOpen(false)
-					}}
-				/>
+				<PostForm onSubmit={() => dialog.setOpen(false)} />
 			</Dialog.Content>
 		</>
 	)

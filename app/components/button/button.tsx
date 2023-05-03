@@ -20,6 +20,7 @@ type PolymorphicProps<E extends React.ElementType> = ButtonProps & React.Compone
 
 const DEFAULT_ELEMENT = 'button'
 
+/** @deprecated */
 export const Button = <E extends React.ElementType = typeof DEFAULT_ELEMENT>({
 	as: Component = DEFAULT_ELEMENT,
 	children,

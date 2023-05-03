@@ -1,6 +1,6 @@
 import { Link, Outlet } from '~/remix'
 
-import { Button, ButtonProvider, FormAuth, NavList, AccountMenu, RouteHeader } from '~/components'
+import { ButtonProvider, FormAuth, NavList, AccountMenu, RouteHeader } from '~/components'
 import { useOptionalUser } from '~/utils'
 
 export default function App() {
@@ -11,18 +11,11 @@ export default function App() {
 			<div className="flex justify-center">
 				<div className="mdl:grid-cols-[auto_600px_minmax(auto,390px)] inline-grid grid-cols-[auto_minmax(auto,600px)]">
 					{/* Header */}
-					<div className="sticky top-0 z-10 col-start-1 row-start-1 flex h-16 flex-col justify-center px-0 sm:h-screen sm:items-center sm:px-[5px] md:px-3.5 xl:w-[275px] xl:items-start">
+					<div className="sticky top-0 z-10 col-start-1 row-start-1 flex h-16 flex-col justify-center px-0 sm:h-screen sm:items-center sm:px-2 sm:px-[5px] md:px-3.5 xl:w-[275px] xl:items-start">
 						{/* Logo */}
 						<div className="hidden h-16 sm:block">
-							<Link to={user ? '/home' : '/explore'} prefetch="intent">
-								<Button
-									as="div"
-									variant="ghost"
-									color="primary"
-									size="xl"
-									icon="logo"
-									className="text-primary-500"
-								/>
+							<Link to={user ? '/home' : '/explore'} prefetch="intent" aria-label="Go to home">
+								<span className="btn-icon ghost primary i-logo text-$color h-16 text-3xl" />
 							</Link>
 						</div>
 						{/* Nav */}
@@ -66,7 +59,7 @@ const AuthBanner = () => (
 			</div>
 
 			<FormAuth className="flex max-w-xs flex-col gap-4">
-				<ButtonProvider provider="github" color="white" />
+				<ButtonProvider provider="github" />
 			</FormAuth>
 		</div>
 	</div>
