@@ -1,23 +1,23 @@
 module default {
 
-	global current_user_id -> uuid;
+	global current_user_id: uuid;
 
 	type User extending has::CreatedAt {
-		required property provider -> tuple<name: str, id: str> {
+		required provider: tuple<name: str, id: str> {
 			constraint exclusive;
 		}
-		required property username -> str {
+		required username: str {
 			constraint exclusive;
 			constraint expression on (__subject__ = str_trim(__subject__));
 		}
-		required property name -> str;
-		property bio -> str;
-		property location -> str;
-		property website -> str;
-		property avatarUrl -> str;
-		property coverUrl -> str;
+		required name: str;
+		bio: str;
+		location: str;
+		website: str;
+		avatarUrl: str;
+		coverUrl: str;
 
-		multi link following extending has::created_at -> User {
+		multi following extending has::created_at -> User {
 			on target delete allow;
 		}
 		multi link followers := .<following[is User];
@@ -36,11 +36,11 @@ module default {
 	}
 
 	type Post extending has::CreatedAt {
-		required link user -> User { on target delete delete source; }
-		property body -> str { constraint min_len_value(1); constraint max_len_value(280); }
-		link quote -> Post { on target delete allow }
-		link repost -> Post { on target delete delete source }
-		link replied_to -> Post { on target delete allow }
+		required user: User { on target delete delete source; }
+		body: str { constraint min_len_value(1); constraint max_len_value(280); }
+		quote: Post { on target delete allow }
+		repost: Post { on target delete delete source }
+		replied_to: Post { on target delete allow }
 
 		multi link likes := .<post[is PostLike];
 		multi link quotes := .<quote[is Post];
@@ -59,8 +59,8 @@ module default {
 	}
 
 	type PostLike extending has::CreatedAt {
-		required link user -> User { on target delete delete source }
-		required link post -> Post { on target delete delete source }
+		required user: User { on target delete delete source }
+		required post: Post { on target delete delete source }
 		constraint exclusive on ((.user, .post));
 	}
 
