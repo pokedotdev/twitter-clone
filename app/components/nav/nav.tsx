@@ -62,7 +62,7 @@ const PostButton = () => {
 			</button>
 			<Dialog.Content store={dialog}>
 				<Dialog.Header />
-				<PostForm onSubmit={() => dialog.setOpen(false)} />
+				<PostForm onSuccess={() => dialog.setOpen(false)} />
 			</Dialog.Content>
 		</>
 	)

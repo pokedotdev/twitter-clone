@@ -75,6 +75,7 @@ export interface Post extends has.CreatedAt {
   "reposts": Post[];
   "is_reposted": boolean;
   "num_reposts": number;
+  "unique"?: [string, string, string, string, string] | null;
 }
 export interface PostLike extends has.CreatedAt {
   "post": Post;

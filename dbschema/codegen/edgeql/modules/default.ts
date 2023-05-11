@@ -22,6 +22,7 @@ export type $PostλShape = $.typeutil.flatten<_has.$CreatedAtλShape & {
   "reposts": $.LinkDesc<$Post, $.Cardinality.Many, {}, false, true,  false, false>;
   "is_reposted": $.PropertyDesc<_std.$bool, $.Cardinality.One, false, true, false, false>;
   "num_reposts": $.PropertyDesc<_std.$int64, $.Cardinality.One, false, true, false, false>;
+  "unique": $.PropertyDesc<$.TupleType<[_std.$str, _std.$str, _std.$str, _std.$str, _std.$str]>, $.Cardinality.AtMostOne, false, false, false, false>;
   "<quote[is Post]": $.LinkDesc<$Post, $.Cardinality.Many, {}, false, false,  false, false>;
   "<replied_to[is Post]": $.LinkDesc<$Post, $.Cardinality.Many, {}, false, false,  false, false>;
   "<quotes[is Post]": $.LinkDesc<$Post, $.Cardinality.Many, {}, false, false,  false, false>;
@@ -42,7 +43,7 @@ export type $PostλShape = $.typeutil.flatten<_has.$CreatedAtλShape & {
 type $Post = $.ObjectType<"default::Post", $PostλShape, null, [
   ..._has.$CreatedAt['__exclusives__'],
 ]>;
-const $Post = $.makeType<$Post>(_.spec, "665876ba-eba8-11ed-93e3-955645548826", _.syntax.literal);
+const $Post = $.makeType<$Post>(_.spec, "c625e4da-ebf6-11ed-a202-5916c4029cce", _.syntax.literal);
 
 const Post: $.$expr_PathNode<$.TypeSet<$Post, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($Post, $.Cardinality.Many), null);
 
@@ -57,7 +58,7 @@ type $PostLike = $.ObjectType<"default::PostLike", $PostLikeλShape, null, [
   ..._has.$CreatedAt['__exclusives__'],
   {user: {__element__: $User, __cardinality__: $.Cardinality.One | $.Cardinality.AtMostOne },post: {__element__: $Post, __cardinality__: $.Cardinality.One | $.Cardinality.AtMostOne },},
 ]>;
-const $PostLike = $.makeType<$PostLike>(_.spec, "7131dcac-eba8-11ed-8637-9d48c5a26ce3", _.syntax.literal);
+const $PostLike = $.makeType<$PostLike>(_.spec, "d108b076-ebf6-11ed-aae4-515088403cc2", _.syntax.literal);
 
 const PostLike: $.$expr_PathNode<$.TypeSet<$PostLike, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($PostLike, $.Cardinality.Many), null);
 
@@ -98,7 +99,7 @@ type $User = $.ObjectType<"default::User", $UserλShape, null, [
   {username: {__element__: _std.$str, __cardinality__: $.Cardinality.One | $.Cardinality.AtMostOne },},
   {provider: {__element__: $.NamedTupleType<{name: _std.$str, id: _std.$str}>, __cardinality__: $.Cardinality.One | $.Cardinality.AtMostOne },},
 ]>;
-const $User = $.makeType<$User>(_.spec, "6443305e-eba8-11ed-bfae-b357000da320", _.syntax.literal);
+const $User = $.makeType<$User>(_.spec, "c4465758-ebf6-11ed-899f-b5d77a12f818", _.syntax.literal);
 
 const User: $.$expr_PathNode<$.TypeSet<$User, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($User, $.Cardinality.Many), null);
 

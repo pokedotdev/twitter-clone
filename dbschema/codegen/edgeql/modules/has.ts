@@ -4,13 +4,13 @@
 import * as $ from "../reflection";
 import * as _ from "../imports";
 import type * as _std from "./std";
-export type $CreatedAtλShape = $.typeutil.flatten<_std.$Object_3372b5b6eae611ed89f8b51677ce9f94λShape & {
+export type $CreatedAtλShape = $.typeutil.flatten<_std.$Object_6957daacebaf11ed9a17df80308ab3e6λShape & {
   "created_at": $.PropertyDesc<_std.$datetime, $.Cardinality.One, false, false, true, true>;
 }>;
 type $CreatedAt = $.ObjectType<"has::CreatedAt", $CreatedAtλShape, null, [
-  ..._std.$Object_3372b5b6eae611ed89f8b51677ce9f94['__exclusives__'],
+  ..._std.$Object_6957daacebaf11ed9a17df80308ab3e6['__exclusives__'],
 ]>;
-const $CreatedAt = $.makeType<$CreatedAt>(_.spec, "64414546-eba8-11ed-a214-57a465667368", _.syntax.literal);
+const $CreatedAt = $.makeType<$CreatedAt>(_.spec, "c444db6c-ebf6-11ed-99de-1f8025f12019", _.syntax.literal);
 
 const CreatedAt: $.$expr_PathNode<$.TypeSet<$CreatedAt, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($CreatedAt, $.Cardinality.Many), null);
 

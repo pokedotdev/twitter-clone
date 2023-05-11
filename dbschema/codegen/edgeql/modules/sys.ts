@@ -9,7 +9,7 @@ export type $TransactionIsolation = {
   "RepeatableRead": $.$expr_Literal<$TransactionIsolation>;
   "Serializable": $.$expr_Literal<$TransactionIsolation>;
 } & $.EnumType<"sys::TransactionIsolation", ["RepeatableRead", "Serializable"]>;
-const TransactionIsolation: $TransactionIsolation = $.makeType<$TransactionIsolation>(_.spec, "381826d2-eae6-11ed-970f-6d4b64c2090f", _.syntax.literal);
+const TransactionIsolation: $TransactionIsolation = $.makeType<$TransactionIsolation>(_.spec, "6dfdd12e-ebaf-11ed-a97d-69ec7b33993a", _.syntax.literal);
 
 export type $VersionStage = {
   "dev": $.$expr_Literal<$VersionStage>;
@@ -18,14 +18,14 @@ export type $VersionStage = {
   "rc": $.$expr_Literal<$VersionStage>;
   "final": $.$expr_Literal<$VersionStage>;
 } & $.EnumType<"sys::VersionStage", ["dev", "alpha", "beta", "rc", "final"]>;
-const VersionStage: $VersionStage = $.makeType<$VersionStage>(_.spec, "38188db6-eae6-11ed-8584-2705cb3afec3", _.syntax.literal);
+const VersionStage: $VersionStage = $.makeType<$VersionStage>(_.spec, "6dfe377c-ebaf-11ed-9696-81ab3b014776", _.syntax.literal);
 
-export type $SystemObjectλShape = $.typeutil.flatten<_schema.$Object_33b8d5c8eae611ed94c199514184a8a8λShape & {
+export type $SystemObjectλShape = $.typeutil.flatten<_schema.$Object_69c34bdeebaf11edbe73bb7e7047f592λShape & {
 }>;
 type $SystemObject = $.ObjectType<"sys::SystemObject", $SystemObjectλShape, null, [
-  ..._schema.$Object_33b8d5c8eae611ed94c199514184a8a8['__exclusives__'],
+  ..._schema.$Object_69c34bdeebaf11edbe73bb7e7047f592['__exclusives__'],
 ]>;
-const $SystemObject = $.makeType<$SystemObject>(_.spec, "3818f332-eae6-11ed-8ba9-236c092972bd", _.syntax.literal);
+const $SystemObject = $.makeType<$SystemObject>(_.spec, "6dfe9cee-ebaf-11ed-8d51-5ba4ae900c1c", _.syntax.literal);
 
 const SystemObject: $.$expr_PathNode<$.TypeSet<$SystemObject, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($SystemObject, $.Cardinality.Many), null);
 
@@ -34,7 +34,7 @@ export type $ExternalObjectλShape = $.typeutil.flatten<$SystemObjectλShape & {
 type $ExternalObject = $.ObjectType<"sys::ExternalObject", $ExternalObjectλShape, null, [
   ...$SystemObject['__exclusives__'],
 ]>;
-const $ExternalObject = $.makeType<$ExternalObject>(_.spec, "38235868-eae6-11ed-86ed-3f6ed5c67058", _.syntax.literal);
+const $ExternalObject = $.makeType<$ExternalObject>(_.spec, "6e08ee60-ebaf-11ed-a330-83586fca0f6d", _.syntax.literal);
 
 const ExternalObject: $.$expr_PathNode<$.TypeSet<$ExternalObject, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($ExternalObject, $.Cardinality.Many), null);
 
@@ -46,7 +46,7 @@ type $Database = $.ObjectType<"sys::Database", $DatabaseλShape, null, [
   ..._schema.$AnnotationSubject['__exclusives__'],
   {name: {__element__: _std.$str, __cardinality__: $.Cardinality.One | $.Cardinality.AtMostOne },},
 ]>;
-const $Database = $.makeType<$Database>(_.spec, "382db93e-eae6-11ed-8b40-c95ae9d15f08", _.syntax.literal);
+const $Database = $.makeType<$Database>(_.spec, "6e13490a-ebaf-11ed-b991-0d164350978a", _.syntax.literal);
 
 const Database: $.$expr_PathNode<$.TypeSet<$Database, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($Database, $.Cardinality.Many), null);
 
@@ -60,7 +60,7 @@ type $ExtensionPackage = $.ObjectType<"sys::ExtensionPackage", $ExtensionPackage
   ...$SystemObject['__exclusives__'],
   ..._schema.$AnnotationSubject['__exclusives__'],
 ]>;
-const $ExtensionPackage = $.makeType<$ExtensionPackage>(_.spec, "384090fe-eae6-11ed-86ba-394ac4a54262", _.syntax.literal);
+const $ExtensionPackage = $.makeType<$ExtensionPackage>(_.spec, "6e264d7a-ebaf-11ed-a23b-3f721a8acc16", _.syntax.literal);
 
 const ExtensionPackage: $.$expr_PathNode<$.TypeSet<$ExtensionPackage, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($ExtensionPackage, $.Cardinality.Many), null);
 
@@ -79,7 +79,7 @@ type $Role = $.ObjectType<"sys::Role", $RoleλShape, null, [
   ..._schema.$AnnotationSubject['__exclusives__'],
   {name: {__element__: _std.$str, __cardinality__: $.Cardinality.One | $.Cardinality.AtMostOne },},
 ]>;
-const $Role = $.makeType<$Role>(_.spec, "3856d2d8-eae6-11ed-9972-0f511915dcea", _.syntax.literal);
+const $Role = $.makeType<$Role>(_.spec, "6e3c8ba8-ebaf-11ed-b453-2bbdff6d6a76", _.syntax.literal);
 
 const Role: $.$expr_PathNode<$.TypeSet<$Role, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($Role, $.Cardinality.Many), null);
 
@@ -92,7 +92,7 @@ type get_versionλFuncExpr = $.$expr_Function<
 function get_version(): get_versionλFuncExpr;
 function get_version(...args: any[]) {
   const {returnType, cardinality, args: positionalArgs, namedArgs} = _.syntax.$resolveOverload('sys::get_version', args, _.spec, [
-    {args: [], returnTypeId: "3843655e-eae6-11ed-821f-b93a89fb4e7e"},
+    {args: [], returnTypeId: "6e290858-ebaf-11ed-94d7-89517938f035"},
   ]);
   return _.syntax.$expressionify({
     __kind__: $.ExpressionKind.Function,
@@ -155,7 +155,7 @@ type get_transaction_isolationλFuncExpr = $.$expr_Function<
 function get_transaction_isolation(): get_transaction_isolationλFuncExpr;
 function get_transaction_isolation(...args: any[]) {
   const {returnType, cardinality, args: positionalArgs, namedArgs} = _.syntax.$resolveOverload('sys::get_transaction_isolation', args, _.spec, [
-    {args: [], returnTypeId: "381826d2-eae6-11ed-970f-6d4b64c2090f"},
+    {args: [], returnTypeId: "6dfdd12e-ebaf-11ed-a97d-69ec7b33993a"},
   ]);
   return _.syntax.$expressionify({
     __kind__: $.ExpressionKind.Function,

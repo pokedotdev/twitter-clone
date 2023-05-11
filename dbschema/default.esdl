@@ -55,7 +55,10 @@ module default {
 		property num_reposts := count(.reposts);
 		property num_replies := count(.replies);
 
-		# constraint exclusive on ((.user, .body, .quote, .replied_to, .repost));
+		unique: tuple<str, str, str, str, str> {
+			rewrite insert, update using ((<str>.user.id, .body ?? '', <str>.quote.id ?? '', <str>.replied_to.id ?? '', <str>.repost.id ?? ''))
+		}
+		constraint exclusive on (.unique);
 	}
 
 	type PostLike extending has::CreatedAt {
