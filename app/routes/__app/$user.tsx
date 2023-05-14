@@ -1,14 +1,12 @@
-import type { LoaderArgs, MetaFunction } from '~/remix'
+import type { LoaderArgs, V2_MetaFunction } from '~/remix'
 import { json, Outlet } from '~/remix'
 import { notFound } from 'remix-utils'
 
 import { getContext, getUserByUsername } from '~/models/user.server'
 
-export const meta: MetaFunction = ({ data }) => {
-	if (!data?.user) return { title: 'Profile / Twitter' }
-	return {
-		title: `${data.user.name} (${data.user.username}) / Twitter`,
-	}
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+	const title = data?.profile ? `${data.profile.name} (@${data.profile.username})` : 'Profile'
+	return [{ title }]
 }
 
 export const loader = async ({ params, request }: LoaderArgs) => {

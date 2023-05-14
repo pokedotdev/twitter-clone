@@ -1,11 +1,9 @@
-import type { MetaFunction } from '~/remix'
+import type { V2_MetaFunction } from '~/remix'
 import { Outlet } from '~/remix'
 
 import { Tabs } from '~/components'
 
-export const meta: MetaFunction = () => ({
-	title: 'Explore',
-})
+export const meta: V2_MetaFunction = () => [{ title: 'Explore' }]
 
 export const handle = {
 	header: {

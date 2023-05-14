@@ -32,7 +32,9 @@ export default function ProfileLayout() {
 						/>
 						<div className="flex gap-2.5">
 							{profile.is_own ? (
-								<button className="btn ghost dark outline">Edit Profile</button>
+								<button className="btn ghost dark outline" disabled>
+									Edit Profile
+								</button>
 							) : (
 								<>
 									{/* <button className="btn-icon i-dots ghost dark outline" />

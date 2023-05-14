@@ -1,8 +1,6 @@
-/**
- * @type {import('eslint').Linter.Config}
- */
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
-	extends: ['@remix-run/eslint-config', '@remix-run/eslint-config/node', 'prettier'],
+	extends: ['@remix-run/eslint-config', '@remix-run/eslint-config/node'],
 	rules: {
 		// Import
 		'import/no-duplicates': 2,

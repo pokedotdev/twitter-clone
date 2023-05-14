@@ -8,41 +8,41 @@
 		"dev:remix": "remix dev",
 		"dev:css": "pnpm run gen:css --watch",
 		"dev": "pnpm run /^dev:.*/",
-		"format": "prettier --write .",
-		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
 		"gen:css": "unocss './app/**/*.{ts,tsx}' -o ./app/styles/uno.css",
 		"gen:remix": "rmx gen-remix --packages @remix-run/node @remix-run/react",
 		"gen:edgedb": "pnpm run /^edgedb:.*/",
 		"edgedb:ql": "pnpm dlx @edgedb/generate edgeql-js --target ts --out ./dbschema/codegen/edgeql/",
 		"edgedb:queries": "pnpm dlx @edgedb/generate queries --file ./dbschema/codegen/queries --target ts",
 		"edgedb:interfaces": "pnpm dlx @edgedb/generate interfaces --file ./dbschema/codegen/interfaces.ts",
-		"db:seed": "pnpm dlx tsx dbschema/seed.ts"
+		"db:seed": "pnpm dlx tsx dbschema/seed.ts",
+		"format": "prettier --write .",
+		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint ."
 	},
 	"dependencies": {
 		"@ariakit/react": "^0.1.6",
-		"@remix-run/node": "^1.11.1",
-		"@remix-run/react": "^1.11.1",
-		"@remix-run/vercel": "^1.11.1",
-		"@vercel/node": "^2.8.15",
+		"@remix-run/node": "^1.16.1",
+		"@remix-run/react": "^1.16.1",
+		"@remix-run/vercel": "^1.16.1",
+		"@vercel/node": "^2.10.3",
 		"clsx": "^1.2.1",
 		"edgedb": "^1.2.0",
-		"isbot": "^3.6.5",
+		"isbot": "^3.6.8",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"remix-auth": "^3.4.0",
 		"remix-auth-github": "^1.3.0",
-		"remix-utils": "^6.0.0",
+		"remix-utils": "^6.3.0",
 		"zod": "^3.20.2",
 		"zodix": "^0.4.0"
 	},
 	"devDependencies": {
 		"@edgedb/generate": "^0.1.0",
 		"@iconify/json": "^2.2.58",
-		"@remix-run/dev": "^1.11.1",
-		"@remix-run/eslint-config": "^1.11.1",
-		"@remix-run/serve": "^1.11.1",
-		"@types/react": "^18.0.27",
-		"@types/react-dom": "^18.0.10",
+		"@remix-run/dev": "^1.16.1",
+		"@remix-run/eslint-config": "^1.16.1",
+		"@remix-run/serve": "^1.16.1",
+		"@types/react": "^18.0.35",
+		"@types/react-dom": "^18.0.11",
 		"@unocss/cli": "^0.51.8",
 		"@unocss/reset": "^0.51.8",
 		"colord": "^2.9.3",
@@ -50,8 +50,8 @@
 		"eslint-config-prettier": "^8.6.0",
 		"prettier": "^2.8.8",
 		"prettier-plugin-tailwindcss": "^0.2.8",
-		"rmx-cli": "^0.3.5",
-		"typescript": "^4.9.4",
+		"rmx-cli": "^0.3.6",
+		"typescript": "^5.0.4",
 		"unocss": "^0.51.8"
 	},
 	"engines": {
@@ -59,7 +59,7 @@
 	},
 	"pnpm": {
 		"patchedDependencies": {
-			"@remix-run/dev@1.11.1": "patches/@remix-run__dev@1.11.1.patch"
+			"@remix-run/dev@1.16.1": "patches/@remix-run__dev@1.16.1.patch"
 		}
 	}
 }

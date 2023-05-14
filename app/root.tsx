@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderArgs, MetaFunction } from '~/remix'
+import type { LinksFunction, LoaderArgs, V2_MetaFunction } from '~/remix'
 import { json, Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '~/remix'
 import reset from '@unocss/reset/tailwind.css'
 
@@ -10,11 +10,7 @@ export const links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: unocss },
 ]
 
-export const meta: MetaFunction = () => ({
-	charset: 'utf-8',
-	title: 'Twitter Clone',
-	viewport: 'width=device-width,initial-scale=1',
-})
+export const meta: V2_MetaFunction = () => [{ title: 'Twitter Clone' }]
 
 export const loader = async ({ request }: LoaderArgs) => {
 	return json({
@@ -26,6 +22,8 @@ function Document({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
 			<head>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="width=device-width,initial-scale=1" />
 				<Meta />
 				<Links />
 			</head>

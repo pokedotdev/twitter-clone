@@ -8,9 +8,9 @@ import { getContext } from '~/models/user.server'
 import { useOptionalUser } from '~/utils'
 
 export async function loader({ request, params }: LoaderArgs) {
-	if (!params.id) throw badRequest({ message: 'param ID required' })
+	if (!params.postId) throw badRequest({ message: 'param ID required' })
 	const ctx = await getContext(request)
-	const post = await findPostById({ id: params.id }, ctx)
+	const post = await findPostById({ id: params.postId }, ctx)
 	if (!post) throw notFound({ message: 'Post not found' })
 
 	return { post }
