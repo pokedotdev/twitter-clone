@@ -1,4 +1,4 @@
-import { PostCard } from './post-card'
+import { PostCard } from './PostCard'
 
 export type PostListProps = {
 	list: any[]

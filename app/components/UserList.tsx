@@ -1,4 +1,4 @@
-import { UserCard } from './user-card'
+import { UserCard } from './UserCard'
 
 export type UserListProps = {
 	list: any[]

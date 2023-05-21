@@ -1,3 +1,17 @@
+import cn from 'clsx'
+
+import { Theme } from '~/components/theme'
+
+export type IconProps = {
+	name: IconCollection
+	size?: keyof typeof Theme.sizes.icon
+} & React.ComponentProps<'div'>
+
+export const Icon = ({ name, size, className, ...rest }: IconProps) => {
+	const classes = cn(name && icons[name], size && Theme.sizes.icon[size], className)
+	return <div className={classes} {...rest} />
+}
+
 export const icons = {
 	logo: 'i-teenyicons-twitter-solid',
 	home: 'i-ph-house',
