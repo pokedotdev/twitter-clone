@@ -1,7 +1,8 @@
-import { Link, useFetcher } from '~/remix'
 import * as React from 'react'
+import { Link, useFetcher } from '~/remix'
+import cn from 'clsx'
 
-import { Avatar, Text } from '~/components'
+import { Avatar, ReplyDialog, Text } from '~/components'
 import { getTimeSincePost, MS, useOptionalUser } from '~/utils'
 
 export const useTimeAgo = (date: Date) => {
@@ -19,26 +20,38 @@ export const useTimeAgo = (date: Date) => {
 
 const TimeAgo = (props: { date: Date }) => <>{useTimeAgo(props.date)}</>
 
-export const Post = ({ post }: { post: any }) => {
+type PostCardProps = {
+	post: any
+	border?: boolean
+	threaded?: boolean
+}
+
+export const PostCard = ({ post, border = true, threaded = false }: PostCardProps) => {
 	const user = useOptionalUser()
 	const fetcher = useFetcher()
 
 	const postLink = `/${post.user.username}/status/${post.id}`
 
 	return (
-		<article className="group relative flex cursor-pointer flex-col border-b border-gray-200 px-5 hover:bg-gray-50">
+		<article
+			className={cn(
+				'group relative flex cursor-pointer flex-col px-5 hover:bg-gray-50',
+				border && 'border-b border-gray-200',
+			)}
+		>
 			<Link to={postLink} className="absolute inset-0 text-[0px]" aria-hidden="true">
 				post
 			</Link>
 			{/* Reposted ? */}
-			<div className="my-2 w-full" />
+			<div className="my-1.5 w-full" />
 			{/* Posts */}
 			<div className="flex gap-3.5">
 				{/* Left */}
-				<div className="flex-none">
-					<Link to={`/${post.user.username}`} className="relative">
+				<div className="flex flex-none flex-col items-center">
+					<Link to={`/${post.user.username}`} className="relative flex-none">
 						<Avatar src={post.user.avatarUrl} alt={post.user.username} size="lg" />
 					</Link>
+					{threaded && <div className="relative top-1.5 z-10 w-0.5 flex-auto bg-gray-300" />}
 				</div>
 				{/* Right */}
 				<div className="flex-1">
@@ -78,8 +91,15 @@ export const Post = ({ post }: { post: any }) => {
 					>
 						<input type="hidden" name="post" value={post.id} />
 						{/* Comments */}
-						<span className="-ml-1 flex-1">
-							<button className="btn-icon i-comment ghost primary" disabled />
+						<span className="-ml-3 flex-1">
+							<ReplyDialog repliedTo={post.id} isOwn={post.user.username === user?.username}>
+								<button
+									className={`primary hover:text-$color relative flex flex-1 items-center gap-1 rounded-full pr-2`}
+								>
+									<span className="btn-icon i-comment ghost" />
+									{post.num_replies || ''}
+								</button>
+							</ReplyDialog>
 						</span>
 						{/* Reposts */}
 						<span className="flex-1">

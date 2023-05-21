@@ -36,7 +36,7 @@ module default {
 	}
 
 	type Post extending has::CreatedAt {
-		required user: User { on target delete delete source; }
+		required user: User { on target delete delete source }
 		body: str { constraint min_len_value(1); constraint max_len_value(280); }
 		quote: Post { on target delete allow }
 		repost: Post { on target delete delete source }
@@ -47,13 +47,19 @@ module default {
 		multi link reposts := .<repost[is Post];
 		multi link replies := .<replied_to[is Post];
 
-		property tag := str_split(.__type__.name, '::')[1];
 		property is_own := (.user.id ?= global current_user_id);
 		property is_liked := (global current_user_id in .likes.user.id) ?? false;
 		property is_reposted := (global current_user_id in .reposts.user.id) ?? false;
 		property num_likes := count(.likes);
 		property num_reposts := count(.reposts);
 		property num_replies := count(.replies);
+
+		link p := (select .replied_to); # alias (p = parent)
+		multi link ancestors := (
+			# TODO: refactor when recursion can be used
+			# harcoded max depth 10
+			select .p union .p.p union .p.p.p union .p.p.p.p union .p.p.p.p.p union .p.p.p.p.p.p union .p.p.p.p.p.p.p union .p.p.p.p.p.p.p.p union .p.p.p.p.p.p.p.p.p union .p.p.p.p.p.p.p.p.p.p
+		);
 
 		unique: tuple<str, str, str, str, str> {
 			rewrite insert, update using ((<str>.user.id, .body ?? '', <str>.quote.id ?? '', <str>.replied_to.id ?? '', <str>.repost.id ?? ''))

@@ -12,7 +12,7 @@ export const RouteHeader = () => {
 	const header = useHeader()
 
 	return header ? (
-		<div className="sticky top-0 z-10 col-start-2 row-start-1 flex h-16 items-center bg-white/80 px-5 backdrop-blur-lg">
+		<div className="sticky top-0 z-20 col-start-2 row-start-1 flex h-16 items-center bg-white/80 px-5 backdrop-blur-lg">
 			<div>
 				{header?.title && (
 					<Text as="h2" size="xl" weight={7} className="leading-none">

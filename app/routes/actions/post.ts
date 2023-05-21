@@ -29,7 +29,7 @@ export async function action({ request }: ActionArgs) {
 	switch (data.action) {
 		case 'create': {
 			try {
-				await createPost({ body: data.body }, ctx)
+				await createPost({ body: data.body, repliedTo: data?.repliedTo }, ctx)
 			} catch (_) {
 				return json(
 					{ form: { error: 'Whoops! You already said that.' }, value: { body: data.body } },

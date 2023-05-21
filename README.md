@@ -8,15 +8,17 @@ Twitter clone made with Remix, EdgeDB & UnoCSS.
 
 - Authentication (GitHub)
 - Creating Posts
-- Post Lists
 - Post Likes
+- Post Comments
 - User Profiles
 - Follow User
 
 ### Upcoming features
 
-- Edit Profile
-- Repost & Post Comments
+- Edit Profile & Settings
+- Repost
+- Bookmarks
+- Threads
 - Hashtags & Mentions
 - Search for Posts & Users
 - Dark Mode

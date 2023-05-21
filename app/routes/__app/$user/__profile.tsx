@@ -1,7 +1,7 @@
 import { Link, Outlet } from '~/remix'
 
 import { formatUserCreatedDate, parseDomainToValidUrl, useProfile } from '~/utils'
-import { Text, Icon, Tabs, Avatar, ButtonFollow } from '~/components'
+import { Text, Tabs, Avatar, ButtonFollow } from '~/components'
 
 export default function ProfileLayout() {
 	const profile = useProfile()
@@ -62,13 +62,13 @@ export default function ProfileLayout() {
 				<Text as="div" color="gray" size="md" className="my-3 flex flex-wrap gap-3">
 					{profile.location && (
 						<span className="flex items-center gap-1">
-							<Icon name="location" size="md" />
+							<span className="icon i-location" />
 							{profile.location}
 						</span>
 					)}
 					{profile.website && (
 						<span className="flex items-center gap-1">
-							<Icon name="link" size="md" />
+							<span className="icon i-link" />
 							<a
 								href={parseDomainToValidUrl(profile.website)}
 								target="_blank"
@@ -80,7 +80,7 @@ export default function ProfileLayout() {
 						</span>
 					)}
 					<span className="flex items-center gap-1">
-						<Icon name="calendar" size="md" />
+						<span className="icon i-calendar" />
 						{'Joined ' + formatUserCreatedDate(new Date(profile.created_at))}
 					</span>
 				</Text>
@@ -104,7 +104,7 @@ export default function ProfileLayout() {
 				list={[
 					{ label: 'Posts', to: '', end: true },
 					// TODO: implement replies & media tabs
-					// { label: 'Replies', to: 'with_replies' },
+					{ label: 'Replies', to: 'with_replies' },
 					// { label: 'Media', to: 'media' },
 					{ label: 'Likes', to: 'likes' },
 				]}
@@ -139,7 +139,7 @@ const SomeFollowersYouKnow = () => {
 					/>
 				))}
 			</div>
-			<span className="text-gray text-sm group-hover:underline">Followed by {text}</span>
+			<span className="text-gray group-hover:underline">Followed by {text}</span>
 		</Link>
 	)
 }

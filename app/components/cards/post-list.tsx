@@ -1,14 +1,16 @@
-import { Post } from './post-card'
+import { PostCard } from './post-card'
 
 export type PostListProps = {
 	list: any[]
+	border?: boolean
+	threaded?: boolean
 }
 
-export const PostList = (props: PostListProps) => {
+export const PostList = ({ list, ...rest }: PostListProps) => {
 	return (
 		<div>
-			{props.list.map((post) => (
-				<Post post={post} key={post.id} />
+			{list.map((post) => (
+				<PostCard post={post} key={post.id} {...rest} />
 			))}
 		</div>
 	)

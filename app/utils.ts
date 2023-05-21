@@ -83,6 +83,17 @@ export function getTimeSincePost(postDate: Date): string {
 	return new Intl.DateTimeFormat('en-US', options).format(postDate)
 }
 
+export function formatPostDate(postDate: Date): string {
+	return new Date(postDate).toLocaleString('en-US', {
+		hour: 'numeric',
+		minute: '2-digit',
+		hour12: true,
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	})
+}
+
 export function removeExtraBreakLines(text: string) {
 	return text.replace(/\n\s*\n\s*\n/g, '\n\n')
 }

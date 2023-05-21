@@ -25,8 +25,8 @@ dependencies:
     specifier: ^1.2.1
     version: 1.2.1
   edgedb:
-    specifier: ^1.2.0
-    version: 1.2.0
+    specifier: ^1.2.2
+    version: 1.2.2
   isbot:
     specifier: ^3.6.8
     version: 3.6.8
@@ -54,8 +54,8 @@ dependencies:
 
 devDependencies:
   '@edgedb/generate':
-    specifier: ^0.1.0
-    version: 0.1.0(edgedb@1.2.0)
+    specifier: ^0.1.1
+    version: 0.1.1(edgedb@1.2.2)
   '@iconify/json':
     specifier: ^2.2.58
     version: 2.2.58
@@ -1455,15 +1455,15 @@ packages:
       '@edge-runtime/primitives': 2.0.0
     dev: false
 
-  /@edgedb/generate@0.1.0(edgedb@1.2.0):
-    resolution: {integrity: sha512-pV/40NUXuuxeTmW76a6Pa/ZjQvvI3wiFTpynbPe961OGWwyl4Y3oeUBLHA49huZiBbYgowsYEm4HZL0TDM8eEA==}
+  /@edgedb/generate@0.1.1(edgedb@1.2.2):
+    resolution: {integrity: sha512-0NVX6WzKIDEBH+XlQS7gO/I63TI2IKjQWq5k3EFLsxMUSGL1LvxwHZNr7vXSxH1XRr+Qoyil9dxM+Ff78t/xZw==}
     engines: {node: '>= 12.0.0'}
     hasBin: true
     peerDependencies:
       edgedb: ^1.1.0
     dependencies:
       chokidar: 3.5.3
-      edgedb: 1.2.0
+      edgedb: 1.2.2
     dev: true
 
   /@emotion/hash@0.9.0:
@@ -3845,8 +3845,8 @@ packages:
       time-span: 4.0.0
     dev: false
 
-  /edgedb@1.2.0:
-    resolution: {integrity: sha512-pl8owmVPEjUpQ62ywuXjqjIkLLWnJxQDWcf/g3BEZ01B80kgyR2gnAPAtHug92lAGXDwd5jfNW+2fwbzv9BVeQ==}
+  /edgedb@1.2.2:
+    resolution: {integrity: sha512-NQfd7dLSluxrHFGxaB/PtCGagdiiWuAqf0HtPFsR2epahsQYZU6DJipy+Vn0wdxLSlVKCRG+iAajrcVAvWZdog==}
     engines: {node: '>= 12.0.0'}
     hasBin: true
 

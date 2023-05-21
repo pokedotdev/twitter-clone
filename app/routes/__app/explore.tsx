@@ -26,7 +26,7 @@ export default function Explore() {
 						to: 'latest_users',
 					},
 				]}
-				className="sticky top-16 z-10"
+				className="sticky top-16 z-20"
 			/>
 			<Outlet />
 		</div>

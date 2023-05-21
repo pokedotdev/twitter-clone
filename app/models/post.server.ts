@@ -4,7 +4,6 @@ import { client, e, globals } from '~/lib/db.server'
 export type PostCardFieldsType = $infer<typeof selectPosts>[0]
 
 const basePostShape = e.shape(e.Post, () => ({
-	tag: true,
 	id: true,
 	created_at: true,
 	user: {
@@ -20,9 +19,12 @@ const basePostShape = e.shape(e.Post, () => ({
 	num_replies: true,
 }))
 
-export async function createPost(data: { body: string }, ctx: Context) {
+export async function createPost(data: { body: string; repliedTo?: string }, ctx: Context) {
 	const insert = e.insert(e.Post, {
-		...data,
+		body: data.body,
+		replied_to: data.repliedTo
+			? e.select(e.Post, () => ({ filter_single: { id: data.repliedTo as string } }))
+			: undefined,
 		user: globals.currentUser,
 	})
 	return insert.run(client.withGlobals(ctx))
@@ -32,6 +34,18 @@ export async function findPostById(data: { id: string }, ctx: Context) {
 	const query = e.select(e.Post, (post) => ({
 		filter_single: { id: data.id },
 		...basePostShape(post),
+		ancestors: basePostShape,
+		replies: (reply) => ({
+			order_by: [
+				// priority: author's replies, replies with author's reply, and follower's replies
+				{ expression: e.op(reply.user, '=', post.user) },
+				{ expression: e.op(post.user, 'in', reply.replies.user) },
+				{ expression: e.op(reply.user, 'in', globals.currentUser.followers) },
+				{ expression: reply.created_at, direction: e.ASC },
+				// { expression: reply.num_likes, direction: e.DESC },
+			],
+			...basePostShape(reply),
+		}),
 	}))
 	return query.run(client.withGlobals(ctx))
 }
@@ -52,6 +66,7 @@ const selectPosts = e.select(e.Post, basePostShape)
 
 export async function getPosts(ctx: Context) {
 	const query = e.select(e.Post, (post) => ({
+		filter: e.op('not', e.op('exists', post.replied_to)),
 		order_by: {
 			expression: post.created_at,
 			direction: e.DESC,
@@ -62,12 +77,18 @@ export async function getPosts(ctx: Context) {
 }
 
 export async function getHomeFeed(ctx: Context) {
-	const query = e.select(e.Post, (post) => ({
+	const filtered = e.select(e.Post, (post) => ({
 		filter: e.op(
-			e.op(post.user, 'in', globals.currentUser.following),
-			'or',
-			e.op(post.user, '=', globals.currentUser),
+			e.op('not', e.op('exists', post.replied_to)),
+			'and',
+			e.op(
+				e.op(post.user, 'in', globals.currentUser.following),
+				'or',
+				e.op(post.user, '=', globals.currentUser),
+			),
 		),
+	}))
+	const query = e.select(filtered, (post) => ({
 		order_by: {
 			expression: post.created_at,
 			direction: e.DESC,
@@ -78,10 +99,28 @@ export async function getHomeFeed(ctx: Context) {
 }
 
 export async function getUserPosts(data: { username: string }, ctx: Context) {
-	const filter = e.select(e.User, () => ({
-		filter_single: { username: data.username },
-	})).posts
-	const query = e.select(filter, (post) => ({
+	const query = e.select(e.Post, (post) => ({
+		filter: e.op(
+			e.op(post.user.username, '=', data.username),
+			'and',
+			e.op('not', e.op('exists', post.replied_to)),
+		),
+		order_by: {
+			expression: post.created_at,
+			direction: e.DESC,
+		},
+		...basePostShape(post),
+	}))
+	return query.run(client.withGlobals(ctx))
+}
+
+export async function getUserReplies(data: { username: string }, ctx: Context) {
+	const query = e.select(e.Post, (post) => ({
+		filter: e.op(
+			e.op(post.user.username, '=', data.username),
+			'and',
+			e.op('exists', post.replied_to),
+		),
 		order_by: {
 			expression: post.created_at,
 			direction: e.DESC,

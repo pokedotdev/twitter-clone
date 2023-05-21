@@ -14,7 +14,7 @@ export async function loader({ params, request }: LoaderArgs) {
 	const ctx = await getContext(request)
 
 	if (feed === undefined) posts = await PostModel.getUserPosts({ username }, ctx)
-	else if (feed === 'with_replies') posts = []
+	else if (feed === 'with_replies') posts = await PostModel.getUserReplies({ username }, ctx)
 	else if (feed === 'media') posts = []
 	else if (feed === 'likes') posts = await PostModel.getUserLikedPosts({ username }, ctx)
 
