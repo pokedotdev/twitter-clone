@@ -100,9 +100,11 @@ export default function PostRoute() {
 				</fetcher.Form>
 			</article>
 			{/* reply form */}
-			<div className="border-b py-2">
-				<PostForm template="reply" repliedTo={post.id} compact />
-			</div>
+			{user && (
+				<div className="border-b py-2">
+					<PostForm template="reply" repliedTo={post.id} compact />
+				</div>
+			)}
 			{/* replies */}
 			<PostList list={post.replies} />
 			<div className="min-h-[calc(100vh-64px)] flex-none" />

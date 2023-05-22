@@ -1,12 +1,18 @@
 type ButtonAuthProps = {
 	provider: keyof typeof Providers
 	redirectTo?: string
+	className?: string
 }
 
-export const ButtonProvider = ({ provider, redirectTo, ...props }: ButtonAuthProps) => {
+export const ButtonProvider = ({ provider, redirectTo, className, ...rest }: ButtonAuthProps) => {
 	const data = Providers[provider]
 	return (
-		<button className="btn solid light pl-0" {...props} name="provider" value={provider}>
+		<button
+			className={className || 'btn solid light pl-0'}
+			{...rest}
+			name="provider"
+			value={provider}
+		>
 			<span className={`icon ${data.icon}`} />
 			Sign in with {data.displayName}
 		</button>
