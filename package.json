@@ -11,7 +11,7 @@
 		"gen:css": "unocss './app/**/*.{ts,tsx}' -o ./app/styles/uno.css",
 		"gen:remix": "rmx gen-remix --packages @remix-run/node @remix-run/react",
 		"gen:edgedb": "pnpm run /^edgedb:.*/",
-		"edgedb:ql": "pnpm dlx @edgedb/generate edgeql-js --target ts --out ./dbschema/codegen/edgeql/",
+		"edgedb:ql": "pnpm dlx @edgedb/generate edgeql-js --target ts --out ./dbschema/codegen/edgeql/ --force-overwrite",
 		"edgedb:queries": "pnpm dlx @edgedb/generate queries --file ./dbschema/codegen/queries --target ts",
 		"edgedb:interfaces": "pnpm dlx @edgedb/generate interfaces --file ./dbschema/codegen/interfaces.ts",
 		"db:seed": "pnpm dlx tsx dbschema/seed.ts",
