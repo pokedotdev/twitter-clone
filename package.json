@@ -4,7 +4,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "vite build && vite build --ssr",
-		"start": "remix-serve build",
+		"start": "remix-serve ./build/index.js",
 		"dev": "vite dev",
 		"codegen": "pnpm run /^gen:.*/",
 		"gen:edgedb": "pnpm run /^edgedb:.*/",
