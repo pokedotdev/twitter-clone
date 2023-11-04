@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from '~/remix'
+import { createCookieSessionStorage } from '@remix-run/node'
 
 if (!process.env.COOKIE_SECRET) throw new Error('COOKIE_SECRET is required')
 

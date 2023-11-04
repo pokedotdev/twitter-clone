@@ -1,5 +1,5 @@
 import type { GitHubProfile } from 'remix-auth-github'
-import { unauthorized } from 'remix-utils'
+import { json } from '@remix-run/node'
 
 import type { User, Context, ContextRequired } from '~/lib/db.server'
 import { client, e, globals, ContextSchema } from '~/lib/db.server'
@@ -40,7 +40,7 @@ export async function getContext(request: Request) {
 }
 export async function getContextRequired(request: Request) {
 	const res = ContextSchema.required().safeParse(await getContext(request))
-	if (!res.success) throw unauthorized({ message: 'You need to login.' })
+	if (!res.success) throw json({ message: 'You need to login.' }, 401)
 	return res.data
 }
 

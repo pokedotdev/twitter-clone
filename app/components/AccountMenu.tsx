@@ -1,4 +1,4 @@
-import { Form } from '~/remix'
+import { Form } from '@remix-run/react'
 import * as AK from '@ariakit/react'
 
 import { useUser } from '~/utils'

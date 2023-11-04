@@ -1,10 +1,11 @@
-import type { LoaderArgs } from '~/remix'
-import { json, useLoaderData } from '~/remix'
+import type { LoaderFunctionArgs } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
 
 import { UserList } from '~/components'
 import { getContext, getFollowers } from '~/models/user.server'
 
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
 	if (!params.user) throw new Error('User not found')
 	const ctx = await getContext(request)
 	const users = await getFollowers({ username: params.user }, ctx)

@@ -1,4 +1,4 @@
-import { useFetcher } from '~/remix'
+import { useFetcher } from '@remix-run/react'
 
 import type { UserProfileLoaderType } from '~/types/routes'
 import { useOptionalUser } from '~/utils'

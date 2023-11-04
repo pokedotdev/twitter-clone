@@ -1,28 +1,14 @@
-import * as React from 'react'
-import { useMatches } from '~/remix'
+import { useRouteLoaderData } from '@remix-run/react'
 
 import type { User } from '~/lib/db.server'
 import type { RootLoaderType, UserProfileLoaderType } from '~/types/routes'
-
-/**
- * This base hook is used in other hooks to quickly search for specific data
- * across all loader data using useMatches.
- */
-export function useMatchesData<T>(routeId: string) {
-	const matchingRoutes = useMatches()
-	const route = React.useMemo(
-		() => matchingRoutes.find((route) => route.id === routeId),
-		[matchingRoutes, routeId],
-	)
-	return route?.data as unknown as T
-}
 
 function isUser(user: any): user is User {
 	return user && typeof user === 'object' && typeof user.id === 'string'
 }
 
 export function useOptionalUser() {
-	const data = useMatchesData<RootLoaderType>('root')
+	const data = useRouteLoaderData<RootLoaderType>('root')
 	if (!data || !isUser(data.user)) return undefined
 	return data.user
 }
@@ -37,7 +23,7 @@ export function useUser() {
 }
 
 export function useOptionalProfile() {
-	const data = useMatchesData<UserProfileLoaderType>('routes/__app/$user')
+	const data = useRouteLoaderData<UserProfileLoaderType>('routes/_app.$user')
 	if (!data || !isUser(data.profile)) return undefined
 	return data.profile
 }

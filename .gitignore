@@ -1,19 +1,9 @@
 node_modules
 
-.cache
-.env
-.vercel
-.output
-.notes
-
+/.cache
 /build
 /public/build
-/api/index.js
-/api/index.js.map
+.env
 
-# generated files
-app/styles/uno.css
-app/remix.ts
-
-# TODO: ignore this
-# dbschema/codegen
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

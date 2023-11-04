@@ -1,23 +1,23 @@
 import * as React from 'react'
-import type { LoaderArgs, V2_MetaFunction } from '~/remix'
-import { json, useFetcher, Link, useLoaderData } from '~/remix'
-import { badRequest, notFound } from 'remix-utils'
+import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import { useFetcher, Link, useLoaderData } from '@remix-run/react'
 
 import { Avatar, ReplyDialog, PostForm, PostList, Text } from '~/components'
 import { findPostById } from '~/models/post.server'
 import { getContext } from '~/models/user.server'
 import { formatPostDate, useOptionalUser } from '~/utils'
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	if (!data?.post) return []
 	return [{ title: `${data.post.user.name}: "${data.post.body}"` }]
 }
 
-export async function loader({ request, params }: LoaderArgs) {
-	if (!params.postId) throw badRequest({ message: 'param ID required' })
+export async function loader({ request, params }: LoaderFunctionArgs) {
+	if (!params.postId) throw json({ message: 'param ID required' }, 400)
 	const ctx = await getContext(request)
 	const post = await findPostById({ id: params.postId }, ctx)
-	if (!post) throw notFound({ message: 'Post not found' })
+	if (!post) throw json({ message: 'Post not found' }, 404)
 	const formatted_date = formatPostDate(post.created_at)
 
 	return json({ post: { ...post, formatted_date } })

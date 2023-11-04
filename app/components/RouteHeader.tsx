@@ -1,9 +1,19 @@
-import { useMatches } from '~/remix'
+import { useMatches } from '@remix-run/react'
 
 import { Text } from '~/components'
 
+type Header = {
+	title?: string
+	subtitle?: string
+}
+
+type RouteWithHeader = {
+	data: { header?: Header }
+	handle: { header?: Header }
+}
+
 function useHeader() {
-	const matches = useMatches()
+	const matches = useMatches() as RouteWithHeader[]
 	const match = matches.reverse().find((match) => match.data?.header || match.handle?.header)
 	return match?.data?.header || match?.handle?.header
 }

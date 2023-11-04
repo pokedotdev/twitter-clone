@@ -1,9 +1,9 @@
-import type { LoaderArgs } from '~/remix'
-import { redirect } from '~/remix'
+import type { LoaderFunctionArgs } from '@remix-run/node'
+import { redirect } from '@remix-run/node'
 
 import { authenticator } from '~/lib/auth.server'
 
-export const loader = async ({ request, params }: LoaderArgs) => {
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	const provider = params.provider?.toString()
 	// TODO: add Error message if provider is not found
 	if (!provider) return redirect('/explore')

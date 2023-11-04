@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link, useFetcher } from '~/remix'
+import { Link, useFetcher } from '@remix-run/react'
 import cn from 'clsx'
 
 import { Avatar, ReplyDialog, Text } from '~/components'

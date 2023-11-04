@@ -1,65 +1,57 @@
 {
 	"private": true,
 	"sideEffects": false,
+	"type": "module",
 	"scripts": {
-		"codegen": "pnpm run /^gen:.*/",
-		"build": "pnpm gen:css && pnpm gen:remix && remix build",
+		"build": "vite build && vite build --ssr",
 		"start": "remix-serve build",
-		"dev:remix": "remix dev",
-		"dev:css": "pnpm run gen:css --watch",
-		"dev": "pnpm run /^dev:.*/",
-		"gen:css": "unocss './app/**/*.{ts,tsx}' -o ./app/styles/uno.css",
-		"gen:remix": "rmx gen-remix --packages @remix-run/node @remix-run/react",
+		"dev": "vite dev",
+		"codegen": "pnpm run /^gen:.*/",
 		"gen:edgedb": "pnpm run /^edgedb:.*/",
 		"edgedb:ql": "pnpm dlx @edgedb/generate edgeql-js --target ts --out ./dbschema/codegen/edgeql/ --force-overwrite",
 		"edgedb:queries": "pnpm dlx @edgedb/generate queries --file ./dbschema/codegen/queries --target ts",
 		"edgedb:interfaces": "pnpm dlx @edgedb/generate interfaces --file ./dbschema/codegen/interfaces.ts",
 		"db:seed": "pnpm dlx tsx dbschema/seed.ts",
 		"format": "prettier --write .",
-		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint ."
+		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
+		"typecheck": "tsc"
 	},
 	"dependencies": {
 		"@ariakit/react": "^0.1.6",
-		"@remix-run/node": "^1.16.1",
-		"@remix-run/react": "^1.16.1",
-		"@remix-run/vercel": "^1.16.1",
-		"@vercel/node": "^2.10.3",
+		"@remix-run/node": "^2.2.0",
+		"@remix-run/react": "^2.2.0",
+		"@remix-run/serve": "^2.2.0",
 		"clsx": "^1.2.1",
-		"edgedb": "^1.3.6",
+		"edgedb": "^1.4.0",
 		"isbot": "^3.6.8",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"remix-auth": "^3.4.0",
-		"remix-auth-github": "^1.3.0",
-		"remix-utils": "^6.3.0",
-		"zod": "^3.20.2",
-		"zodix": "^0.4.0"
+		"remix-auth": "^3.6.0",
+		"remix-auth-github": "^1.6.0",
+		"remix-utils": "7.1.0",
+		"zod": "^3.22.4",
+		"zodix": "^0.4.4"
 	},
 	"devDependencies": {
-		"@edgedb/generate": "^0.1.1",
-		"@iconify/json": "^2.2.58",
-		"@remix-run/dev": "^1.16.1",
-		"@remix-run/eslint-config": "^1.16.1",
-		"@remix-run/serve": "^1.16.1",
-		"@types/react": "^18.0.35",
-		"@types/react-dom": "^18.0.11",
-		"@unocss/cli": "^0.51.8",
-		"@unocss/reset": "^0.51.8",
+		"@edgedb/generate": "^0.4.1",
+		"@iconify/json": "^2.2.137",
+		"@remix-run/dev": "^2.2.0",
+		"@remix-run/eslint-config": "^2.2.0",
+		"@types/react": "^18.2.20",
+		"@types/react-dom": "^18.2.7",
+		"@unocss/cli": "^0.57.2",
+		"@unocss/reset": "^0.57.2",
 		"colord": "^2.9.3",
-		"eslint": "^8.32.0",
+		"eslint": "^8.38.0",
 		"eslint-config-prettier": "^8.6.0",
 		"prettier": "^2.8.8",
 		"prettier-plugin-tailwindcss": "^0.2.8",
-		"rmx-cli": "^0.3.6",
-		"typescript": "^5.0.4",
-		"unocss": "^0.51.8"
+		"typescript": "^5.2.2",
+		"unocss": "^0.57.2",
+		"vite": "^4.5.0",
+		"vite-tsconfig-paths": "^4.2.1"
 	},
 	"engines": {
-		"node": ">=18"
-	},
-	"pnpm": {
-		"patchedDependencies": {
-			"@remix-run/dev@1.16.1": "patches/@remix-run__dev@1.16.1.patch"
-		}
+		"node": ">=18.0.0"
 	}
 }

@@ -1,5 +1,5 @@
-import type { NavLinkProps } from '~/remix'
-import { NavLink } from '~/remix'
+import type { NavLinkProps } from '@remix-run/react'
+import { NavLink } from '@remix-run/react'
 import cn from 'clsx'
 
 import { Text } from '~/components'
@@ -42,7 +42,7 @@ const Tab = ({ children, ...rest }: NavLinkProps) => {
 						color={isActive ? undefined : 'gray'}
 						className="whitespace-nowrap"
 					>
-						{children}
+						{children as React.ReactNode}
 					</Text>
 					{isActive && <div className="bg-primary-500 absolute bottom-0 h-1 w-full rounded-full" />}
 				</div>

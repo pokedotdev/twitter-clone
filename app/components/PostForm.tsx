@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { removeExtraBreakLines, useUser } from '~/utils'
 import { Avatar } from '~/components'
-import type { action } from '~/routes/actions/post'
+import type { action } from '~/routes/actions.post'
 
 export const postFormSchema = z.object({
 	repliedTo: z.string().uuid().optional(),

@@ -1,4 +1,4 @@
-import { Outlet } from '~/remix'
+import { Outlet } from '@remix-run/react'
 
 import { Tabs } from '~/components'
 import { useOptionalUser, useProfile } from '~/utils'

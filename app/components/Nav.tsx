@@ -1,5 +1,5 @@
-import { NavLink } from '~/remix'
-import type { NavLinkProps } from '~/remix'
+import { NavLink } from '@remix-run/react'
+import type { NavLinkProps } from '@remix-run/react'
 
 import { useOptionalUser } from '~/utils'
 import { PostForm, Dialog } from '~/components'

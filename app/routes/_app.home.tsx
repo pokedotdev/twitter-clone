@@ -1,12 +1,13 @@
-import { useLoaderData, json, redirect } from '~/remix'
-import type { LoaderArgs } from '~/remix'
+import { json, redirect } from '@remix-run/node'
+import type { LoaderFunctionArgs } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
 
 import { PostForm, PostList } from '~/components'
 import { useOptionalUser } from '~/utils'
 import { getContext } from '~/models/user.server'
 import { getHomeFeed } from '~/models/post.server'
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
 	const ctx = await getContext(request)
 	if (!ctx.current_user_id) throw redirect('/explore')
 	const posts = await getHomeFeed(ctx)

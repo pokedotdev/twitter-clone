@@ -1,16 +1,19 @@
 {
-	"include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
+	"include": ["env.d.ts", "**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules", "build", "dbschema/codegen/**"],
 	"compilerOptions": {
-		"lib": ["DOM", "DOM.Iterable", "ES2021"],
+		"lib": ["DOM", "DOM.Iterable", "ES2022"],
 		"isolatedModules": true,
 		"esModuleInterop": true,
 		"jsx": "react-jsx",
-		"moduleResolution": "node",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
 		"resolveJsonModule": true,
-		"target": "ES2021",
+		"target": "ES2022",
 		"strict": true,
 		"allowJs": true,
 		"downlevelIteration": true,
+		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": ".",
 		"paths": {

@@ -1,11 +1,12 @@
-import type { LoaderArgs } from '~/remix'
-import { json, useLoaderData } from '~/remix'
+import type { LoaderFunctionArgs } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
 
 import { getContext } from '~/models/user.server'
 import * as PostModel from '~/models/post.server'
 import { PostList } from '~/components'
 
-export async function loader({ params, request }: LoaderArgs) {
+export async function loader({ params, request }: LoaderFunctionArgs) {
 	let posts: PostModel.PostCardFieldsType[] = []
 
 	const { user: username, feed } = params

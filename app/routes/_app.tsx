@@ -1,4 +1,4 @@
-import { Link, Outlet } from '~/remix'
+import { Link, Outlet } from '@remix-run/react'
 
 import { ButtonProvider, FormAuth, NavList, AccountMenu, RouteHeader } from '~/components'
 import { useOptionalUser } from '~/utils'

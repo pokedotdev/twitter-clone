@@ -1,8 +1,8 @@
-import type { ActionArgs } from '~/remix'
-import { json, redirect } from '~/remix'
+import type { ActionFunctionArgs } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import { z } from 'zod'
 import { zx } from 'zodix'
-import { redirectBack } from 'remix-utils'
+import { redirectBack } from 'remix-utils/redirect-back'
 
 import { createPost, likePost } from '~/models/post.server'
 import { getContextRequired } from '~/models/user.server'
@@ -21,7 +21,7 @@ const likeSchema = z.object({
 })
 const formSchema = z.discriminatedUnion('action', [createSchema, likeSchema])
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
 	const formData = await request.formData()
 	const data = await zx.parseForm(formData, formSchema)
 	const ctx = await getContextRequired(request)

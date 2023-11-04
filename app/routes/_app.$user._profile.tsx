@@ -1,4 +1,4 @@
-import { Link, Outlet } from '~/remix'
+import { Link, Outlet } from '@remix-run/react'
 
 import { formatUserCreatedDate, parseDomainToValidUrl, useProfile } from '~/utils'
 import { Text, Tabs, Avatar, ButtonFollow } from '~/components'
@@ -11,7 +11,7 @@ export default function ProfileLayout() {
 			<div>
 				{/* Banner */}
 				<div className="aspect-[3/1] bg-gray-200 dark:bg-gray-600" aria-hidden="true" tabIndex={-1}>
-					{profile.coverUrl && (
+					{profile?.coverUrl && (
 						<img
 							alt=""
 							draggable="true"
@@ -48,7 +48,7 @@ export default function ProfileLayout() {
 			</div>
 			<div className="px-5">
 				{/* User name */}
-				<Text as="h1" size="xl" weight={8} className="leading-tight">
+				<Text as="h1" size="xl" weight={7} className="leading-tight">
 					{profile.name}
 				</Text>
 				<Text color="gray" className="leading-tight">
