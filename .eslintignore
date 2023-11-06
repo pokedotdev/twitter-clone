@@ -15,5 +15,3 @@ yarn.lock
 /api/index.js.map
 
 dbschema/codegen
-
-app/styles/uno.css
